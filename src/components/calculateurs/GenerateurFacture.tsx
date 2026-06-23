@@ -96,10 +96,10 @@ export default function GenerateurFacture() {
       {/* AE Info Form */}
       <div className="card no-print">
         <h2 className="text-xl font-bold text-amber-900 mb-4">Vos informations (Auto-Entrepreneur)</h2>
-        <p className="text-sm text-gray-500 mb-4">Ces informations sont sauvegardees automatiquement pour vos prochaines factures.</p>
+        <p className="text-sm text-gray-500 mb-4">Ces informations sont sauvegardées automatiquement pour vos prochaines factures.</p>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-semibold text-amber-900 mb-1">Nom et prenom</label>
+            <label className="block text-sm font-semibold text-amber-900 mb-1">Nom et prénom</label>
             <input
               type="text"
               value={infoAE.nom}
@@ -109,7 +109,7 @@ export default function GenerateurFacture() {
             />
           </div>
           <div>
-            <label className="block text-sm font-semibold text-amber-900 mb-1">Numero ICE</label>
+            <label className="block text-sm font-semibold text-amber-900 mb-1">Numéro ICE</label>
             <input
               type="text"
               value={infoAE.ice}
@@ -139,7 +139,7 @@ export default function GenerateurFacture() {
             />
           </div>
           <div>
-            <label className="block text-sm font-semibold text-amber-900 mb-1">Telephone</label>
+            <label className="block text-sm font-semibold text-amber-900 mb-1">Téléphone</label>
             <input
               type="text"
               value={infoAE.telephone}
@@ -162,7 +162,7 @@ export default function GenerateurFacture() {
               value={client.nom}
               onChange={e => setClient({ ...client, nom: e.target.value })}
               className="input-field"
-              placeholder="Societe ABC"
+              placeholder="Société ABC"
             />
           </div>
           <div>
@@ -204,7 +204,7 @@ export default function GenerateurFacture() {
           <h2 className="text-xl font-bold text-amber-900">Lignes de facturation</h2>
           <div className="flex gap-4 items-center">
             <div>
-              <label className="block text-xs text-gray-500">N. Facture</label>
+              <label className="block text-xs text-gray-500">N° Facture</label>
               <input
                 type="text"
                 value={numeroFacture}
@@ -228,8 +228,8 @@ export default function GenerateurFacture() {
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b-2 border-amber-200">
-                <th className="text-left py-2 text-amber-900">Designation</th>
-                <th className="text-center py-2 w-24 text-amber-900">Quantite</th>
+                <th className="text-left py-2 text-amber-900">Désignation</th>
+                <th className="text-center py-2 w-24 text-amber-900">Quantité</th>
                 <th className="text-right py-2 w-32 text-amber-900">Prix unitaire</th>
                 <th className="text-right py-2 w-32 text-amber-900">Montant</th>
                 <th className="w-10"></th>
@@ -304,7 +304,7 @@ export default function GenerateurFacture() {
       {/* Print Button */}
       <div className="no-print flex gap-4">
         <button type="button" onClick={handlePrint} className="btn-primary">
-          Imprimer / Telecharger PDF
+          Imprimer / Télécharger PDF
         </button>
       </div>
 
@@ -314,7 +314,7 @@ export default function GenerateurFacture() {
         <div className="flex justify-between items-start mb-8 pb-4 border-b-2 border-amber-400">
           <div>
             <h2 className="text-2xl font-bold text-amber-800">FACTURE</h2>
-            <p className="text-gray-600 mt-1">N. {numeroFacture}</p>
+            <p className="text-gray-600 mt-1">N° {numeroFacture}</p>
             <p className="text-gray-600">Date : {formatDateCourte(dateParsed)}</p>
           </div>
           <div className="text-right">
@@ -322,13 +322,13 @@ export default function GenerateurFacture() {
             <p className="text-sm text-gray-600">ICE : {infoAE.ice || '...'}</p>
             <p className="text-sm text-gray-600">{infoAE.adresse || '...'}</p>
             <p className="text-sm text-gray-600">{infoAE.ville || '...'}</p>
-            {infoAE.telephone && <p className="text-sm text-gray-600">Tel : {infoAE.telephone}</p>}
+            {infoAE.telephone && <p className="text-sm text-gray-600">Tél : {infoAE.telephone}</p>}
           </div>
         </div>
 
         {/* Client */}
         <div className="mb-8 p-4 bg-gray-50 rounded-lg">
-          <p className="text-xs text-gray-500 mb-1 font-semibold uppercase">Facture a :</p>
+          <p className="text-xs text-gray-500 mb-1 font-semibold uppercase">Facturé à :</p>
           <p className="font-bold">{client.nom || 'Nom du client'}</p>
           {client.ice && <p className="text-sm text-gray-600">ICE : {client.ice}</p>}
           <p className="text-sm text-gray-600">{client.adresse || '...'}</p>
@@ -339,8 +339,8 @@ export default function GenerateurFacture() {
         <table className="w-full text-sm mb-8">
           <thead>
             <tr className="border-b-2 border-amber-400">
-              <th className="text-left py-2 text-amber-900">Designation</th>
-              <th className="text-center py-2 text-amber-900">Qte</th>
+              <th className="text-left py-2 text-amber-900">Désignation</th>
+              <th className="text-center py-2 text-amber-900">Qté</th>
               <th className="text-right py-2 text-amber-900">Prix unit. HT</th>
               <th className="text-right py-2 text-amber-900">Montant HT</th>
             </tr>
@@ -373,7 +373,7 @@ export default function GenerateurFacture() {
             </div>
             <div className="flex justify-between text-sm">
               <span className="text-gray-600">TVA</span>
-              <span className="text-gray-500">Exonere</span>
+              <span className="text-gray-500">Exonéré</span>
             </div>
             <div className="flex justify-between border-t-2 border-amber-400 pt-2">
               <span className="font-bold text-amber-900">Total TTC</span>
@@ -388,7 +388,7 @@ export default function GenerateurFacture() {
             {factureResult.mentionTVA}
           </p>
           <p className="text-xs text-gray-400 mt-2">
-            Facture generee sur autoentrepreneurmaroc.ma
+            Facture générée sur autoentrepreneurmaroc.ma
           </p>
         </div>
       </div>

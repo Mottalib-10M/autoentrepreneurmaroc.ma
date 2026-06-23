@@ -25,11 +25,11 @@ export default function CalculateurAE() {
     <div className="space-y-8">
       {/* Inputs */}
       <div className="card">
-        <h2 className="text-xl font-bold text-amber-900 mb-4">Parametres</h2>
+        <h2 className="text-xl font-bold text-amber-900 mb-4">Paramètres</h2>
 
-        {/* Periode Toggle */}
+        {/* Période Toggle */}
         <div className="mb-4">
-          <label className="block text-sm font-semibold text-amber-900 mb-2">Periode de saisie</label>
+          <label className="block text-sm font-semibold text-amber-900 mb-2">Période de saisie</label>
           <div className="flex rounded-lg overflow-hidden border-2 border-amber-200">
             <button
               type="button"
@@ -56,10 +56,10 @@ export default function CalculateurAE() {
           </div>
         </div>
 
-        {/* Type d'activite */}
+        {/* Type d'activité */}
         <div className="mb-4">
           <label htmlFor="type-activite" className="block text-sm font-semibold text-amber-900 mb-1">
-            Type d'activite
+            Type d'activité
           </label>
           <select
             id="type-activite"
@@ -68,7 +68,7 @@ export default function CalculateurAE() {
             className="input-field"
           >
             <option value="services">Prestations de services (IR 2%)</option>
-            <option value="commercial">Activites commerciales / industrielles / artisanales (IR 1%)</option>
+            <option value="commercial">Activités commerciales / industrielles / artisanales (IR 1%)</option>
           </select>
         </div>
 
@@ -113,8 +113,8 @@ export default function CalculateurAE() {
             {seuil.depassement && (
               <div className="mt-3 p-3 bg-red-100 border border-red-300 rounded-lg">
                 <p className="text-sm text-red-800 font-medium">
-                  Attention : Votre CA annuel projete ({simulation.caAnnuel.toLocaleString('fr-FR')} DH) depasse le seuil de {seuilLabel} DH.
-                  Si ce depassement persiste 2 annees consecutives, vous devrez passer au regime reel (SARL ou autre).
+                  Attention : Votre CA annuel projeté ({simulation.caAnnuel.toLocaleString('fr-FR')} DH) dépasse le seuil de {seuilLabel} DH.
+                  Si ce dépassement persiste 2 années consécutives, vous devrez passer au régime réel (SARL ou autre).
                 </p>
               </div>
             )}
@@ -122,15 +122,15 @@ export default function CalculateurAE() {
               <div className="mt-3 p-3 bg-orange-100 border border-orange-300 rounded-lg">
                 <p className="text-sm text-orange-800 font-medium">
                   Vous approchez du seuil ! Il vous reste {seuil.margeRestante.toLocaleString('fr-FR')} DH de marge.
-                  Pensez a anticiper un changement de statut.
+                  Pensez à anticiper un changement de statut.
                 </p>
               </div>
             )}
           </div>
 
-          {/* Resultats Trimestriels */}
+          {/* Résultats Trimestriels */}
           <div className="result-card">
-            <h2 className="text-xl font-bold text-amber-900 mb-4">Detail trimestriel</h2>
+            <h2 className="text-xl font-bold text-amber-900 mb-4">Détail trimestriel</h2>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
               <ResultItem label="CA trimestriel" value={formatMontant(simulation.caTrimestriel)} />
               <ResultItem
@@ -145,7 +145,7 @@ export default function CalculateurAE() {
             </div>
           </div>
 
-          {/* Resultats Annuels */}
+          {/* Résultats Annuels */}
           <div className="result-card">
             <h2 className="text-xl font-bold text-amber-900 mb-4">Projection annuelle</h2>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
@@ -158,12 +158,12 @@ export default function CalculateurAE() {
             </div>
           </div>
 
-          {/* Resume */}
+          {/* Résumé */}
           <div className="card bg-amber-50">
-            <h3 className="text-lg font-bold text-amber-900 mb-3">Resume</h3>
+            <h3 className="text-lg font-bold text-amber-900 mb-3">Résumé</h3>
             <p className="text-gray-700 leading-relaxed">
               Pour un chiffre d'affaires {periodeSaisie} de <strong>{montant.toLocaleString('fr-FR')} DH</strong> en{' '}
-              <strong>{typeActivite === 'services' ? 'prestations de services' : 'activites commerciales'}</strong>, vous
+              <strong>{typeActivite === 'services' ? 'prestations de services' : 'activités commerciales'}</strong>, vous
               payerez <strong>{formatMontant(simulation.totalChargesAnnuel)}</strong> de charges annuelles
               (IR + AMO), soit un taux effectif de <strong>{formatPourcentage(simulation.tauxEffectifAnnuel)}</strong>.
               Votre revenu net mensuel moyen sera de <strong>{formatMontant(simulation.netMensuelMoyen)}</strong>.

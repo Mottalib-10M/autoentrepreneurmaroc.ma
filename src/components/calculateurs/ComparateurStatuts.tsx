@@ -23,14 +23,14 @@ export default function ComparateurStatuts() {
     <div className="space-y-8">
       {/* Inputs */}
       <div className="card">
-        <h2 className="text-xl font-bold text-amber-900 mb-4">Parametres de comparaison</h2>
+        <h2 className="text-xl font-bold text-amber-900 mb-4">Paramètres de comparaison</h2>
 
         <ChampMontant
-          label="Chiffre d'affaires annuel estime"
+          label="Chiffre d'affaires annuel estimé"
           value={caSaisi}
           onChange={setCaSaisi}
           placeholder="Ex: 150000"
-          helpText="Votre CA annuel prevu ou actuel"
+          helpText="Votre CA annuel prévu ou actuel"
         />
 
         <div className="mb-4">
@@ -63,12 +63,12 @@ export default function ComparateurStatuts() {
 
         {modeCharges === 'pourcentage' ? (
           <ChampMontant
-            label="Charges professionnelles estimees"
+            label="Charges professionnelles estimées"
             value={pourcentageCharges}
             onChange={setPourcentageCharges}
             suffix="%"
             placeholder="30"
-            helpText="Pourcentage de votre CA consacre aux charges (loyer, materiel, etc.) - utile pour SARL/SAS"
+            helpText="Pourcentage de votre CA consacré aux charges (loyer, matériel, etc.) - utile pour SARL/SAS"
           />
         ) : (
           <ChampMontant
@@ -76,13 +76,13 @@ export default function ComparateurStatuts() {
             value={chargesSaisies}
             onChange={setChargesSaisies}
             placeholder="Ex: 50000"
-            helpText="Montant total annuel de vos charges (loyer, materiel, etc.)"
+            helpText="Montant total annuel de vos charges (loyer, matériel, etc.)"
           />
         )}
 
         {caAnnuel > 0 && (
           <p className="text-sm text-gray-600">
-            Charges estimees : <strong>{formatMontant(chargesEstimees)}</strong> / an
+            Charges estimées : <strong>{formatMontant(chargesEstimees)}</strong> / an
             {modeCharges === 'pourcentage' && ` (${pourcentageCharges}% de ${formatMontant(caAnnuel)})`}
           </p>
         )}
@@ -118,7 +118,7 @@ export default function ComparateurStatuts() {
                 >
                   {isRecommande && (
                     <span className="absolute -top-3 left-4 bg-amber-500 text-white text-xs font-bold px-3 py-1 rounded-full">
-                      Recommande
+                      Recommandé
                     </span>
                   )}
 
@@ -126,14 +126,14 @@ export default function ComparateurStatuts() {
                     {statut.statut}
                   </h3>
 
-                  {/* Chiffres cles */}
+                  {/* Chiffres clés */}
                   <div className="space-y-3 mb-6">
                     <div className="flex justify-between">
                       <span className="text-sm text-gray-600">CA annuel</span>
                       <span className="font-semibold">{formatMontant(statut.caAnnuel)}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-sm text-gray-600">Impots</span>
+                      <span className="text-sm text-gray-600">Impôts</span>
                       <span className="font-semibold text-red-600">- {formatMontant(statut.impots)}</span>
                     </div>
                     <div className="flex justify-between">
@@ -141,7 +141,7 @@ export default function ComparateurStatuts() {
                       <span className="font-semibold text-red-600">- {formatMontant(statut.charges)}</span>
                     </div>
                     <div className="border-t border-amber-200 pt-2 flex justify-between">
-                      <span className="text-sm font-bold text-amber-900">Total prelevements</span>
+                      <span className="text-sm font-bold text-amber-900">Total prélèvements</span>
                       <span className="font-bold text-red-600">- {formatMontant(statut.totalPrelevements)}</span>
                     </div>
                     <div className="bg-amber-50 p-3 rounded-lg flex justify-between">
@@ -153,7 +153,7 @@ export default function ComparateurStatuts() {
                       <span className="font-semibold">{formatPourcentage(statut.tauxEffectif)}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-sm text-gray-600">Complexite</span>
+                      <span className="text-sm text-gray-600">Complexité</span>
                       <span className={`font-semibold ${
                         statut.complexite === 'Faible' ? 'text-green-600' :
                         statut.complexite === 'Moyenne' ? 'text-orange-600' : 'text-red-600'
@@ -174,9 +174,9 @@ export default function ComparateurStatuts() {
                     </ul>
                   </div>
 
-                  {/* Inconvenients */}
+                  {/* Inconvénients */}
                   <div>
-                    <h4 className="text-sm font-bold text-red-700 mb-2">Inconvenients</h4>
+                    <h4 className="text-sm font-bold text-red-700 mb-2">Inconvénients</h4>
                     <ul className="space-y-1">
                       {statut.inconvenients.map((inc, i) => (
                         <li key={i} className="text-xs text-gray-700 flex items-start gap-1">
@@ -193,7 +193,7 @@ export default function ComparateurStatuts() {
 
           {/* Bar Chart Visual */}
           <div className="card">
-            <h3 className="text-lg font-bold text-amber-900 mb-4">Comparaison visuelle - Net apres charges</h3>
+            <h3 className="text-lg font-bold text-amber-900 mb-4">Comparaison visuelle - Net après charges</h3>
             <div className="space-y-4">
               {comparaison.statuts.map((statut) => {
                 const maxNet = Math.max(...comparaison.statuts.map(s => Math.max(s.netApresCharges, 0)));

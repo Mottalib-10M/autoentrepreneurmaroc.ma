@@ -16,7 +16,7 @@ export interface SEOProps {
 }
 
 /**
- * Genere le titre complet de la page
+ * Génère le titre complet de la page
  */
 export function getFullTitle(pageTitle: string): string {
   if (pageTitle === siteConfig.name) return pageTitle;
@@ -24,7 +24,7 @@ export function getFullTitle(pageTitle: string): string {
 }
 
 /**
- * Genere les donnees structurees Schema.org pour le site
+ * Génère les données structurées Schema.org pour le site
  */
 export function getWebsiteSchema() {
   return {
@@ -43,7 +43,7 @@ export function getWebsiteSchema() {
 }
 
 /**
- * Genere les donnees structurees pour une page article/guide
+ * Génère les données structurées pour une page article/guide
  */
 export function getArticleSchema(props: {
   title: string;
@@ -69,13 +69,13 @@ export function getArticleSchema(props: {
       name: siteConfig.name,
       url: siteConfig.url,
     },
-    datePublished: props.datePublished || '2025-01-15',
+    datePublished: props.datePublished || '2026-01-15',
     dateModified: props.dateModified || new Date().toISOString().split('T')[0],
   };
 }
 
 /**
- * Genere les donnees structurees pour un outil/calculateur
+ * Génère les données structurées pour un outil/calculateur
  */
 export function getSoftwareAppSchema(props: {
   name: string;
@@ -103,7 +103,7 @@ export function getSoftwareAppSchema(props: {
 }
 
 /**
- * Genere les donnees structurees FAQ
+ * Génère les données structurées FAQ
  */
 export function getFAQSchema(questions: Array<{ question: string; answer: string }>) {
   return {
@@ -121,7 +121,7 @@ export function getFAQSchema(questions: Array<{ question: string; answer: string
 }
 
 /**
- * Genere les donnees structurees BreadcrumbList
+ * Génère les données structurées BreadcrumbList
  */
 export function getBreadcrumbSchema(items: Array<{ name: string; url: string }>) {
   return {

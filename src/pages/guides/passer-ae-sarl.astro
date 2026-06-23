@@ -6,7 +6,7 @@ import { getArticleSchema, getBreadcrumbSchema } from '../../lib/seo';
 const breadcrumbs = [
   { name: 'Accueil', url: siteConfig.url + '/' },
   { name: 'Guides', url: siteConfig.url + '/guides/passer-ae-sarl/' },
-  { name: 'Passer AE a SARL', url: siteConfig.url + '/guides/passer-ae-sarl/' },
+  { name: 'Passer AE à SARL', url: siteConfig.url + '/guides/passer-ae-sarl/' },
 ];
 
 const schema = {
@@ -14,7 +14,7 @@ const schema = {
   '@graph': [
     getBreadcrumbSchema(breadcrumbs),
     getArticleSchema({
-      title: 'Passer de l\'Auto-Entrepreneur a la SARL au Maroc',
+      title: 'Passer de l\'Auto-Entrepreneur à la SARL au Maroc',
       description: 'Guide complet pour transitionner du statut auto-entrepreneur vers la SARL au Maroc. Quand, pourquoi et comment faire la transition.',
       url: siteConfig.url + '/guides/passer-ae-sarl/',
     }),
@@ -23,8 +23,8 @@ const schema = {
 ---
 
 <Layout
-  title="Passer de l'AE a la SARL au Maroc : Guide 2025"
-  description="Quand et comment passer du statut auto-entrepreneur a la SARL au Maroc. Procedure complete, avantages, inconvenients et conseils pratiques 2025."
+  title="Passer de l'AE à la SARL au Maroc : Guide 2026"
+  description="Quand et comment passer du statut auto-entrepreneur à la SARL au Maroc. Procédure complète, avantages, inconvénients et conseils pratiques 2026."
   type="article"
   schema={schema}
 >
@@ -45,137 +45,137 @@ const schema = {
     </nav>
 
     <h1 class="text-3xl sm:text-4xl font-extrabold text-amber-900 mb-4">
-      Passer de l'Auto-Entrepreneur a la SARL au Maroc : Guide Complet
+      Passer de l'Auto-Entrepreneur à la SARL au Maroc : Guide Complet
     </h1>
 
     <p class="text-sm text-gray-500 mb-8">
       Par <a href="/a-propos/" class="text-amber-700 font-medium">{siteConfig.author.name}</a> ({siteConfig.author.credentials})
-      &middot; Mis a jour le 15 janvier 2025
+      &middot; Mis à jour le 15 janvier 2026
     </p>
 
     <div class="prose max-w-none">
       <p>
-        La transition du statut d'auto-entrepreneur vers la SARL est une etape importante dans le developpement
-        de votre activite. Que ce soit par obligation legale (depassement des seuils) ou par choix strategique,
-        ce guide vous accompagne dans toutes les etapes de cette transition.
+        La transition du statut d'auto-entrepreneur vers la SARL est une étape importante dans le développement
+        de votre activité. Que ce soit par obligation légale (dépassement des seuils) ou par choix stratégique,
+        ce guide vous accompagne dans toutes les étapes de cette transition.
       </p>
 
-      <h2>Quand faut-il passer de l'AE a la SARL ?</h2>
+      <h2>Quand faut-il passer de l'AE à la SARL ?</h2>
 
       <h3>Le passage obligatoire</h3>
 
       <p>
-        Le passage au regime reel (SARL ou autre forme societaire) devient <strong>obligatoire</strong> dans les cas suivants :
+        Le passage au régime réel (SARL ou autre forme sociétaire) devient <strong>obligatoire</strong> dans les cas suivants :
       </p>
 
       <ul>
-        <li><strong>Depassement du seuil de CA pendant 2 annees consecutives</strong> : Si votre CA depasse 200 000 DH (services) ou 500 000 DH (commercial) deux annees de suite, vous devez obligatoirement changer de statut.</li>
-        <li><strong>Exercice d'une activite non eligible</strong> : Certaines activites necessitent un statut societaire</li>
+        <li><strong>Dépassement du seuil de CA pendant 2 années consécutives</strong> : Si votre CA dépasse 200 000 DH (services) ou 500 000 DH (commercial) deux années de suite, vous devez obligatoirement changer de statut.</li>
+        <li><strong>Exercice d'une activité non éligible</strong> : Certaines activités nécessitent un statut sociétaire</li>
       </ul>
 
-      <h3>Le passage strategique</h3>
+      <h3>Le passage stratégique</h3>
 
       <p>
-        Meme sans depasser les seuils, la transition vers la SARL peut etre judicieuse si :
+        Même sans dépasser les seuils, la transition vers la SARL peut être judicieuse si :
       </p>
 
       <ul>
-        <li><strong>Vos charges sont elevees</strong> : En SARL, vous pouvez deduire toutes vos charges professionnelles (loyer, materiel, vehicule, etc.), ce qui reduit votre base imposable. Si vos charges representent plus de 40-50% de votre CA, la SARL peut etre plus avantageuse.</li>
-        <li><strong>Vous voulez une meilleure protection sociale</strong> : La CNSS complete offre retraite, allocations familiales et couverture maladie plus etendue</li>
-        <li><strong>Vous avez besoin de credibilite</strong> : Les banques, les grands comptes et les marches publics preferent souvent travailler avec des societes</li>
-        <li><strong>Vous voulez limiter votre responsabilite</strong> : En AE, votre responsabilite est illimitee. En SARL, elle est limitee a vos apports.</li>
+        <li><strong>Vos charges sont élevées</strong> : En SARL, vous pouvez déduire toutes vos charges professionnelles (loyer, matériel, véhicule, etc.), ce qui réduit votre base imposable. Si vos charges représentent plus de 40-50% de votre CA, la SARL peut être plus avantageuse.</li>
+        <li><strong>Vous voulez une meilleure protection sociale</strong> : La CNSS complète offre retraite, allocations familiales et couverture maladie plus étendue</li>
+        <li><strong>Vous avez besoin de crédibilité</strong> : Les banques, les grands comptes et les marchés publics préfèrent souvent travailler avec des sociétés</li>
+        <li><strong>Vous voulez limiter votre responsabilité</strong> : En AE, votre responsabilité est illimitée. En SARL, elle est limitée à vos apports.</li>
         <li><strong>Vous voulez vous associer</strong> : Le statut AE est strictement individuel</li>
-        <li><strong>Vous avez besoin de recuperer la TVA</strong> : Si vos fournisseurs facturent de la TVA, vous pourrez la deduire en SARL</li>
+        <li><strong>Vous avez besoin de récupérer la TVA</strong> : Si vos fournisseurs facturent de la TVA, vous pourrez la déduire en SARL</li>
       </ul>
 
       <p>
-        Utilisez notre <a href="/comparateur-statuts/">comparateur de statuts</a> pour simuler les deux scenarios
-        avec vos chiffres reels.
+        Utilisez notre <a href="/comparateur-statuts/">comparateur de statuts</a> pour simuler les deux scénarios
+        avec vos chiffres réels.
       </p>
 
-      <h2>Avantages de la SARL par rapport a l'AE</h2>
+      <h2>Avantages de la SARL par rapport à l'AE</h2>
 
       <ul>
-        <li>CA illimite</li>
-        <li>Responsabilite limitee aux apports</li>
-        <li>Deduction des charges professionnelles</li>
-        <li>Protection sociale complete (CNSS : retraite, allocations familiales, AMO etendue)</li>
-        <li>Possibilite de s'associer</li>
-        <li>Meilleure credibilite commerciale</li>
-        <li>Recuperation de la TVA sur les achats</li>
-        <li>Possibilite d'acceder aux marches publics</li>
+        <li>CA illimité</li>
+        <li>Responsabilité limitée aux apports</li>
+        <li>Déduction des charges professionnelles</li>
+        <li>Protection sociale complète (CNSS : retraite, allocations familiales, AMO étendue)</li>
+        <li>Possibilité de s'associer</li>
+        <li>Meilleure crédibilité commerciale</li>
+        <li>Récupération de la TVA sur les achats</li>
+        <li>Possibilité d'accéder aux marchés publics</li>
       </ul>
 
-      <h2>Inconvenients de la transition</h2>
+      <h2>Inconvénients de la transition</h2>
 
       <ul>
-        <li>Fiscalite plus lourde : IS de 10 a 31% sur le benefice + IR sur les dividendes</li>
-        <li>Comptabilite complete obligatoire (expert-comptable necessaire)</li>
-        <li>Charges sociales plus elevees (environ 30% de la remuneration du gerant)</li>
-        <li>Formalites administratives plus complexes</li>
-        <li>Cout de creation plus eleve</li>
-        <li>Obligations de depot de comptes annuels</li>
+        <li>Fiscalité plus lourde : IS de 10 à 31% sur le bénéfice + IR sur les dividendes</li>
+        <li>Comptabilité complète obligatoire (expert-comptable nécessaire)</li>
+        <li>Charges sociales plus élevées (environ 30% de la rémunération du gérant)</li>
+        <li>Formalités administratives plus complexes</li>
+        <li>Coût de création plus élevé</li>
+        <li>Obligations de dépôt de comptes annuels</li>
       </ul>
 
-      <h2>Procedure de transition etape par etape</h2>
+      <h2>Procédure de transition étape par étape</h2>
 
-      <h3>Etape 1 : Preparation (2-4 semaines avant)</h3>
+      <h3>Étape 1 : Préparation (2-4 semaines avant)</h3>
 
       <ul>
-        <li>Faites le bilan de votre activite AE : CA, charges, clients, fournisseurs</li>
-        <li>Consultez un expert-comptable pour valider la decision</li>
-        <li>Choisissez la denomination sociale de votre SARL</li>
-        <li>Determinez le capital social (minimum 1 DH, mais un capital plus eleve donne plus de credibilite)</li>
-        <li>Redigez ou faites rediger les statuts de la SARL</li>
+        <li>Faites le bilan de votre activité AE : CA, charges, clients, fournisseurs</li>
+        <li>Consultez un expert-comptable pour valider la décision</li>
+        <li>Choisissez la dénomination sociale de votre SARL</li>
+        <li>Déterminez le capital social (minimum 1 DH, mais un capital plus élevé donne plus de crédibilité)</li>
+        <li>Rédigez ou faites rédiger les statuts de la SARL</li>
       </ul>
 
-      <h3>Etape 2 : Creation de la SARL</h3>
+      <h3>Étape 2 : Création de la SARL</h3>
 
       <ol>
-        <li><strong>Certificat negatif</strong> : Demandez un certificat negatif aupres de l'OMPIC pour reserver le nom de votre societe (coute environ 210 DH)</li>
-        <li><strong>Depot du capital</strong> : Ouvrez un compte bancaire au nom de la societe en formation et deposez le capital social</li>
-        <li><strong>Redaction des statuts</strong> : Les statuts doivent etre rediges par acte sous seing prive ou acte notarie</li>
-        <li><strong>Enregistrement des statuts</strong> : Aupres de la DGI (Direction Generale des Impots)</li>
-        <li><strong>Inscription au registre de commerce</strong> : Aupres du tribunal de commerce competent</li>
-        <li><strong>Publication legale</strong> : Publication dans un journal d'annonces legales et au Bulletin Officiel</li>
-        <li><strong>Affiliation CNSS</strong> : Inscrivez la societe aupres de la CNSS</li>
-        <li><strong>Patente</strong> : Inscription a la taxe professionnelle</li>
+        <li><strong>Certificat négatif</strong> : Demandez un certificat négatif auprès de l'OMPIC pour réserver le nom de votre société (coûte environ 210 DH)</li>
+        <li><strong>Dépôt du capital</strong> : Ouvrez un compte bancaire au nom de la société en formation et déposez le capital social</li>
+        <li><strong>Rédaction des statuts</strong> : Les statuts doivent être rédigés par acte sous seing privé ou acte notarié</li>
+        <li><strong>Enregistrement des statuts</strong> : Auprès de la DGI (Direction Générale des Impôts)</li>
+        <li><strong>Inscription au registre de commerce</strong> : Auprès du tribunal de commerce compétent</li>
+        <li><strong>Publication légale</strong> : Publication dans un journal d'annonces légales et au Bulletin Officiel</li>
+        <li><strong>Affiliation CNSS</strong> : Inscrivez la société auprès de la CNSS</li>
+        <li><strong>Patente</strong> : Inscription à la taxe professionnelle</li>
       </ol>
 
-      <h3>Etape 3 : Radiation du statut AE</h3>
+      <h3>Étape 3 : Radiation du statut AE</h3>
 
       <ul>
-        <li>Declarez votre dernier trimestre d'activite AE</li>
-        <li>Payez tous les impots et cotisations en suspens</li>
+        <li>Déclarez votre dernier trimestre d'activité AE</li>
+        <li>Payez tous les impôts et cotisations en suspens</li>
         <li>Demandez la radiation de votre inscription AE sur ae.gov.ma</li>
         <li>Conservez vos documents AE pendant 10 ans</li>
       </ul>
 
-      <h3>Etape 4 : Demarrage de la SARL</h3>
+      <h3>Étape 4 : Démarrage de la SARL</h3>
 
       <ul>
-        <li>Commencez a facturer sous le nom de la SARL avec votre nouveau ICE</li>
+        <li>Commencez à facturer sous le nom de la SARL avec votre nouveau ICE</li>
         <li>Informez vos clients et fournisseurs du changement de statut</li>
-        <li>Mettez en place votre comptabilite avec un expert-comptable</li>
-        <li>Gerez vos obligations TVA (declarations mensuelles ou trimestrielles)</li>
+        <li>Mettez en place votre comptabilité avec un expert-comptable</li>
+        <li>Gérez vos obligations TVA (déclarations mensuelles ou trimestrielles)</li>
       </ul>
 
-      <h2>Couts de la transition</h2>
+      <h2>Coûts de la transition</h2>
 
       <table>
         <thead>
           <tr>
             <th>Poste</th>
-            <th>Cout approximatif</th>
+            <th>Coût approximatif</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td>Certificat negatif</td>
+            <td>Certificat négatif</td>
             <td>210 DH</td>
           </tr>
           <tr>
-            <td>Redaction des statuts (avocat/fiduciaire)</td>
+            <td>Rédaction des statuts (avocat/fiduciaire)</td>
             <td>2 000 - 5 000 DH</td>
           </tr>
           <tr>
@@ -183,7 +183,7 @@ const schema = {
             <td>1 000 - 2 000 DH</td>
           </tr>
           <tr>
-            <td>Publication legale</td>
+            <td>Publication légale</td>
             <td>500 - 1 500 DH</td>
           </tr>
           <tr>
@@ -191,24 +191,24 @@ const schema = {
             <td>350 DH</td>
           </tr>
           <tr>
-            <td><strong>Total estime</strong></td>
+            <td><strong>Total estimé</strong></td>
             <td><strong>4 000 - 9 000 DH</strong></td>
           </tr>
         </tbody>
       </table>
 
       <p>
-        A ces frais de creation s'ajoutent les couts recurrents : honoraires d'expert-comptable (environ 2 000 a 5 000 DH/an pour une petite activite), patente annuelle et charges sociales plus elevees.
+        À ces frais de création s'ajoutent les coûts récurrents : honoraires d'expert-comptable (environ 2 000 à 5 000 DH/an pour une petite activité), patente annuelle et charges sociales plus élevées.
       </p>
 
-      <h2>Conseils pour une transition reussie</h2>
+      <h2>Conseils pour une transition réussie</h2>
 
       <ul>
-        <li><strong>Anticipez</strong> : Ne attendez pas le dernier moment pour planifier la transition. Commencez les demarches au moins 2 mois a l'avance.</li>
-        <li><strong>Faites-vous accompagner</strong> : Un expert-comptable ou un fiduciaire peut vous faire gagner beaucoup de temps et eviter les erreurs</li>
-        <li><strong>Informez vos clients</strong> : Prevenez vos clients du changement de facturation (nouveau ICE, TVA, etc.)</li>
-        <li><strong>Pensez a la TVA</strong> : Vos prix devront inclure la TVA, ce qui peut impacter votre competitivite</li>
-        <li><strong>Preparez votre tresorerie</strong> : Les charges sociales et fiscales seront payees avec un decalage, prevoyez les fonds</li>
+        <li><strong>Anticipez</strong> : N'attendez pas le dernier moment pour planifier la transition. Commencez les démarches au moins 2 mois à l'avance.</li>
+        <li><strong>Faites-vous accompagner</strong> : Un expert-comptable ou un fiduciaire peut vous faire gagner beaucoup de temps et éviter les erreurs</li>
+        <li><strong>Informez vos clients</strong> : Prévenez vos clients du changement de facturation (nouveau ICE, TVA, etc.)</li>
+        <li><strong>Pensez à la TVA</strong> : Vos prix devront inclure la TVA, ce qui peut impacter votre compétitivité</li>
+        <li><strong>Préparez votre trésorerie</strong> : Les charges sociales et fiscales seront payées avec un décalage, prévoyez les fonds</li>
       </ul>
     </div>
   </article>

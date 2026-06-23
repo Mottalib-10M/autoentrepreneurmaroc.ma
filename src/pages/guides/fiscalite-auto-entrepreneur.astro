@@ -6,7 +6,7 @@ import { getArticleSchema, getBreadcrumbSchema } from '../../lib/seo';
 const breadcrumbs = [
   { name: 'Accueil', url: siteConfig.url + '/' },
   { name: 'Guides', url: siteConfig.url + '/guides/fiscalite-auto-entrepreneur/' },
-  { name: 'Fiscalite AE', url: siteConfig.url + '/guides/fiscalite-auto-entrepreneur/' },
+  { name: 'Fiscalité AE', url: siteConfig.url + '/guides/fiscalite-auto-entrepreneur/' },
 ];
 
 const schema = {
@@ -14,8 +14,8 @@ const schema = {
   '@graph': [
     getBreadcrumbSchema(breadcrumbs),
     getArticleSchema({
-      title: 'Fiscalite de l\'Auto-Entrepreneur au Maroc',
-      description: 'Guide complet sur la fiscalite de l\'auto-entrepreneur au Maroc : IR forfaitaire, declaration trimestrielle, paiement et penalites.',
+      title: 'Fiscalité de l\'Auto-Entrepreneur au Maroc',
+      description: 'Guide complet sur la fiscalité de l\'auto-entrepreneur au Maroc : IR forfaitaire, déclaration trimestrielle, paiement et pénalités.',
       url: siteConfig.url + '/guides/fiscalite-auto-entrepreneur/',
     }),
   ],
@@ -23,8 +23,8 @@ const schema = {
 ---
 
 <Layout
-  title="Fiscalite Auto-Entrepreneur Maroc : Guide Complet"
-  description="Tout sur la fiscalite de l'auto-entrepreneur au Maroc : IR forfaitaire 1-2%, declaration trimestrielle, paiement, AMO et penalites de retard 2025."
+  title="Fiscalité Auto-Entrepreneur Maroc : Guide Complet"
+  description="Tout sur la fiscalité de l'auto-entrepreneur au Maroc : IR forfaitaire 1-2%, déclaration trimestrielle, paiement, AMO et pénalités de retard 2026."
   type="article"
   schema={schema}
 >
@@ -45,47 +45,47 @@ const schema = {
     </nav>
 
     <h1 class="text-3xl sm:text-4xl font-extrabold text-amber-900 mb-4">
-      Fiscalite de l'Auto-Entrepreneur au Maroc : Guide Complet 2025
+      Fiscalité de l'Auto-Entrepreneur au Maroc : Guide Complet 2026
     </h1>
 
     <p class="text-sm text-gray-500 mb-8">
       Par <a href="/a-propos/" class="text-amber-700 font-medium">{siteConfig.author.name}</a> ({siteConfig.author.credentials})
-      &middot; Mis a jour le 15 janvier 2025
+      &middot; Mis à jour le 15 janvier 2026
     </p>
 
     <div class="prose max-w-none">
       <p>
-        La fiscalite de l'auto-entrepreneur au Maroc est l'un des regimes les plus simples et les plus avantageux au
-        monde. Comprendre ses mecanismes vous permet de gerer sereinement votre activite et d'eviter les penalites.
-        Ce guide couvre en detail l'IR forfaitaire, les declarations, les paiements et tout ce que vous devez savoir
+        La fiscalité de l'auto-entrepreneur au Maroc est l'un des régimes les plus simples et les plus avantageux au
+        monde. Comprendre ses mécanismes vous permet de gérer sereinement votre activité et d'éviter les pénalités.
+        Ce guide couvre en détail l'IR forfaitaire, les déclarations, les paiements et tout ce que vous devez savoir
         sur vos obligations fiscales en tant qu'AE.
       </p>
 
-      <h2>L'Impot sur le Revenu (IR) forfaitaire</h2>
+      <h2>L'Impôt sur le Revenu (IR) forfaitaire</h2>
 
       <p>
-        L'auto-entrepreneur beneficie d'un regime d'imposition forfaitaire extremement simplifie. Au lieu de
-        calculer un benefice net imposable (recettes moins charges) comme dans le regime reel, l'IR est calcule
-        directement sur le chiffre d'affaires encaisse, sans aucune deduction.
+        L'auto-entrepreneur bénéficie d'un régime d'imposition forfaitaire extrêmement simplifié. Au lieu de
+        calculer un bénéfice net imposable (recettes moins charges) comme dans le régime réel, l'IR est calculé
+        directement sur le chiffre d'affaires encaissé, sans aucune déduction.
       </p>
 
       <h3>Les taux d'imposition</h3>
 
       <p>
-        Les taux sont fixes par la loi et dependent du type d'activite :
+        Les taux sont fixés par la loi et dépendent du type d'activité :
       </p>
 
       <table>
         <thead>
           <tr>
-            <th>Type d'activite</th>
+            <th>Type d'activité</th>
             <th>Taux IR</th>
             <th>Seuil de CA annuel</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td>Activites commerciales, industrielles et artisanales</td>
+            <td>Activités commerciales, industrielles et artisanales</td>
             <td><strong>1% du CA</strong></td>
             <td>500 000 DH</td>
           </tr>
@@ -98,34 +98,34 @@ const schema = {
       </table>
 
       <p>
-        <strong>Important</strong> : Le taux pour les prestations de services a ete augmente de 1,5% a 2%. Assurez-vous
+        <strong>Important</strong> : Le taux pour les prestations de services a été augmenté de 1,5% à 2%. Assurez-vous
         d'utiliser le taux en vigueur pour vos calculs. Notre <a href="/calculateur-charges-ae/">calculateur de charges</a>
-        utilise toujours les taux a jour.
+        utilise toujours les taux à jour.
       </p>
 
       <h3>Base de calcul</h3>
 
       <p>
-        L'IR est calcule sur le chiffre d'affaires <strong>encaisse</strong> (et non facture). Cela signifie que vous ne
-        payez l'impot que sur les montants reellement recus. Si un client vous doit 10 000 DH mais n'a pas encore paye,
-        vous ne declarez pas ce montant tant que le paiement n'est pas effectif.
+        L'IR est calculé sur le chiffre d'affaires <strong>encaissé</strong> (et non facturé). Cela signifie que vous ne
+        payez l'impôt que sur les montants réellement reçus. Si un client vous doit 10 000 DH mais n'a pas encore payé,
+        vous ne déclarez pas ce montant tant que le paiement n'est pas effectif.
       </p>
 
-      <h2>La declaration trimestrielle</h2>
+      <h2>La déclaration trimestrielle</h2>
 
       <p>
-        Chaque trimestre, l'auto-entrepreneur doit declarer son chiffre d'affaires sur la plateforme ae.gov.ma. Cette
-        declaration est <strong>obligatoire meme si le CA est de 0</strong>. L'absence de declaration entraine des penalites.
+        Chaque trimestre, l'auto-entrepreneur doit déclarer son chiffre d'affaires sur la plateforme ae.gov.ma. Cette
+        déclaration est <strong>obligatoire même si le CA est de 0</strong>. L'absence de déclaration entraîne des pénalités.
       </p>
 
-      <h3>Calendrier des declarations</h3>
+      <h3>Calendrier des déclarations</h3>
 
       <table>
         <thead>
           <tr>
             <th>Trimestre</th>
-            <th>Periode couverte</th>
-            <th>Date limite de declaration</th>
+            <th>Période couverte</th>
+            <th>Date limite de déclaration</th>
           </tr>
         </thead>
         <tbody>
@@ -135,49 +135,49 @@ const schema = {
             <td>30 Avril</td>
           </tr>
           <tr>
-            <td>2eme trimestre</td>
+            <td>2ème trimestre</td>
             <td>Avril - Juin</td>
             <td>31 Juillet</td>
           </tr>
           <tr>
-            <td>3eme trimestre</td>
+            <td>3ème trimestre</td>
             <td>Juillet - Septembre</td>
             <td>31 Octobre</td>
           </tr>
           <tr>
-            <td>4eme trimestre</td>
-            <td>Octobre - Decembre</td>
-            <td>31 Janvier (annee suivante)</td>
+            <td>4ème trimestre</td>
+            <td>Octobre - Décembre</td>
+            <td>31 Janvier (année suivante)</td>
           </tr>
         </tbody>
       </table>
 
-      <h3>Comment declarer</h3>
+      <h3>Comment déclarer</h3>
 
       <p>
-        La procedure de declaration est simple :
+        La procédure de déclaration est simple :
       </p>
 
       <ol>
-        <li>Connectez-vous a votre espace sur ae.gov.ma avec vos identifiants</li>
-        <li>Acced a la section "Declaration trimestrielle"</li>
-        <li>Saisissez votre chiffre d'affaires pour le trimestre concerne</li>
-        <li>Verifiez le montant de l'IR calcule automatiquement</li>
-        <li>Validez et procedez au paiement</li>
+        <li>Connectez-vous à votre espace sur ae.gov.ma avec vos identifiants</li>
+        <li>Accédez à la section "Déclaration trimestrielle"</li>
+        <li>Saisissez votre chiffre d'affaires pour le trimestre concerné</li>
+        <li>Vérifiez le montant de l'IR calculé automatiquement</li>
+        <li>Validez et procédez au paiement</li>
       </ol>
 
       <h2>Le paiement de l'IR</h2>
 
       <p>
-        Le paiement de l'IR s'effectue en meme temps que la declaration trimestrielle. Plusieurs modes de paiement
+        Le paiement de l'IR s'effectue en même temps que la déclaration trimestrielle. Plusieurs modes de paiement
         sont disponibles :
       </p>
 
       <ul>
         <li><strong>Paiement en ligne</strong> : Par carte bancaire directement sur la plateforme ae.gov.ma</li>
-        <li><strong>Virement bancaire</strong> : Vers le compte du Tresor public</li>
+        <li><strong>Virement bancaire</strong> : Vers le compte du Trésor public</li>
         <li><strong>Agences bancaires</strong> : Paiement au guichet des banques partenaires</li>
-        <li><strong>Points de paiement</strong> : Via certains points de paiement agrees</li>
+        <li><strong>Points de paiement</strong> : Via certains points de paiement agréés</li>
       </ul>
 
       <h2>L'Assurance Maladie Obligatoire (AMO)</h2>
@@ -185,57 +185,57 @@ const schema = {
       <p>
         En plus de l'IR, l'auto-entrepreneur doit payer une cotisation AMO (Assurance Maladie Obligatoire)
         d'un montant forfaitaire de <strong>300 DH par trimestre</strong>, soit 1 200 DH par an. Cette cotisation
-        est independante du chiffre d'affaires et doit etre payee meme en l'absence de revenus.
+        est indépendante du chiffre d'affaires et doit être payée même en l'absence de revenus.
       </p>
 
       <p>
-        L'AMO couvre les soins medicaux de base et est geree par la CNSS (Caisse Nationale de Securite Sociale).
-        La couverture inclut les consultations medicales, les medicaments et les hospitalisations, selon les
-        baremes de remboursement de la CNSS.
+        L'AMO couvre les soins médicaux de base et est gérée par la CNSS (Caisse Nationale de Sécurité Sociale).
+        La couverture inclut les consultations médicales, les médicaments et les hospitalisations, selon les
+        barèmes de remboursement de la CNSS.
       </p>
 
-      <h2>L'exoneration de TVA</h2>
+      <h2>L'exonération de TVA</h2>
 
       <p>
-        L'auto-entrepreneur est <strong>exonere de TVA</strong> tant que son CA reste sous les seuils. Cela signifie :
+        L'auto-entrepreneur est <strong>exonéré de TVA</strong> tant que son CA reste sous les seuils. Cela signifie :
       </p>
 
       <ul>
-        <li>Vous ne facturez <strong>pas</strong> de TVA a vos clients</li>
-        <li>Vous ne pouvez <strong>pas</strong> recuperer la TVA sur vos achats</li>
-        <li>Chaque facture doit porter la mention <strong>"Exonere de TVA"</strong></li>
-        <li>Vous n'avez <strong>pas</strong> de declaration de TVA a faire</li>
+        <li>Vous ne facturez <strong>pas</strong> de TVA à vos clients</li>
+        <li>Vous ne pouvez <strong>pas</strong> récupérer la TVA sur vos achats</li>
+        <li>Chaque facture doit porter la mention <strong>"Exonéré de TVA"</strong></li>
+        <li>Vous n'avez <strong>pas</strong> de déclaration de TVA à faire</li>
       </ul>
 
       <p>
-        Cette exoneration est un avantage pour les clients particuliers (qui ne recuperent pas la TVA de toute
-        facon) mais peut etre un inconvenient avec les clients professionnels qui, eux, ne pourront pas deduire
+        Cette exonération est un avantage pour les clients particuliers (qui ne récupèrent pas la TVA de toute
+        façon) mais peut être un inconvénient avec les clients professionnels qui, eux, ne pourront pas déduire
         la TVA sur vos prestations.
       </p>
 
-      <h2>Penalites de retard</h2>
+      <h2>Pénalités de retard</h2>
 
       <p>
-        Le non-respect des obligations fiscales entraine des penalites :
+        Le non-respect des obligations fiscales entraîne des pénalités :
       </p>
 
       <ul>
-        <li><strong>Retard de declaration</strong> : Majoration de 5% du montant de l'impot du par mois de retard (plafonee a 50%)</li>
-        <li><strong>Retard de paiement</strong> : Penalite de 10% du montant de l'impot, plus 5% pour le premier mois de retard, puis 0,5% par mois supplementaire</li>
-        <li><strong>Absence de declaration pendant 4 trimestres consecutifs</strong> : Radiation automatique du statut auto-entrepreneur</li>
+        <li><strong>Retard de déclaration</strong> : Majoration de 5% du montant de l'impôt dû par mois de retard (plafonnée à 50%)</li>
+        <li><strong>Retard de paiement</strong> : Pénalité de 10% du montant de l'impôt, plus 5% pour le premier mois de retard, puis 0,5% par mois supplémentaire</li>
+        <li><strong>Absence de déclaration pendant 4 trimestres consécutifs</strong> : Radiation automatique du statut auto-entrepreneur</li>
       </ul>
 
       <p>
-        <strong>Conseil</strong> : Ne manquez jamais une declaration, meme si votre CA est de 0. La declaration nulle
-        est gratuite et vous evite des ennuis.
+        <strong>Conseil</strong> : Ne manquez jamais une déclaration, même si votre CA est de 0. La déclaration nulle
+        est gratuite et vous évite des ennuis.
       </p>
 
-      <h2>L'alternative : l'IR sur le revenu net reel</h2>
+      <h2>L'alternative : l'IR sur le revenu net réel</h2>
 
       <p>
-        Bien que le regime forfaitaire soit le plus courant, l'auto-entrepreneur peut opter pour l'IR selon
-        le bareme progressif sur le revenu net reel. Cela peut etre avantageux si vos charges professionnelles
-        sont tres elevees par rapport a votre CA. Le bareme progressif s'applique comme suit :
+        Bien que le régime forfaitaire soit le plus courant, l'auto-entrepreneur peut opter pour l'IR selon
+        le barème progressif sur le revenu net réel. Cela peut être avantageux si vos charges professionnelles
+        sont très élevées par rapport à votre CA. Le barème progressif s'applique comme suit :
       </p>
 
       <table>
@@ -256,19 +256,19 @@ const schema = {
       </table>
 
       <p>
-        Dans la plupart des cas, le regime forfaitaire est nettement plus avantageux. L'option pour le reel
-        ne se justifie que dans des situations tres specifiques ou les charges depassent largement le CA.
+        Dans la plupart des cas, le régime forfaitaire est nettement plus avantageux. L'option pour le réel
+        ne se justifie que dans des situations très spécifiques où les charges dépassent largement le CA.
       </p>
 
       <h2>Conseils pratiques</h2>
 
       <ul>
-        <li>Utilisez notre <a href="/calculateur-charges-ae/">calculateur de charges</a> pour estimer vos impots a l'avance</li>
-        <li>Mettez de cote environ 3-4% de votre CA chaque mois pour couvrir l'IR et l'AMO</li>
-        <li>Tenez votre registre des achats et ventes a jour quotidiennement</li>
+        <li>Utilisez notre <a href="/calculateur-charges-ae/">calculateur de charges</a> pour estimer vos impôts à l'avance</li>
+        <li>Mettez de côté environ 3-4% de votre CA chaque mois pour couvrir l'IR et l'AMO</li>
+        <li>Tenez votre registre des achats et ventes à jour quotidiennement</li>
         <li>Conservez tous vos justificatifs pendant 10 ans minimum</li>
-        <li>Programmez des rappels pour les dates limites de declaration</li>
-        <li>Utilisez notre <a href="/suivi-chiffre-affaires/">outil de suivi du CA</a> pour ne pas depasser les seuils</li>
+        <li>Programmez des rappels pour les dates limites de déclaration</li>
+        <li>Utilisez notre <a href="/suivi-chiffre-affaires/">outil de suivi du CA</a> pour ne pas dépasser les seuils</li>
       </ul>
     </div>
   </article>

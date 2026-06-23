@@ -1,6 +1,6 @@
 /**
  * Moteur de calcul auto-entrepreneur Maroc
- * Tous les calculs sont conformes a la legislation marocaine 2025
+ * Tous les calculs sont conformes à la législation marocaine 2026
  */
 
 import { AE_CONFIG, type TypeActivite } from '../data/ae-config';
@@ -54,7 +54,7 @@ export interface StatutComparaison {
   tauxEffectif: number;
   avantages: string[];
   inconvenients: string[];
-  complexite: 'Faible' | 'Moyenne' | 'Elevee';
+  complexite: 'Faible' | 'Moyenne' | 'Élevée';
 }
 
 export interface ComparaisonResult {
@@ -142,7 +142,7 @@ export function calculerChargesAE(caTrimestriel: number, typeActivite: TypeActiv
 }
 
 /**
- * Simule le revenu annuel a partir d'un CA mensuel
+ * Simule le revenu annuel à partir d'un CA mensuel
  */
 export function simulerRevenuAnnuel(caMensuel: number, typeActivite: TypeActivite): SimulationResult {
   const caTrimestriel = caMensuel * 3;
@@ -169,7 +169,7 @@ export function simulerRevenuAnnuel(caMensuel: number, typeActivite: TypeActivit
 }
 
 /**
- * Calcule l'IR selon le bareme progressif (regime reel)
+ * Calcule l'IR selon le barème progressif (régime réel)
  */
 function calculerIRBareme(revenuImposable: number): number {
   for (const tranche of AE_CONFIG.baremeIR) {
@@ -182,7 +182,7 @@ function calculerIRBareme(revenuImposable: number): number {
 }
 
 /**
- * Calcule l'IS pour SARL/SAS selon le bareme progressif
+ * Calcule l'IS pour SARL/SAS selon le barème progressif
  */
 function calculerIS(benefice: number): number {
   let is = 0;
@@ -199,7 +199,7 @@ function calculerIS(benefice: number): number {
 }
 
 /**
- * Compare les 3 statuts juridiques pour un meme CA
+ * Compare les 3 statuts juridiques pour un même CA
  */
 export function comparerStatuts(caAnnuel: number, chargesEstimees: number): ComparaisonResult {
   // --- Auto-Entrepreneur ---
@@ -221,18 +221,18 @@ export function comparerStatuts(caAnnuel: number, chargesEstimees: number): Comp
     netApresCharges: caAnnuel - totalAE,
     tauxEffectif: caAnnuel > 0 ? Math.round(totalAE / caAnnuel * 10000) / 10000 : 0,
     avantages: [
-      'Fiscalite tres avantageuse (1-2% du CA)',
-      'Creation en 48h en ligne',
-      'Comptabilite simplifiee',
-      'Exonere de TVA',
+      'Fiscalité très avantageuse (1-2% du CA)',
+      'Création en 48h en ligne',
+      'Comptabilité simplifiée',
+      'Exonéré de TVA',
       'Aucun capital minimum',
     ],
     inconvenients: [
       `Plafond de CA : ${seuilAE.toLocaleString('fr-FR')} DH/an`,
-      'Responsabilite illimitee',
-      'Protection sociale limitee (AMO uniquement)',
-      'Pas de deduction des charges',
-      ...(depasseSeuilAE ? ['CA depasse le seuil AE !'] : []),
+      'Responsabilité illimitée',
+      'Protection sociale limitée (AMO uniquement)',
+      'Pas de déduction des charges',
+      ...(depasseSeuilAE ? ['CA dépasse le seuil AE !'] : []),
     ],
     complexite: 'Faible',
   };
@@ -240,7 +240,7 @@ export function comparerStatuts(caAnnuel: number, chargesEstimees: number): Comp
   // --- SARL ---
   const beneficeSARL = caAnnuel - chargesEstimees;
   const isSARL = calculerIS(Math.max(0, beneficeSARL));
-  // Gerant majoritaire: remuneration environ 60% du benefice
+  // Gérant majoritaire: rémunération environ 60% du bénéfice
   const remunerationGerant = beneficeSARL * 0.6;
   const chargesCNSS_SARL = Math.round(remunerationGerant * (AE_CONFIG.cnssGerant.tauxPatronal + AE_CONFIG.cnssGerant.tauxSalarial) * 100) / 100;
   const totalSARL = isSARL + chargesCNSS_SARL;
@@ -254,24 +254,24 @@ export function comparerStatuts(caAnnuel: number, chargesEstimees: number): Comp
     netApresCharges: caAnnuel - chargesEstimees - totalSARL,
     tauxEffectif: caAnnuel > 0 ? Math.round(totalSARL / caAnnuel * 10000) / 10000 : 0,
     avantages: [
-      'CA illimite',
-      'Responsabilite limitee aux apports',
-      'Protection sociale complete (CNSS)',
-      'Deduction des charges professionnelles',
-      'Credibilite aupres des banques et clients',
+      'CA illimité',
+      'Responsabilité limitée aux apports',
+      'Protection sociale complète (CNSS)',
+      'Déduction des charges professionnelles',
+      'Crédibilité auprès des banques et clients',
     ],
     inconvenients: [
-      'IS de 10 a 31% sur le benefice',
-      'Comptabilite complete obligatoire',
-      'Creation plus longue (2-4 semaines)',
-      'Frais de gestion plus eleves',
-      'Assujetti a la TVA',
+      'IS de 10 à 31% sur le bénéfice',
+      'Comptabilité complète obligatoire',
+      'Création plus longue (2-4 semaines)',
+      'Frais de gestion plus élevés',
+      'Assujetti à la TVA',
     ],
-    complexite: 'Elevee',
+    complexite: 'Élevée',
   };
 
   // --- SAS (similaire SARL pour le Maroc, structure plus flexible) ---
-  const isSAS = isSARL; // Meme bareme IS
+  const isSAS = isSARL; // Même barème IS
   const chargesCNSS_SAS = chargesCNSS_SARL;
   const totalSAS = isSAS + chargesCNSS_SAS;
 
@@ -284,20 +284,20 @@ export function comparerStatuts(caAnnuel: number, chargesEstimees: number): Comp
     netApresCharges: caAnnuel - chargesEstimees - totalSAS,
     tauxEffectif: caAnnuel > 0 ? Math.round(totalSAS / caAnnuel * 10000) / 10000 : 0,
     avantages: [
-      'CA illimite',
-      'Responsabilite limitee',
-      'Flexibilite statutaire',
-      'Protection sociale complete',
-      'Adapte pour plusieurs associes',
+      'CA illimité',
+      'Responsabilité limitée',
+      'Flexibilité statutaire',
+      'Protection sociale complète',
+      'Adapté pour plusieurs associés',
     ],
     inconvenients: [
-      'IS de 10 a 31% sur le benefice',
-      'Comptabilite complete obligatoire',
-      'Creation plus longue (2-4 semaines)',
-      'Frais de gestion eleves',
-      'Assujetti a la TVA',
+      'IS de 10 à 31% sur le bénéfice',
+      'Comptabilité complète obligatoire',
+      'Création plus longue (2-4 semaines)',
+      'Frais de gestion élevés',
+      'Assujetti à la TVA',
     ],
-    complexite: 'Elevee',
+    complexite: 'Élevée',
   };
 
   // --- Recommandation ---
@@ -306,16 +306,16 @@ export function comparerStatuts(caAnnuel: number, chargesEstimees: number): Comp
 
   if (depasseSeuilAE) {
     recommandation = 'SARL';
-    raisonRecommandation = `Votre CA de ${caAnnuel.toLocaleString('fr-FR')} DH depasse le seuil auto-entrepreneur de ${seuilAE.toLocaleString('fr-FR')} DH. La SARL est le choix logique pour votre niveau d'activite.`;
+    raisonRecommandation = `Votre CA de ${caAnnuel.toLocaleString('fr-FR')} DH dépasse le seuil auto-entrepreneur de ${seuilAE.toLocaleString('fr-FR')} DH. La SARL est le choix logique pour votre niveau d'activité.`;
   } else if (caAnnuel < 100_000) {
     recommandation = 'Auto-Entrepreneur';
-    raisonRecommandation = `Avec un CA de ${caAnnuel.toLocaleString('fr-FR')} DH, le statut auto-entrepreneur est ideal : fiscalite minimale et zero complexite administrative.`;
+    raisonRecommandation = `Avec un CA de ${caAnnuel.toLocaleString('fr-FR')} DH, le statut auto-entrepreneur est idéal : fiscalité minimale et zéro complexité administrative.`;
   } else if (ae.netApresCharges > sarl.netApresCharges) {
     recommandation = 'Auto-Entrepreneur';
-    raisonRecommandation = `Le statut AE vous laisse un net superieur (${ae.netApresCharges.toLocaleString('fr-FR')} DH vs ${sarl.netApresCharges.toLocaleString('fr-FR')} DH pour la SARL). Restez en AE tant que votre CA le permet.`;
+    raisonRecommandation = `Le statut AE vous laisse un net supérieur (${ae.netApresCharges.toLocaleString('fr-FR')} DH vs ${sarl.netApresCharges.toLocaleString('fr-FR')} DH pour la SARL). Restez en AE tant que votre CA le permet.`;
   } else {
     recommandation = 'SARL';
-    raisonRecommandation = `A ce niveau de CA et de charges, la SARL devient plus avantageuse grace a la deduction des charges professionnelles.`;
+    raisonRecommandation = `À ce niveau de CA et de charges, la SARL devient plus avantageuse grâce à la déduction des charges professionnelles.`;
   }
 
   return {
@@ -326,7 +326,7 @@ export function comparerStatuts(caAnnuel: number, chargesEstimees: number): Comp
 }
 
 /**
- * Verifie si le CA est dans les limites AE
+ * Vérifie si le CA est dans les limites AE
  */
 export function verifierSeuil(caAnnuel: number, typeActivite: TypeActivite): SeuilResult {
   const seuil = AE_CONFIG.seuils[typeActivite];
@@ -345,7 +345,7 @@ export function verifierSeuil(caAnnuel: number, typeActivite: TypeActivite): Seu
 }
 
 /**
- * Calcule le total d'une facture a partir des lignes
+ * Calcule le total d'une facture à partir des lignes
  */
 export function calculerFacture(lignes: LigneFacture[]): FactureResult {
   const lignesCalculees = lignes.map(l => ({
@@ -360,6 +360,6 @@ export function calculerFacture(lignes: LigneFacture[]): FactureResult {
     totalHT: Math.round(totalHT * 100) / 100,
     tva: 0,
     totalTTC: Math.round(totalHT * 100) / 100,
-    mentionTVA: 'Exonere de TVA - Statut Auto-Entrepreneur, Loi 114-13',
+    mentionTVA: 'Exonéré de TVA - Statut Auto-Entrepreneur, Loi 114-13',
   };
 }

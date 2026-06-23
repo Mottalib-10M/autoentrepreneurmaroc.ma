@@ -13,7 +13,7 @@ export function formatMontant(montant: number): string {
 }
 
 /**
- * Formate un montant sans decimales
+ * Formate un montant sans décimales
  */
 export function formatMontantEntier(montant: number): string {
   return new Intl.NumberFormat('fr-FR', {
@@ -37,7 +37,7 @@ export function formatNombre(valeur: number): string {
 }
 
 /**
- * Formate une date en francais
+ * Formate une date en français
  */
 export function formatDate(date: Date): string {
   return new Intl.DateTimeFormat('fr-FR', {

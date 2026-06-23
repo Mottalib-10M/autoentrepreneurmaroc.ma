@@ -3,7 +3,7 @@ export const siteConfig = {
   domain: 'autoentrepreneurmaroc.ma',
   url: 'https://autoentrepreneurmaroc.ma',
   tagline: 'Le guide complet de l\'auto-entrepreneur au Maroc',
-  description: 'Guide complet, calculateurs et outils gratuits pour les auto-entrepreneurs au Maroc. Simulez vos charges, comparez les statuts et generez vos factures.',
+  description: 'Guide complet, calculateurs et outils gratuits pour les auto-entrepreneurs au Maroc. Simulez vos charges, comparez les statuts et générez vos factures.',
   author: {
     name: 'Mottalib Radif',
     credentials: 'MBA INSEAD',

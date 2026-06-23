@@ -7,8 +7,8 @@ import type { TypeActivite } from '../../data/ae-config';
 const STORAGE_KEY = 'ae-suivi-ca';
 
 const MOIS = [
-  'Janvier', 'Fevrier', 'Mars', 'Avril', 'Mai', 'Juin',
-  'Juillet', 'Aout', 'Septembre', 'Octobre', 'Novembre', 'Decembre',
+  'Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin',
+  'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre',
 ];
 
 interface SuiviData {
@@ -72,7 +72,7 @@ export default function SuiviCA() {
   }
 
   function resetData() {
-    if (confirm('Voulez-vous vraiment reinitialiser le suivi ?')) {
+    if (confirm('Voulez-vous vraiment réinitialiser le suivi ?')) {
       setData({
         annee: new Date().getFullYear(),
         typeActivite: data.typeActivite,
@@ -88,7 +88,7 @@ export default function SuiviCA() {
     { label: 'T1 (Jan-Mar)', total: montantsMois.slice(0, 3).reduce((a, b) => a + b, 0) },
     { label: 'T2 (Avr-Jun)', total: montantsMois.slice(3, 6).reduce((a, b) => a + b, 0) },
     { label: 'T3 (Jul-Sep)', total: montantsMois.slice(6, 9).reduce((a, b) => a + b, 0) },
-    { label: 'T4 (Oct-Dec)', total: montantsMois.slice(9, 12).reduce((a, b) => a + b, 0) },
+    { label: 'T4 (Oct-Déc)', total: montantsMois.slice(9, 12).reduce((a, b) => a + b, 0) },
   ];
 
   return (
@@ -107,7 +107,7 @@ export default function SuiviCA() {
               <option value="commercial">Commercial (seuil 500 000 DH)</option>
             </select>
             <button type="button" onClick={resetData} className="text-sm text-red-500 hover:text-red-700">
-              Reinitialiser
+              Réinitialiser
             </button>
           </div>
         </div>
@@ -163,8 +163,8 @@ export default function SuiviCA() {
         {seuil.depassement && (
           <div className="mt-3 p-3 bg-red-100 border border-red-300 rounded-lg">
             <p className="text-sm text-red-800 font-medium">
-              Attention : Votre CA ({totalCA.toLocaleString('fr-FR')} DH) depasse le seuil de {seuilValue.toLocaleString('fr-FR')} DH !
-              Si le depassement persiste 2 annees consecutives, vous devrez changer de statut.
+              Attention : Votre CA ({totalCA.toLocaleString('fr-FR')} DH) dépasse le seuil de {seuilValue.toLocaleString('fr-FR')} DH !
+              Si le dépassement persiste 2 années consécutives, vous devrez changer de statut.
             </p>
           </div>
         )}
@@ -179,7 +179,7 @@ export default function SuiviCA() {
 
       {/* Visual Chart */}
       <div className="card">
-        <h3 className="font-bold text-amber-900 mb-4">Evolution du CA cumule</h3>
+        <h3 className="font-bold text-amber-900 mb-4">Évolution du CA cumulé</h3>
         <div className="relative h-64 flex items-end gap-1">
           {/* Seuil line */}
           <div
@@ -231,7 +231,7 @@ export default function SuiviCA() {
 
       {/* Trimestres */}
       <div className="card">
-        <h3 className="font-bold text-amber-900 mb-4">Resume par trimestre</h3>
+        <h3 className="font-bold text-amber-900 mb-4">Résumé par trimestre</h3>
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           {trimestres.map((t) => (
             <div key={t.label} className="bg-amber-50 p-4 rounded-lg text-center">
@@ -248,17 +248,17 @@ export default function SuiviCA() {
           <h3 className="font-bold text-amber-900 mb-3">Projection annuelle</h3>
           <p className="text-gray-700">
             Avec un CA moyen de <strong>{formatMontant(caMoyenParMois)}</strong> par mois
-            (sur {moisRemplis} mois renseignes), votre CA annuel projete est de{' '}
+            (sur {moisRemplis} mois renseignés), votre CA annuel projeté est de{' '}
             <strong>{formatMontant(caProjeteFin)}</strong>.
           </p>
           {caProjeteFin > seuilValue ? (
             <p className="text-red-700 font-medium mt-2">
-              A ce rythme, vous depasserez le seuil de {seuilValue.toLocaleString('fr-FR')} DH.
-              Envisagez de passer a la SARL.
+              À ce rythme, vous dépasserez le seuil de {seuilValue.toLocaleString('fr-FR')} DH.
+              Envisagez de passer à la SARL.
             </p>
           ) : (
             <p className="text-green-700 font-medium mt-2">
-              Vous restez dans les limites du statut auto-entrepreneur. Marge restante estimee :{' '}
+              Vous restez dans les limites du statut auto-entrepreneur. Marge restante estimée :{' '}
               {formatMontant(seuilValue - caProjeteFin)}.
             </p>
           )}
