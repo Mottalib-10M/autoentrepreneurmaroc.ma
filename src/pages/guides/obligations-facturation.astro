@@ -1,0 +1,226 @@
+---
+import Layout from '../../components/layout/Layout.astro';
+import { siteConfig } from '../../config';
+import { getArticleSchema, getBreadcrumbSchema } from '../../lib/seo';
+
+const breadcrumbs = [
+  { name: 'Accueil', url: siteConfig.url + '/' },
+  { name: 'Guides', url: siteConfig.url + '/guides/obligations-facturation/' },
+  { name: 'Obligations Facturation', url: siteConfig.url + '/guides/obligations-facturation/' },
+];
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    getBreadcrumbSchema(breadcrumbs),
+    getArticleSchema({
+      title: 'Obligations de Facturation de l\'Auto-Entrepreneur au Maroc',
+      description: 'Guide complet sur les obligations de facturation de l\'auto-entrepreneur au Maroc : mentions obligatoires, ICE, registre des ventes.',
+      url: siteConfig.url + '/guides/obligations-facturation/',
+    }),
+  ],
+};
+---
+
+<Layout
+  title="Facturation Auto-Entrepreneur Maroc : Obligations"
+  description="Toutes les obligations de facturation de l'auto-entrepreneur au Maroc : mentions legales, ICE, numerotation, registre des ventes et conservation 2025."
+  type="article"
+  schema={schema}
+>
+  <article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <nav class="mb-6 text-sm" aria-label="Fil d'Ariane">
+      <ol class="flex items-center gap-2 text-gray-500">
+        {breadcrumbs.map((crumb, i) => (
+          <li class="flex items-center gap-2">
+            {i > 0 && <span class="text-amber-400">/</span>}
+            {i === breadcrumbs.length - 1 ? (
+              <span class="text-amber-700 font-medium">{crumb.name}</span>
+            ) : (
+              <a href={crumb.url} class="hover:text-amber-700">{crumb.name}</a>
+            )}
+          </li>
+        ))}
+      </ol>
+    </nav>
+
+    <h1 class="text-3xl sm:text-4xl font-extrabold text-amber-900 mb-4">
+      Obligations de Facturation de l'Auto-Entrepreneur au Maroc
+    </h1>
+
+    <p class="text-sm text-gray-500 mb-8">
+      Par <a href="/a-propos/" class="text-amber-700 font-medium">{siteConfig.author.name}</a> ({siteConfig.author.credentials})
+      &middot; Mis a jour le 15 janvier 2025
+    </p>
+
+    <div class="prose max-w-none">
+      <p>
+        La facturation est une obligation legale fondamentale pour tout auto-entrepreneur au Maroc. Chaque
+        transaction commerciale, qu'il s'agisse d'une vente de bien ou d'une prestation de service, doit
+        faire l'objet d'une facture conforme. Le non-respect de ces obligations peut entrainer des sanctions.
+        Ce guide detaille toutes les regles a connaitre.
+      </p>
+
+      <h2>Les mentions obligatoires sur une facture AE</h2>
+
+      <p>
+        Selon la legislation marocaine, toute facture emise par un auto-entrepreneur doit obligatoirement
+        comporter les mentions suivantes :
+      </p>
+
+      <h3>1. Identification de l'auto-entrepreneur</h3>
+
+      <ul>
+        <li><strong>Nom et prenom complets</strong> de l'auto-entrepreneur, tels qu'ils figurent sur le certificat d'inscription</li>
+        <li><strong>Numero ICE</strong> (Identifiant Commun de l'Entreprise) : ce numero unique a 15 chiffres est attribue lors de l'inscription et doit figurer sur tous les documents commerciaux</li>
+        <li><strong>Adresse complete</strong> de l'auto-entrepreneur (adresse d'activite declaree lors de l'inscription)</li>
+      </ul>
+
+      <h3>2. Identification de la facture</h3>
+
+      <ul>
+        <li><strong>Le mot "FACTURE"</strong> clairement visible</li>
+        <li><strong>Numero de facture</strong> : unique, sequentiel et sans rupture de numerotation (ex: F-001, F-002, F-003...)</li>
+        <li><strong>Date d'emission</strong> de la facture</li>
+      </ul>
+
+      <h3>3. Identification du client</h3>
+
+      <ul>
+        <li><strong>Nom ou raison sociale</strong> du client</li>
+        <li><strong>ICE du client</strong> (si le client est une entreprise)</li>
+        <li><strong>Adresse</strong> du client</li>
+      </ul>
+
+      <h3>4. Detail de la prestation ou des biens</h3>
+
+      <ul>
+        <li><strong>Designation precise</strong> de chaque bien vendu ou service rendu</li>
+        <li><strong>Quantite</strong> pour chaque ligne</li>
+        <li><strong>Prix unitaire HT</strong> (hors taxes)</li>
+        <li><strong>Montant total HT</strong> de chaque ligne</li>
+      </ul>
+
+      <h3>5. Montant total et mention TVA</h3>
+
+      <ul>
+        <li><strong>Montant total de la facture</strong></li>
+        <li><strong>Mention obligatoire "Exonere de TVA"</strong> : cette mention est indispensable car l'auto-entrepreneur n'est pas assujetti a la TVA</li>
+      </ul>
+
+      <h2>Le numero ICE : qu'est-ce que c'est ?</h2>
+
+      <p>
+        L'ICE (Identifiant Commun de l'Entreprise) est un numero unique a 15 chiffres attribue a chaque
+        entreprise ou auto-entrepreneur inscrit au Maroc. Il sert d'identifiant fiscal et commercial unifie
+        et doit figurer sur :
+      </p>
+
+      <ul>
+        <li>Toutes les factures emises</li>
+        <li>Tous les bons de commande et devis</li>
+        <li>Les documents administratifs et commerciaux</li>
+        <li>Les correspondances professionnelles</li>
+      </ul>
+
+      <p>
+        L'ICE est attribue automatiquement lors de l'inscription sur ae.gov.ma. Si vous ne l'avez pas recu,
+        contactez le support de la plateforme.
+      </p>
+
+      <h2>La numerotation des factures</h2>
+
+      <p>
+        La numerotation des factures doit respecter des regles strictes :
+      </p>
+
+      <ul>
+        <li><strong>Sequentielle</strong> : Les numeros doivent se suivre dans l'ordre (1, 2, 3, etc.)</li>
+        <li><strong>Continue</strong> : Aucune rupture n'est admise. Il est interdit de supprimer une facture deja numerotee</li>
+        <li><strong>Unique</strong> : Chaque facture porte un numero different</li>
+        <li><strong>Chronologique</strong> : L'ordre des numeros doit correspondre a l'ordre chronologique d'emission</li>
+      </ul>
+
+      <p>
+        Vous pouvez adopter le systeme de numerotation de votre choix : simple (F-001, F-002) ou incluant
+        l'annee (2025-001, 2025-002). L'important est de maintenir la sequence sans interruption.
+      </p>
+
+      <p>
+        Notre <a href="/generateur-facture/">generateur de factures</a> gere automatiquement la numerotation
+        sequentielle pour vous.
+      </p>
+
+      <h2>Le registre des achats et ventes</h2>
+
+      <p>
+        L'auto-entrepreneur doit tenir un <strong>livre journal</strong> (registre) des achats et ventes.
+        Ce registre doit etre cote et paraphe et contenir pour chaque operation :
+      </p>
+
+      <ul>
+        <li>La date de l'operation</li>
+        <li>Le numero de la facture</li>
+        <li>La nature de l'operation (vente ou achat)</li>
+        <li>Le nom du client ou fournisseur</li>
+        <li>Le montant de l'operation</li>
+        <li>Le mode de paiement</li>
+      </ul>
+
+      <p>
+        Ce registre peut etre tenu sur papier ou de maniere numerique (tableur Excel, logiciel de comptabilite).
+        L'essentiel est de le tenir a jour regulierement et de pouvoir le presenter en cas de controle.
+      </p>
+
+      <h2>Conservation des documents</h2>
+
+      <p>
+        La loi impose de conserver tous les documents comptables pendant une duree minimale de
+        <strong>10 ans</strong>. Cela inclut :
+      </p>
+
+      <ul>
+        <li>Les factures emises (copies)</li>
+        <li>Les factures recues (achats)</li>
+        <li>Le registre des achats et ventes</li>
+        <li>Les releves bancaires lies a l'activite</li>
+        <li>Les declarations trimestrielles</li>
+        <li>Les preuves de paiement des impots et cotisations</li>
+      </ul>
+
+      <p>
+        <strong>Conseil</strong> : Scannez tous vos documents papier et conservez-les en double (format
+        numerique + papier) pour eviter les pertes.
+      </p>
+
+      <h2>Les erreurs courantes a eviter</h2>
+
+      <ul>
+        <li><strong>Oublier l'ICE</strong> : C'est la mention la plus souvent oubliee et l'une des plus importantes</li>
+        <li><strong>Oublier la mention "Exonere de TVA"</strong> : Sans cette mention, le client pourrait croire que la TVA est incluse</li>
+        <li><strong>Rupture de numerotation</strong> : Annuler une facture ne signifie pas supprimer son numero. Emettez un avoir a la place</li>
+        <li><strong>Factures non datees</strong> : Chaque facture doit imperativement comporter une date</li>
+        <li><strong>Description vague</strong> : Detaillez les prestations ou produits de maniere precise</li>
+        <li><strong>Ne pas conserver les copies</strong> : Gardez systematiquement un double de chaque facture</li>
+      </ul>
+
+      <h2>Les devis et bons de commande</h2>
+
+      <p>
+        Bien qu'ils ne soient pas des factures, les devis et bons de commande sont des documents commerciaux
+        importants. Ils n'ont pas de valeur fiscale mais servent de preuve en cas de litige commercial.
+        Il est recommande d'y inclure les memes mentions que sur les factures (ICE, coordonnees, detail
+        des prestations) en ajoutant clairement la mention "Devis" ou "Bon de commande".
+      </p>
+
+      <h2>Modele de facture conforme</h2>
+
+      <p>
+        Utilisez notre <a href="/generateur-facture/">generateur de factures gratuit</a> pour creer des
+        factures parfaitement conformes a la legislation marocaine. Il inclut automatiquement toutes les
+        mentions obligatoires, la mention d'exoneration de TVA, et gere la numerotation sequentielle.
+        Vos informations sont sauvegardees pour une utilisation future.
+      </p>
+    </div>
+  </article>
+</Layout>

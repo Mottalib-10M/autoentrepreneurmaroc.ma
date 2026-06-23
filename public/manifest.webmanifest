@@ -1,0 +1,17 @@
+{
+  "name": "Auto-Entrepreneur Maroc",
+  "short_name": "AE Maroc",
+  "description": "Le guide complet de l'auto-entrepreneur au Maroc",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FFFBEB",
+  "theme_color": "#D97706",
+  "lang": "fr",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "type": "image/svg+xml",
+      "sizes": "any"
+    }
+  ]
+}

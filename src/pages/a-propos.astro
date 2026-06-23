@@ -1,0 +1,68 @@
+---
+import Layout from '../components/layout/Layout.astro';
+import { siteConfig } from '../config';
+---
+
+<Layout
+  title="A Propos - Auto-Entrepreneur Maroc"
+  description="Decouvrez l'equipe derriere Auto-Entrepreneur Maroc, le guide et les outils gratuits pour les auto-entrepreneurs au Maroc."
+>
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <h1 class="text-3xl sm:text-4xl font-extrabold text-amber-900 mb-8">
+      A Propos d'Auto-Entrepreneur Maroc
+    </h1>
+
+    <div class="prose max-w-none">
+      <h2>Notre mission</h2>
+
+      <p>
+        <strong>Auto-Entrepreneur Maroc</strong> a pour mission de simplifier la vie des auto-entrepreneurs
+        au Maroc en fournissant des outils gratuits, des guides pratiques et des informations fiables sur le
+        statut d'auto-entrepreneur. Nous croyons que l'entrepreneuriat devrait etre accessible a tous et que
+        les aspects administratifs ne devraient pas etre un frein a la creation d'entreprise.
+      </p>
+
+      <h2>L'auteur</h2>
+
+      <p>
+        Ce site est cree et maintenu par <strong>{siteConfig.author.name}</strong>, titulaire d'un
+        <strong>{siteConfig.author.credentials}</strong>. Fort d'une experience dans l'entrepreneuriat et la
+        finance, Mottalib met ses connaissances au service des auto-entrepreneurs marocains pour les aider a
+        comprendre et optimiser leur situation fiscale et administrative.
+      </p>
+
+      <h2>Nos outils</h2>
+
+      <p>
+        Tous nos outils sont 100% gratuits et bases sur la legislation marocaine en vigueur :
+      </p>
+
+      <ul>
+        <li><a href="/calculateur-charges-ae/">Calculateur de charges AE</a> : Estimez votre IR, AMO et revenu net</li>
+        <li><a href="/comparateur-statuts/">Comparateur de statuts</a> : AE vs SARL vs SAS</li>
+        <li><a href="/generateur-facture/">Generateur de factures</a> : Factures conformes avec ICE et mention TVA</li>
+        <li><a href="/suivi-chiffre-affaires/">Suivi du CA</a> : Suivez votre progression et anticipez les seuils</li>
+      </ul>
+
+      <h2>Fiabilite des informations</h2>
+
+      <p>
+        Les informations presentees sur ce site sont basees sur les textes de loi en vigueur (Loi 114-13),
+        les publications de la DGI (Direction Generale des Impots) et de la CNSS. Nous nous efforcons de
+        maintenir les donnees a jour, notamment les taux d'imposition et les seuils de CA.
+      </p>
+
+      <p>
+        Cependant, ce site a vocation informative et ne remplace pas les conseils d'un expert-comptable ou
+        d'un conseiller fiscal. Pour des situations complexes, nous recommandons de consulter un professionnel.
+      </p>
+
+      <h2>Contact</h2>
+
+      <p>
+        Pour toute question, suggestion ou signalement d'erreur, vous pouvez nous contacter a :
+        <a href={`mailto:${siteConfig.contact.email}`}>{siteConfig.contact.email}</a>
+      </p>
+    </div>
+  </div>
+</Layout>

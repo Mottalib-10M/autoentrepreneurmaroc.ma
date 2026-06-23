@@ -1,0 +1,236 @@
+---
+import Layout from '../../components/layout/Layout.astro';
+import { siteConfig } from '../../config';
+import { getArticleSchema, getBreadcrumbSchema } from '../../lib/seo';
+
+const breadcrumbs = [
+  { name: 'Accueil', url: siteConfig.url + '/' },
+  { name: 'Guides', url: siteConfig.url + '/guides/inscription-auto-entrepreneur/' },
+  { name: 'Inscription AE', url: siteConfig.url + '/guides/inscription-auto-entrepreneur/' },
+];
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    getBreadcrumbSchema(breadcrumbs),
+    getArticleSchema({
+      title: 'Guide d\'Inscription Auto-Entrepreneur au Maroc',
+      description: 'Guide complet etape par etape pour s\'inscrire comme auto-entrepreneur sur ae.gov.ma. Documents, procedure et conseils.',
+      url: siteConfig.url + '/guides/inscription-auto-entrepreneur/',
+    }),
+  ],
+};
+---
+
+<Layout
+  title="Inscription Auto-Entrepreneur Maroc : Guide Complet"
+  description="Guide complet etape par etape pour s'inscrire comme auto-entrepreneur sur ae.gov.ma. Documents requis, procedure et conseils pratiques 2025."
+  type="article"
+  schema={schema}
+>
+  <article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <!-- Breadcrumbs -->
+    <nav class="mb-6 text-sm" aria-label="Fil d'Ariane">
+      <ol class="flex items-center gap-2 text-gray-500">
+        {breadcrumbs.map((crumb, i) => (
+          <li class="flex items-center gap-2">
+            {i > 0 && <span class="text-amber-400">/</span>}
+            {i === breadcrumbs.length - 1 ? (
+              <span class="text-amber-700 font-medium">{crumb.name}</span>
+            ) : (
+              <a href={crumb.url} class="hover:text-amber-700">{crumb.name}</a>
+            )}
+          </li>
+        ))}
+      </ol>
+    </nav>
+
+    <h1 class="text-3xl sm:text-4xl font-extrabold text-amber-900 mb-4">
+      Comment s'Inscrire comme Auto-Entrepreneur au Maroc : Guide Complet 2025
+    </h1>
+
+    <p class="text-sm text-gray-500 mb-8">
+      Par <a href="/a-propos/" class="text-amber-700 font-medium">{siteConfig.author.name}</a> ({siteConfig.author.credentials})
+      &middot; Mis a jour le 15 janvier 2025
+    </p>
+
+    <div class="prose max-w-none">
+      <p>
+        L'inscription au statut d'auto-entrepreneur au Maroc est un processus entierement dematerialise qui se fait
+        via la plateforme officielle <strong>ae.gov.ma</strong>. En suivant les bonnes etapes et en preparant
+        correctement vos documents, vous pouvez obtenir votre certificat d'inscription en moins de 48 heures.
+        Ce guide detaille vous accompagne a chaque etape du processus.
+      </p>
+
+      <h2>Conditions d'eligibilite</h2>
+
+      <p>
+        Avant de vous inscrire, assurez-vous que vous remplissez les conditions suivantes :
+      </p>
+
+      <ul>
+        <li><strong>Etre une personne physique</strong> : Le statut AE est reserve aux individus, pas aux societes</li>
+        <li><strong>Etre majeur</strong> : Avoir au moins 18 ans</li>
+        <li><strong>Disposer d'une CIN valide</strong> : Carte d'Identite Nationale marocaine en cours de validite</li>
+        <li><strong>Avoir une activite eligible</strong> : La plupart des activites commerciales, artisanales et de services sont eligibles. Certaines professions reglementees sont exclues (medecins, avocats, architectes, etc.)</li>
+        <li><strong>Ne pas etre fonctionnaire</strong> : Les fonctionnaires de l'Etat ne peuvent pas cumuler avec le statut AE (sauf exceptions)</li>
+        <li><strong>Ne pas etre deja inscrit comme AE</strong> : Vous ne pouvez avoir qu'un seul compte auto-entrepreneur</li>
+      </ul>
+
+      <h2>Documents a preparer</h2>
+
+      <p>
+        Avant de commencer l'inscription en ligne, reunissez les documents suivants au format numerique (scan ou photo nette) :
+      </p>
+
+      <ul>
+        <li><strong>Copie de la CIN</strong> : Recto et verso de votre Carte d'Identite Nationale. Assurez-vous que le scan est lisible et que la carte est en cours de validite.</li>
+        <li><strong>Certificat de residence</strong> : Delivre par les autorites locales (Moqaddem ou Cadat), il doit dater de moins de 3 mois. Le certificat doit mentionner votre adresse exacte qui sera celle de votre activite.</li>
+        <li><strong>Photo d'identite recente</strong> : Au format numerique, sur fond clair, de bonne qualite. Elle sera utilisee pour votre carte d'auto-entrepreneur.</li>
+      </ul>
+
+      <p>
+        <strong>Conseil</strong> : Scannez vos documents en haute resolution (300 DPI minimum) et en format PDF ou JPG.
+        Les fichiers flous ou trop comprimes peuvent entrainer le rejet de votre dossier.
+      </p>
+
+      <h2>Procedure d'inscription etape par etape</h2>
+
+      <h3>Etape 1 : Creer un compte sur ae.gov.ma</h3>
+
+      <p>
+        Rendez-vous sur <strong>ae.gov.ma</strong> et cliquez sur "S'inscrire" ou "Creer un compte". Vous devrez
+        fournir une adresse email valide et un numero de telephone. Un code de verification vous sera envoye par SMS
+        pour valider votre numero.
+      </p>
+
+      <p>
+        Choisissez un mot de passe securise et conservez bien vos identifiants : vous en aurez besoin pour vos
+        declarations trimestrielles futures.
+      </p>
+
+      <h3>Etape 2 : Remplir le formulaire d'inscription</h3>
+
+      <p>
+        Une fois connecte, remplissez le formulaire d'inscription qui comprend :
+      </p>
+
+      <ul>
+        <li><strong>Informations personnelles</strong> : Nom, prenom, date de naissance, numero de CIN</li>
+        <li><strong>Adresse</strong> : Adresse de residence et adresse d'activite (peut etre la meme)</li>
+        <li><strong>Activite</strong> : Choisissez votre type d'activite dans la liste proposee. Selectionnez celle qui correspond le mieux a votre activite reelle. Vous pouvez exercer plusieurs activites complementaires.</li>
+        <li><strong>Informations bancaires</strong> : Numero de compte bancaire (RIB) pour le paiement de vos impots et cotisations</li>
+      </ul>
+
+      <h3>Etape 3 : Telecharger vos documents</h3>
+
+      <p>
+        Telechargez les scans de vos documents : CIN (recto/verso), certificat de residence et photo d'identite.
+        Verifiez que chaque document est lisible avant de valider.
+      </p>
+
+      <h3>Etape 4 : Validation et soumission</h3>
+
+      <p>
+        Relisez attentivement toutes les informations saisies, puis validez votre dossier. Vous recevrez un
+        accuse de reception par email avec un numero de suivi.
+      </p>
+
+      <h3>Etape 5 : Recevoir votre certificat</h3>
+
+      <p>
+        Votre dossier sera examine par l'administration. En general, le processus prend environ <strong>48 heures
+        ouvrees</strong>. Une fois valide, vous recevrez :
+      </p>
+
+      <ul>
+        <li>Votre <strong>certificat d'inscription</strong> au statut auto-entrepreneur</li>
+        <li>Votre <strong>numero ICE</strong> (Identifiant Commun de l'Entreprise), indispensable pour facturer</li>
+        <li>Votre <strong>numero d'identification fiscale</strong></li>
+      </ul>
+
+      <h2>Erreurs courantes a eviter</h2>
+
+      <p>
+        Voici les erreurs les plus frequentes qui entrainent le rejet ou le retard de l'inscription :
+      </p>
+
+      <ul>
+        <li><strong>Documents illisibles</strong> : Assurez-vous que vos scans sont nets et complets</li>
+        <li><strong>Certificat de residence expire</strong> : Il doit dater de moins de 3 mois au moment de l'inscription</li>
+        <li><strong>CIN expiree</strong> : Verifiez la date de validite de votre carte</li>
+        <li><strong>Adresse email incorrecte</strong> : Utilisez une adresse que vous consultez regulierement, car toutes les communications passeront par la</li>
+        <li><strong>Mauvaise categorie d'activite</strong> : Choisissez la categorie la plus proche de votre activite reelle. En cas de doute, contactez le support ae.gov.ma</li>
+        <li><strong>Oubli de la photo d'identite</strong> : C'est un document obligatoire souvent oublie</li>
+      </ul>
+
+      <h2>Apres l'inscription : les premieres etapes</h2>
+
+      <p>
+        Une fois inscrit, voici les actions a entreprendre immediatement :
+      </p>
+
+      <ul>
+        <li><strong>Conservez votre certificat</strong> : Imprimez-le et gardez une copie numerique en lieu sur</li>
+        <li><strong>Notez votre ICE</strong> : Vous en aurez besoin pour chaque facture</li>
+        <li><strong>Preparez vos factures</strong> : Utilisez notre <a href="/generateur-facture/">generateur de factures</a> pour creer des factures conformes</li>
+        <li><strong>Tenez votre registre</strong> : Commencez des le premier jour a enregistrer vos achats et ventes</li>
+        <li><strong>Planifiez vos declarations</strong> : Notez les dates limites de declaration trimestrielle</li>
+        <li><strong>Ouvrez un compte bancaire dedie</strong> : Meme si ce n'est pas obligatoire, c'est fortement recommande pour separer vos finances personnelles et professionnelles</li>
+      </ul>
+
+      <h2>Dates limites de declaration</h2>
+
+      <p>
+        Les declarations et paiements trimestriels doivent etre effectues selon le calendrier suivant :
+      </p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Trimestre</th>
+            <th>Periode</th>
+            <th>Date limite</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>T1</td>
+            <td>Janvier - Mars</td>
+            <td>30 Avril</td>
+          </tr>
+          <tr>
+            <td>T2</td>
+            <td>Avril - Juin</td>
+            <td>31 Juillet</td>
+          </tr>
+          <tr>
+            <td>T3</td>
+            <td>Juillet - Septembre</td>
+            <td>31 Octobre</td>
+          </tr>
+          <tr>
+            <td>T4</td>
+            <td>Octobre - Decembre</td>
+            <td>31 Janvier (annee suivante)</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>Contacts utiles</h2>
+
+      <ul>
+        <li><strong>Plateforme officielle</strong> : <a href="https://ae.gov.ma" target="_blank" rel="noopener noreferrer">ae.gov.ma</a></li>
+        <li><strong>Direction Generale des Impots</strong> : <a href="https://www.tax.gov.ma" target="_blank" rel="noopener noreferrer">tax.gov.ma</a></li>
+        <li><strong>CNSS</strong> : <a href="https://www.cnss.ma" target="_blank" rel="noopener noreferrer">cnss.ma</a></li>
+      </ul>
+
+      <p>
+        En suivant ce guide, vous devriez pouvoir vous inscrire sans difficulte. Si vous avez des questions,
+        n'hesitez pas a consulter nos autres guides sur la <a href="/guides/fiscalite-auto-entrepreneur/">fiscalite</a>,
+        la <a href="/guides/obligations-facturation/">facturation</a> et la
+        <a href="/guides/cnss-auto-entrepreneur/">protection sociale</a> de l'auto-entrepreneur.
+      </p>
+    </div>
+  </article>
+</Layout>

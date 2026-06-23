@@ -1,0 +1,60 @@
+---
+import CalculateurLayout from '../layouts/CalculateurLayout.astro';
+import SuiviCA from '../components/calculateurs/SuiviCA';
+---
+
+<CalculateurLayout
+  title="Suivi du Chiffre d'Affaires Auto-Entrepreneur"
+  description="Suivez votre CA mensuel, visualisez votre progression et anticipez le depassement du seuil auto-entrepreneur au Maroc. Donnees sauvegardees localement."
+  toolName="Suivi du Chiffre d'Affaires"
+>
+  <SuiviCA client:idle />
+
+  <div class="mt-16 prose max-w-4xl">
+    <h2>Pourquoi suivre votre chiffre d'affaires d'auto-entrepreneur ?</h2>
+
+    <p>
+      Le suivi regulier de votre chiffre d'affaires est essentiel pour tout auto-entrepreneur au Maroc.
+      Non seulement il vous permet de gerer votre activite efficacement, mais il est aussi necessaire
+      pour respecter vos obligations legales et anticiper un eventuel changement de statut.
+    </p>
+
+    <h3>Les seuils a surveiller</h3>
+
+    <p>
+      Le depassement des seuils de CA pendant <strong>2 annees consecutives</strong> entraine le passage
+      obligatoire au regime reel. Les seuils sont :
+    </p>
+
+    <ul>
+      <li><strong>500 000 DH/an</strong> pour les activites commerciales, industrielles et artisanales</li>
+      <li><strong>200 000 DH/an</strong> pour les prestations de services</li>
+    </ul>
+
+    <h3>Comment utiliser cet outil</h3>
+
+    <p>
+      Renseignez votre CA mensuel au fur et a mesure. L'outil calcule automatiquement :
+    </p>
+
+    <ul>
+      <li>Le total cumule et le pourcentage du seuil utilise</li>
+      <li>La projection annuelle basee sur votre tendance</li>
+      <li>Le resume par trimestre (utile pour vos declarations)</li>
+      <li>Un graphique visuel de votre progression</li>
+    </ul>
+
+    <p>
+      Vos donnees sont sauvegardees localement dans votre navigateur. Elles ne sont pas envoyees sur
+      un serveur et restent totalement privees.
+    </p>
+
+    <h3>Declarations trimestrielles</h3>
+
+    <p>
+      Chaque trimestre, vous devez declarer votre CA sur la plateforme ae.gov.ma. Le resume par trimestre
+      de cet outil vous permet de retrouver facilement le montant a declarer. N'oubliez pas : meme si
+      votre CA est de 0, la declaration est obligatoire.
+    </p>
+  </div>
+</CalculateurLayout>

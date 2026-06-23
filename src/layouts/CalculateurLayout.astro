@@ -1,0 +1,70 @@
+---
+import Layout from '../components/layout/Layout.astro';
+import { siteConfig } from '../config';
+import { getBreadcrumbSchema, getSoftwareAppSchema } from '../lib/seo';
+
+export interface Props {
+  title: string;
+  description: string;
+  toolName: string;
+  breadcrumbs?: Array<{ name: string; url: string }>;
+}
+
+const { title, description, toolName, breadcrumbs } = Astro.props;
+
+const defaultBreadcrumbs = [
+  { name: 'Accueil', url: siteConfig.url + '/' },
+  { name: toolName, url: siteConfig.url + Astro.url.pathname },
+];
+
+const crumbs = breadcrumbs || defaultBreadcrumbs;
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    getBreadcrumbSchema(crumbs),
+    getSoftwareAppSchema({
+      name: toolName,
+      description,
+      url: siteConfig.url + Astro.url.pathname,
+    }),
+  ],
+};
+---
+
+<Layout title={title} description={description} schema={schema}>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <!-- Breadcrumbs -->
+    <nav class="mb-6 text-sm" aria-label="Fil d'Ariane">
+      <ol class="flex items-center gap-2 text-gray-500">
+        {crumbs.map((crumb, i) => (
+          <li class="flex items-center gap-2">
+            {i > 0 && <span class="text-amber-400">/</span>}
+            {i === crumbs.length - 1 ? (
+              <span class="text-amber-700 font-medium">{crumb.name}</span>
+            ) : (
+              <a href={crumb.url} class="hover:text-amber-700">{crumb.name}</a>
+            )}
+          </li>
+        ))}
+      </ol>
+    </nav>
+
+    <!-- Page Title -->
+    <h1 class="text-3xl sm:text-4xl font-extrabold text-amber-900 mb-2">
+      {title}
+    </h1>
+    <p class="text-lg text-gray-600 mb-8 max-w-3xl">
+      {description}
+    </p>
+
+    <!-- Author Byline -->
+    <p class="text-sm text-gray-500 mb-8">
+      Par <a href="/a-propos/" class="text-amber-700 font-medium">{siteConfig.author.name}</a> ({siteConfig.author.credentials})
+      &middot; Mis a jour en 2025
+    </p>
+
+    <!-- Content -->
+    <slot />
+  </div>
+</Layout>

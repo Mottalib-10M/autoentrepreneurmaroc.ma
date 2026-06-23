@@ -1,0 +1,28 @@
+---
+import Layout from '../components/layout/Layout.astro';
+---
+
+<Layout
+  title="Page non trouvee (404)"
+  description="La page que vous recherchez n'existe pas ou a ete deplacee."
+  noindex={true}
+>
+  <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-24 text-center">
+    <p class="text-6xl font-extrabold text-amber-300 mb-4">404</p>
+    <h1 class="text-3xl font-extrabold text-amber-900 mb-4">
+      Page non trouvee
+    </h1>
+    <p class="text-gray-600 mb-8 text-lg">
+      La page que vous recherchez n'existe pas ou a ete deplacee.
+      Verifiez l'URL ou retournez a l'accueil.
+    </p>
+    <div class="flex flex-wrap gap-4 justify-center">
+      <a href="/" class="btn-primary">
+        Retour a l'accueil
+      </a>
+      <a href="/calculateur-charges-ae/" class="btn-secondary">
+        Calculateur de charges
+      </a>
+    </div>
+  </div>
+</Layout>

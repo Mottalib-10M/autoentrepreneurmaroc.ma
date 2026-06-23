@@ -1,0 +1,93 @@
+---
+import Layout from '../components/layout/Layout.astro';
+import { siteConfig } from '../config';
+---
+
+<Layout
+  title="Mentions Legales - Auto-Entrepreneur Maroc"
+  description="Mentions legales du site autoentrepreneurmaroc.ma : editeur, hebergement, propriete intellectuelle et responsabilite."
+  noindex={true}
+>
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <h1 class="text-3xl sm:text-4xl font-extrabold text-amber-900 mb-8">
+      Mentions Legales
+    </h1>
+
+    <div class="prose max-w-none">
+      <h2>Editeur du site</h2>
+
+      <p>
+        Le site <strong>{siteConfig.domain}</strong> est edite par {siteConfig.author.name}.
+      </p>
+
+      <ul>
+        <li><strong>Responsable de publication</strong> : {siteConfig.author.name}</li>
+        <li><strong>Email</strong> : <a href={`mailto:${siteConfig.contact.email}`}>{siteConfig.contact.email}</a></li>
+      </ul>
+
+      <h2>Hebergement</h2>
+
+      <p>
+        Ce site est heberge par des services d'hebergement web professionnels conformes aux normes en vigueur.
+      </p>
+
+      <h2>Propriete intellectuelle</h2>
+
+      <p>
+        L'ensemble du contenu de ce site (textes, outils, calculateurs, guides, graphismes) est protege par
+        le droit d'auteur. Toute reproduction, meme partielle, est interdite sans autorisation prealable ecrite
+        de l'editeur.
+      </p>
+
+      <p>
+        Les outils et calculateurs mis a disposition sont destines a un usage personnel et informatif. Leur
+        utilisation commerciale sans autorisation est interdite.
+      </p>
+
+      <h2>Limitation de responsabilite</h2>
+
+      <p>
+        Les informations fournies sur ce site le sont a titre informatif uniquement. Elles ne constituent pas
+        des conseils juridiques, fiscaux ou comptables. L'editeur ne saurait etre tenu responsable des decisions
+        prises sur la base des informations publiees sur ce site.
+      </p>
+
+      <p>
+        Les calculs effectues par nos outils sont bases sur les taux et seuils officiels en vigueur au moment
+        de la derniere mise a jour. Ils peuvent ne pas tenir compte de situations particulieres. Pour des
+        conseils personnalises, nous recommandons de consulter un expert-comptable ou un conseiller fiscal agree.
+      </p>
+
+      <h2>Donnees personnelles</h2>
+
+      <p>
+        Ce site ne collecte aucune donnee personnelle via des formulaires d'inscription ou de paiement.
+        Les donnees saisies dans les calculateurs et le generateur de factures sont traitees localement dans
+        votre navigateur (localStorage) et ne sont jamais transmises a nos serveurs.
+      </p>
+
+      <p>
+        Ce site peut utiliser des cookies techniques necessaires a son fonctionnement et des cookies d'analyse
+        anonymes pour ameliorer l'experience utilisateur.
+      </p>
+
+      <h2>Liens externes</h2>
+
+      <p>
+        Ce site peut contenir des liens vers des sites externes (ae.gov.ma, tax.gov.ma, cnss.ma, etc.).
+        L'editeur ne saurait etre tenu responsable du contenu de ces sites externes.
+      </p>
+
+      <h2>Droit applicable</h2>
+
+      <p>
+        Les presentes mentions legales sont soumises au droit marocain. En cas de litige, les tribunaux
+        marocains seront seuls competents.
+      </p>
+
+      <p class="text-sm text-gray-500 mt-8">
+        Derniere mise a jour : Janvier 2025
+      </p>
+    </div>
+  </div>
+</Layout>

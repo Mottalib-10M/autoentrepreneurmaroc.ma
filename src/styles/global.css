@@ -1,0 +1,213 @@
+@import "tailwindcss";
+
+@theme {
+  --color-amber-50: #FFFBEB;
+  --color-amber-100: #FEF3C7;
+  --color-amber-200: #FDE68A;
+  --color-amber-300: #FCD34D;
+  --color-amber-400: #FBBF24;
+  --color-amber-500: #F59E0B;
+  --color-amber-600: #D97706;
+  --color-amber-700: #B45309;
+  --color-amber-800: #92400E;
+  --color-amber-900: #78350F;
+
+  --color-brand: #D97706;
+  --color-brand-dark: #B45309;
+  --color-brand-light: #F59E0B;
+
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    color: #1F2937;
+    background-color: #FFFBEB;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: 700;
+    line-height: 1.2;
+    color: #78350F;
+  }
+
+  a {
+    color: #D97706;
+    text-decoration: none;
+    transition: color 0.15s ease;
+  }
+
+  a:hover {
+    color: #B45309;
+    text-decoration: underline;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 1.5rem;
+    background-color: #D97706;
+    color: white;
+    font-weight: 600;
+    border-radius: 0.5rem;
+    transition: all 0.15s ease;
+    cursor: pointer;
+    border: none;
+    text-decoration: none;
+  }
+
+  .btn-primary:hover {
+    background-color: #B45309;
+    color: white;
+    text-decoration: none;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(217, 119, 6, 0.3);
+  }
+
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 1.5rem;
+    background-color: white;
+    color: #D97706;
+    font-weight: 600;
+    border-radius: 0.5rem;
+    border: 2px solid #D97706;
+    transition: all 0.15s ease;
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  .btn-secondary:hover {
+    background-color: #FFFBEB;
+    color: #B45309;
+    text-decoration: none;
+  }
+
+  .card {
+    background: white;
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    border: 1px solid #FDE68A;
+    transition: box-shadow 0.15s ease, transform 0.15s ease;
+  }
+
+  .card:hover {
+    box-shadow: 0 4px 12px rgba(217, 119, 6, 0.15);
+    transform: translateY(-2px);
+  }
+
+  .input-field {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 2px solid #FDE68A;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    background: white;
+  }
+
+  .input-field:focus {
+    outline: none;
+    border-color: #D97706;
+    box-shadow: 0 0 0 3px rgba(217, 119, 6, 0.15);
+  }
+
+  .result-card {
+    background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%);
+    border: 2px solid #FCD34D;
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+  }
+
+  .prose h2 {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+  }
+
+  .prose h3 {
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+    font-size: 1.25rem;
+  }
+
+  .prose p {
+    margin-bottom: 1rem;
+    line-height: 1.75;
+  }
+
+  .prose ul, .prose ol {
+    margin-bottom: 1rem;
+    padding-left: 1.5rem;
+  }
+
+  .prose li {
+    margin-bottom: 0.5rem;
+    line-height: 1.75;
+  }
+
+  .prose ul li {
+    list-style-type: disc;
+  }
+
+  .prose ol li {
+    list-style-type: decimal;
+  }
+
+  .prose table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1.5rem;
+  }
+
+  .prose th, .prose td {
+    padding: 0.75rem 1rem;
+    border: 1px solid #FDE68A;
+    text-align: left;
+  }
+
+  .prose th {
+    background: #FFFBEB;
+    font-weight: 600;
+    color: #78350F;
+  }
+
+  .prose strong {
+    color: #78350F;
+  }
+}
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+
+  body {
+    background: white;
+    color: black;
+    font-size: 12pt;
+  }
+
+  .invoice-preview {
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+  }
+
+  @page {
+    margin: 1.5cm;
+  }
+}

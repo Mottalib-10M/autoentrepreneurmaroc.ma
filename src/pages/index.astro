@@ -1,0 +1,425 @@
+---
+import Layout from '../components/layout/Layout.astro';
+import { siteConfig } from '../config';
+import { getFAQSchema, getBreadcrumbSchema } from '../lib/seo';
+
+const faqData = [
+  {
+    question: "Qu'est-ce que le statut auto-entrepreneur au Maroc ?",
+    answer: "Le statut auto-entrepreneur au Maroc, cree par la Loi 114-13, est un regime juridique simplifie permettant aux personnes physiques d'exercer une activite professionnelle de maniere independante. Il offre une fiscalite avantageuse (1 a 2% du chiffre d'affaires), une creation en 48h en ligne sur ae.gov.ma, et une comptabilite simplifiee. Ce statut est ideal pour les freelances, artisans, commercants et prestataires de services dont le CA reste sous les seuils legaux.",
+  },
+  {
+    question: "Quels sont les plafonds de chiffre d'affaires pour un auto-entrepreneur ?",
+    answer: "Les plafonds annuels sont de 500 000 DH pour les activites commerciales, industrielles et artisanales, et de 200 000 DH pour les prestations de services. Si ces seuils sont depasses durant 2 annees consecutives, l'auto-entrepreneur doit obligatoirement passer au regime reel (SARL ou autre forme juridique).",
+  },
+  {
+    question: "Comment s'inscrire comme auto-entrepreneur au Maroc ?",
+    answer: "L'inscription se fait en ligne sur la plateforme ae.gov.ma. Vous aurez besoin d'une copie de votre CIN, d'un certificat de residence de moins de 3 mois, et d'une photo d'identite. Le processus prend environ 48 heures pour obtenir votre certificat d'inscription et votre numero ICE (Identifiant Commun de l'Entreprise).",
+  },
+  {
+    question: "Quelles sont les obligations fiscales d'un auto-entrepreneur ?",
+    answer: "L'auto-entrepreneur doit effectuer une declaration trimestrielle de son chiffre d'affaires (meme si CA = 0), payer l'IR forfaitaire trimestriellement (1% pour les activites commerciales, 2% pour les services), cotiser a l'AMO (300 DH/trimestre), tenir un registre des achats et ventes, et etablir des factures avec les mentions obligatoires dont le numero ICE.",
+  },
+  {
+    question: "Quand faut-il passer de l'auto-entrepreneur a la SARL ?",
+    answer: "Le passage a la SARL devient obligatoire si vous depassez les seuils de CA (200 000 ou 500 000 DH) pendant 2 annees consecutives. Il est egalement recommande si vous avez besoin d'une meilleure protection sociale, d'une responsabilite limitee, de la possibilite de deduire vos charges professionnelles, ou si vous souhaitez donner plus de credibilite a votre activite aupres des banques et grands clients.",
+  },
+];
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    getBreadcrumbSchema([{ name: 'Accueil', url: siteConfig.url + '/' }]),
+    getFAQSchema(faqData),
+  ],
+};
+---
+
+<Layout
+  title="Auto-Entrepreneur Maroc - Guide Complet et Outils Gratuits"
+  description="Guide complet de l'auto-entrepreneur au Maroc : calculateur de charges, comparateur de statuts, generateur de factures. Outils gratuits et guides pratiques."
+  schema={schema}
+>
+  <!-- Hero Section -->
+  <section class="bg-gradient-to-br from-amber-600 via-amber-700 to-amber-800 text-white py-16 sm:py-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-4xl">
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight text-white mb-6">
+          Auto-Entrepreneur au Maroc : Guide Complet et Outils Gratuits
+        </h1>
+        <p class="text-xl sm:text-2xl text-amber-100 mb-8 leading-relaxed">
+          Tout ce que vous devez savoir pour creer, gerer et developper votre activite d'auto-entrepreneur au Maroc.
+          Calculateurs, guides et outils pratiques 100% gratuits.
+        </p>
+        <div class="flex flex-wrap gap-4">
+          <a href="/calculateur-charges-ae/" class="inline-flex items-center px-6 py-3 bg-white text-amber-800 font-bold rounded-lg hover:bg-amber-50 transition-all hover:no-underline">
+            Calculer mes charges
+          </a>
+          <a href="/guides/inscription-auto-entrepreneur/" class="inline-flex items-center px-6 py-3 border-2 border-white text-white font-bold rounded-lg hover:bg-white/10 transition-all hover:no-underline">
+            Guide d'inscription
+          </a>
+        </div>
+        <p class="text-amber-200 text-sm mt-6">
+          Par {siteConfig.author.name} ({siteConfig.author.credentials}) &middot; Mis a jour en 2025
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quick Stats -->
+  <section class="py-12 bg-white border-b border-amber-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 text-center">
+        <div class="p-6">
+          <p class="text-3xl font-extrabold text-amber-700">1-2%</p>
+          <p class="text-gray-600 mt-1">Taux d'imposition forfaitaire</p>
+        </div>
+        <div class="p-6">
+          <p class="text-3xl font-extrabold text-amber-700">48h</p>
+          <p class="text-gray-600 mt-1">Delai de creation en ligne</p>
+        </div>
+        <div class="p-6">
+          <p class="text-3xl font-extrabold text-amber-700">0 DH</p>
+          <p class="text-gray-600 mt-1">Capital minimum requis</p>
+        </div>
+        <div class="p-6">
+          <p class="text-3xl font-extrabold text-amber-700">300 DH</p>
+          <p class="text-gray-600 mt-1">AMO par trimestre</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Outils Cards -->
+  <section class="py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="text-3xl font-extrabold text-amber-900 text-center mb-4">Outils Gratuits pour Auto-Entrepreneurs</h2>
+      <p class="text-gray-600 text-center mb-12 max-w-2xl mx-auto">
+        Des calculateurs et outils pratiques pour gerer votre activite d'auto-entrepreneur en toute serenite.
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- Calculateur -->
+        <a href="/calculateur-charges-ae/" class="card group hover:no-underline">
+          <div class="w-12 h-12 bg-amber-100 rounded-lg flex items-center justify-center mb-4 text-2xl group-hover:bg-amber-200 transition-colors">
+            <span aria-hidden="true">&#9998;</span>
+          </div>
+          <h3 class="text-lg font-bold text-amber-900 mb-2">Calculateur de Charges</h3>
+          <p class="text-gray-600 text-sm">
+            Calculez votre IR forfaitaire, AMO et revenu net en fonction de votre chiffre d'affaires mensuel ou trimestriel.
+          </p>
+        </a>
+
+        <!-- Comparateur -->
+        <a href="/comparateur-statuts/" class="card group hover:no-underline">
+          <div class="w-12 h-12 bg-amber-100 rounded-lg flex items-center justify-center mb-4 text-2xl group-hover:bg-amber-200 transition-colors">
+            <span aria-hidden="true">&#9878;</span>
+          </div>
+          <h3 class="text-lg font-bold text-amber-900 mb-2">Comparateur de Statuts</h3>
+          <p class="text-gray-600 text-sm">
+            Comparez Auto-Entrepreneur, SARL et SAS : impots, charges sociales, net final et complexite administrative.
+          </p>
+        </a>
+
+        <!-- Factures -->
+        <a href="/generateur-facture/" class="card group hover:no-underline">
+          <div class="w-12 h-12 bg-amber-100 rounded-lg flex items-center justify-center mb-4 text-2xl group-hover:bg-amber-200 transition-colors">
+            <span aria-hidden="true">&#9993;</span>
+          </div>
+          <h3 class="text-lg font-bold text-amber-900 mb-2">Generateur de Factures</h3>
+          <p class="text-gray-600 text-sm">
+            Creez des factures conformes avec toutes les mentions obligatoires (ICE, exoneration TVA) et imprimez-les.
+          </p>
+        </a>
+
+        <!-- Suivi CA -->
+        <a href="/suivi-chiffre-affaires/" class="card group hover:no-underline">
+          <div class="w-12 h-12 bg-amber-100 rounded-lg flex items-center justify-center mb-4 text-2xl group-hover:bg-amber-200 transition-colors">
+            <span aria-hidden="true">&#9632;</span>
+          </div>
+          <h3 class="text-lg font-bold text-amber-900 mb-2">Suivi du CA</h3>
+          <p class="text-gray-600 text-sm">
+            Suivez votre chiffre d'affaires mois par mois, visualisez votre progression et anticipez le depassement du seuil.
+          </p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 Etapes -->
+  <section class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="text-3xl font-extrabold text-amber-900 text-center mb-12">
+        Devenir Auto-Entrepreneur en 5 Etapes
+      </h2>
+
+      <div class="relative">
+        <!-- Timeline Line -->
+        <div class="hidden lg:block absolute left-1/2 top-0 bottom-0 w-0.5 bg-amber-300 transform -translate-x-1/2"></div>
+
+        <div class="space-y-8 lg:space-y-12">
+          <!-- Step 1 -->
+          <div class="lg:flex items-center gap-8">
+            <div class="lg:w-1/2 lg:text-right lg:pr-8">
+              <div class="card">
+                <span class="inline-block bg-amber-600 text-white text-sm font-bold w-8 h-8 rounded-full flex items-center justify-center mb-3">1</span>
+                <h3 class="text-lg font-bold text-amber-900">Verifiez votre eligibilite</h3>
+                <p class="text-gray-600 text-sm mt-2">
+                  Assurez-vous que votre activite est compatible avec le statut AE et que votre CA previsionnel
+                  reste sous les seuils (200 000 DH pour les services, 500 000 DH pour le commerce).
+                </p>
+              </div>
+            </div>
+            <div class="hidden lg:block w-4 h-4 bg-amber-600 rounded-full border-4 border-white shadow-md z-10 absolute left-1/2 transform -translate-x-1/2"></div>
+            <div class="lg:w-1/2"></div>
+          </div>
+
+          <!-- Step 2 -->
+          <div class="lg:flex items-center gap-8">
+            <div class="lg:w-1/2"></div>
+            <div class="lg:w-1/2 lg:pl-8">
+              <div class="card">
+                <span class="inline-block bg-amber-600 text-white text-sm font-bold w-8 h-8 rounded-full flex items-center justify-center mb-3">2</span>
+                <h3 class="text-lg font-bold text-amber-900">Preparez vos documents</h3>
+                <p class="text-gray-600 text-sm mt-2">
+                  Reunissez votre CIN (Carte d'Identite Nationale), un certificat de residence de moins de 3 mois
+                  et une photo d'identite recente au format numerique.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 3 -->
+          <div class="lg:flex items-center gap-8">
+            <div class="lg:w-1/2 lg:text-right lg:pr-8">
+              <div class="card">
+                <span class="inline-block bg-amber-600 text-white text-sm font-bold w-8 h-8 rounded-full flex items-center justify-center mb-3">3</span>
+                <h3 class="text-lg font-bold text-amber-900">Inscrivez-vous sur ae.gov.ma</h3>
+                <p class="text-gray-600 text-sm mt-2">
+                  Rendez-vous sur le portail officiel ae.gov.ma, creez votre compte, remplissez le formulaire
+                  d'inscription et telechargez vos documents. Le processus est entierement en ligne.
+                </p>
+              </div>
+            </div>
+            <div class="lg:w-1/2"></div>
+          </div>
+
+          <!-- Step 4 -->
+          <div class="lg:flex items-center gap-8">
+            <div class="lg:w-1/2"></div>
+            <div class="lg:w-1/2 lg:pl-8">
+              <div class="card">
+                <span class="inline-block bg-amber-600 text-white text-sm font-bold w-8 h-8 rounded-full flex items-center justify-center mb-3">4</span>
+                <h3 class="text-lg font-bold text-amber-900">Recevez votre certificat</h3>
+                <p class="text-gray-600 text-sm mt-2">
+                  En environ 48 heures, vous recevrez votre certificat d'inscription et votre numero ICE
+                  (Identifiant Commun de l'Entreprise). Vous pouvez alors commencer a facturer.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 5 -->
+          <div class="lg:flex items-center gap-8">
+            <div class="lg:w-1/2 lg:text-right lg:pr-8">
+              <div class="card">
+                <span class="inline-block bg-amber-600 text-white text-sm font-bold w-8 h-8 rounded-full flex items-center justify-center mb-3">5</span>
+                <h3 class="text-lg font-bold text-amber-900">Gerez votre activite</h3>
+                <p class="text-gray-600 text-sm mt-2">
+                  Declarez votre CA trimestriellement, payez votre IR et AMO, tenez votre registre des achats/ventes,
+                  et emettez des factures conformes. Utilisez nos outils gratuits pour simplifier tout cela.
+                </p>
+              </div>
+            </div>
+            <div class="lg:w-1/2"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Detailed Content Section -->
+  <section class="py-16">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 prose">
+      <h2>Guide Complet de l'Auto-Entrepreneur au Maroc</h2>
+
+      <p>
+        Le statut d'auto-entrepreneur au Maroc, instaure par la <strong>Loi 114-13</strong>, represente une avancee majeure
+        pour l'entrepreneuriat au Maroc. Ce regime simplifie permet a toute personne physique d'exercer une activite
+        professionnelle independante avec un minimum de formalites administratives et une fiscalite extremement avantageuse.
+        Depuis sa mise en place, des centaines de milliers de Marocains ont adopte ce statut pour lancer leur activite.
+      </p>
+
+      <h3>Qu'est-ce que le statut auto-entrepreneur ?</h3>
+
+      <p>
+        L'auto-entrepreneur est une personne physique qui exerce, a titre individuel, une activite industrielle, commerciale,
+        artisanale ou de prestation de services. Ce statut se distingue par sa simplicite : pas de capital minimum, pas de
+        comptabilite complexe, et une creation qui se fait entierement en ligne en 48 heures.
+      </p>
+
+      <p>
+        L'un des principaux avantages est la <strong>fiscalite forfaitaire</strong>. Au lieu de calculer un benefice net
+        imposable comme dans une SARL, l'auto-entrepreneur paie simplement un pourcentage de son chiffre d'affaires :
+        <strong>1% pour les activites commerciales, industrielles et artisanales</strong>, et <strong>2% pour les
+        prestations de services</strong>. Ce systeme est d'une simplicite remarquable et permet de connaitre immediatement
+        le montant de ses impots.
+      </p>
+
+      <h3>Les plafonds de chiffre d'affaires</h3>
+
+      <p>
+        Le statut auto-entrepreneur est soumis a des plafonds de chiffre d'affaires annuel. Pour les <strong>activites
+        commerciales, industrielles et artisanales</strong>, le plafond est fixe a <strong>500 000 DH par an</strong>.
+        Pour les <strong>prestations de services</strong>, il est de <strong>200 000 DH par an</strong>.
+      </p>
+
+      <p>
+        Il est crucial de surveiller ces seuils car leur depassement pendant deux annees consecutives entraine le
+        passage obligatoire au regime reel. Notre <a href="/suivi-chiffre-affaires/">outil de suivi du CA</a> vous
+        permet de suivre votre progression tout au long de l'annee.
+      </p>
+
+      <h3>Les charges de l'auto-entrepreneur</h3>
+
+      <p>
+        Les charges de l'auto-entrepreneur marocain sont parmi les plus basses du monde :
+      </p>
+
+      <ul>
+        <li><strong>Impot sur le revenu (IR) forfaitaire</strong> : 1% du CA pour les activites commerciales, 2% pour les services</li>
+        <li><strong>Cotisation AMO (Assurance Maladie Obligatoire)</strong> : 300 DH par trimestre, soit 1 200 DH par an</li>
+      </ul>
+
+      <p>
+        Cela signifie que pour un prestataire de services avec un CA de 10 000 DH par mois, les charges totales
+        (IR + AMO) ne representent qu'environ 3 200 DH par an, soit un taux effectif de seulement 2,67% du CA annuel.
+        C'est un avantage considerable par rapport aux autres formes juridiques.
+      </p>
+
+      <h3>Les obligations de l'auto-entrepreneur</h3>
+
+      <p>
+        Malgre la simplicite du statut, l'auto-entrepreneur a certaines obligations :
+      </p>
+
+      <ul>
+        <li><strong>Declaration trimestrielle du CA</strong> : Meme si votre CA est de 0, vous devez declarer</li>
+        <li><strong>Paiement trimestriel de l'IR</strong> : Calcule sur le CA declare</li>
+        <li><strong>Paiement de l'AMO</strong> : 300 DH chaque trimestre</li>
+        <li><strong>Tenue d'un registre</strong> : Un livre journal des achats et ventes</li>
+        <li><strong>Facturation conforme</strong> : Avec toutes les mentions obligatoires (ICE, exoneration TVA, etc.)</li>
+      </ul>
+
+      <h3>L'exoneration de TVA</h3>
+
+      <p>
+        L'auto-entrepreneur est <strong>exonere de TVA</strong>. Cela signifie que vous ne facturez pas de TVA a vos
+        clients et vous ne pouvez pas recuperer la TVA sur vos achats. Chaque facture doit porter la mention
+        "Exonere de TVA". Cette exoneration simplifie considerablement la gestion comptable mais peut etre un
+        inconvenient si vos fournisseurs sont assujettis a la TVA.
+      </p>
+
+      <h3>Auto-Entrepreneur vs SARL : que choisir ?</h3>
+
+      <p>
+        Le choix entre auto-entrepreneur et SARL depend de votre situation. L'AE est ideal pour demarrer une activite
+        avec un CA modeste et des charges faibles. La SARL convient mieux pour des CA eleves, quand vous avez besoin
+        de deduire des charges importantes ou quand vous souhaitez une meilleure protection juridique et sociale.
+      </p>
+
+      <p>
+        Notre <a href="/comparateur-statuts/">comparateur de statuts</a> vous permet de simuler les deux scenarios
+        avec vos chiffres reels pour prendre la meilleure decision.
+      </p>
+
+      <h3>Comment s'inscrire ?</h3>
+
+      <p>
+        L'inscription se fait sur <strong>ae.gov.ma</strong>, la plateforme officielle. Vous aurez besoin de votre CIN,
+        d'un certificat de residence recent et d'une photo d'identite. Le processus est rapide et vous obtenez votre
+        certificat d'inscription et votre numero ICE en environ 48 heures. Consultez notre
+        <a href="/guides/inscription-auto-entrepreneur/">guide d'inscription detaille</a> pour toutes les etapes.
+      </p>
+
+      <h3>Pourquoi utiliser nos outils ?</h3>
+
+      <p>
+        Nos outils ont ete concus specifiquement pour les auto-entrepreneurs marocains. Ils sont bases sur les
+        taux et seuils officiels 2025 et sont regulierement mis a jour. Que vous ayez besoin de
+        <a href="/calculateur-charges-ae/">calculer vos charges</a>,
+        <a href="/generateur-facture/">generer une facture conforme</a>,
+        <a href="/comparateur-statuts/">comparer les statuts juridiques</a> ou
+        <a href="/suivi-chiffre-affaires/">suivre votre CA</a>, tout est gratuit et disponible en ligne.
+      </p>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="py-16 bg-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="text-3xl font-extrabold text-amber-900 text-center mb-12">
+        Questions Frequentes
+      </h2>
+
+      <div class="space-y-4">
+        {faqData.map((faq, i) => (
+          <details class="card group" id={`faq-${i}`}>
+            <summary class="cursor-pointer list-none flex items-center justify-between">
+              <h3 class="text-lg font-bold text-amber-900 pr-4">{faq.question}</h3>
+              <span class="text-amber-500 transform group-open:rotate-45 transition-transform text-xl flex-shrink-0">+</span>
+            </summary>
+            <p class="text-gray-700 mt-4 leading-relaxed">{faq.answer}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Guides Section -->
+  <section class="py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="text-3xl font-extrabold text-amber-900 text-center mb-12">
+        Guides Pratiques
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <a href="/guides/inscription-auto-entrepreneur/" class="card group hover:no-underline">
+          <h3 class="text-lg font-bold text-amber-900 mb-2 group-hover:text-amber-700">Guide d'Inscription</h3>
+          <p class="text-gray-600 text-sm">Etapes detaillees pour s'inscrire sur ae.gov.ma, documents necessaires et pieges a eviter.</p>
+        </a>
+        <a href="/guides/fiscalite-auto-entrepreneur/" class="card group hover:no-underline">
+          <h3 class="text-lg font-bold text-amber-900 mb-2 group-hover:text-amber-700">Fiscalite de l'AE</h3>
+          <p class="text-gray-600 text-sm">Comprendre l'IR forfaitaire, la declaration trimestrielle et les penalites de retard.</p>
+        </a>
+        <a href="/guides/passer-ae-sarl/" class="card group hover:no-underline">
+          <h3 class="text-lg font-bold text-amber-900 mb-2 group-hover:text-amber-700">Passer de l'AE a la SARL</h3>
+          <p class="text-gray-600 text-sm">Quand et comment transitionner vers la SARL, avantages et inconvenients.</p>
+        </a>
+        <a href="/guides/obligations-facturation/" class="card group hover:no-underline">
+          <h3 class="text-lg font-bold text-amber-900 mb-2 group-hover:text-amber-700">Obligations de Facturation</h3>
+          <p class="text-gray-600 text-sm">Mentions obligatoires, ICE, registre des ventes et conformite legale.</p>
+        </a>
+        <a href="/guides/cnss-auto-entrepreneur/" class="card group hover:no-underline">
+          <h3 class="text-lg font-bold text-amber-900 mb-2 group-hover:text-amber-700">CNSS Auto-Entrepreneur</h3>
+          <p class="text-gray-600 text-sm">Couverture AMO, adhesion volontaire et droits sociaux de l'AE.</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="py-16 bg-gradient-to-r from-amber-600 to-amber-700 text-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h2 class="text-3xl font-extrabold text-white mb-4">
+        Pret a calculer vos charges ?
+      </h2>
+      <p class="text-amber-100 text-lg mb-8">
+        Utilisez notre calculateur gratuit pour estimer votre IR, AMO et revenu net en quelques secondes.
+      </p>
+      <a href="/calculateur-charges-ae/" class="inline-flex items-center px-8 py-4 bg-white text-amber-800 font-bold rounded-lg text-lg hover:bg-amber-50 transition-all hover:no-underline">
+        Lancer le calculateur
+      </a>
+    </div>
+  </section>
+</Layout>
