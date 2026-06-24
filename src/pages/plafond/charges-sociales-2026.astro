@@ -1,0 +1,201 @@
+---
+import Layout from '../../components/layout/Layout.astro';
+import { siteConfig } from '../../config';
+import { getBreadcrumbSchema, getFAQSchema, getArticleSchema } from '../../lib/seo';
+
+const breadcrumbs = [
+  { name: 'Accueil', url: siteConfig.url + '/' },
+  { name: 'Guides', url: siteConfig.url + '/guides/' },
+  { name: 'Charges sociales 2026', url: siteConfig.url + '/plafond/charges-sociales-2026/' },
+];
+
+const faqData = [
+  { question: 'Quelles sont les charges sociales d\'un auto-entrepreneur au Maroc en 2026 ?', answer: 'Les charges sociales de l\'AE se limitent à la cotisation AMO (Assurance Maladie Obligatoire) de 300 DH par trimestre, soit 1 200 DH par an. C\'est la seule cotisation sociale obligatoire. L\'IR forfaitaire (1-2% du CA) est un impôt, pas une charge sociale.' },
+  { question: 'L\'auto-entrepreneur cotise-t-il pour la retraite ?', answer: 'Non, le statut AE ne prévoit pas de cotisation retraite obligatoire. L\'AE ne bénéficie pas de la pension CNSS. Il est fortement recommandé de souscrire une retraite complémentaire privée (assurance vie, RCAR volontaire) pour préparer votre avenir.' },
+  { question: 'Comment payer la cotisation AMO en tant qu\'AE ?', answer: 'La cotisation AMO de 300 DH est payée trimestriellement, en même temps que la déclaration de CA et le paiement de l\'IR. Le paiement se fait en ligne sur la plateforme ae.gov.ma ou auprès de Barid Bank (La Poste).' },
+  { question: 'Que couvre l\'AMO de l\'auto-entrepreneur ?', answer: 'L\'AMO couvre les frais médicaux de base : consultations, médicaments, hospitalisation et analyses. Le taux de remboursement varie selon les actes (70 à 90% du tarif national de référence). L\'AMO AE ne couvre pas les soins dentaires ni l\'optique de manière complète.' },
+  { question: 'Quelles sont les charges totales d\'un AE par rapport à un salarié ?', answer: 'Un AE paie environ 2-3% de son CA en charges totales (IR + AMO). Un salarié supporte des charges de ~33% (part patronale + salariale). La différence est considérable, mais le salarié bénéficie d\'une protection sociale complète (retraite, AMO, allocations familiales, indemnités de licenciement).' },
+];
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    getBreadcrumbSchema(breadcrumbs),
+    getFAQSchema(faqData),
+    getArticleSchema({
+      title: 'Charges Sociales Auto-Entrepreneur Maroc 2026',
+      description: 'Détail complet des charges sociales de l\'auto-entrepreneur au Maroc en 2026 : AMO, IR et comparaison avec d\'autres statuts.',
+      url: siteConfig.url + '/plafond/charges-sociales-2026/',
+    }),
+  ],
+};
+---
+
+<Layout
+  title="Charges Sociales Auto-Entrepreneur Maroc 2026 : Détails"
+  description="Détail complet des charges sociales auto-entrepreneur au Maroc en 2026 : cotisation AMO, IR forfaitaire, protection sociale et comparaison avec la SARL."
+  type="article"
+  schema={schema}
+>
+  <article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <nav class="mb-6 text-sm" aria-label="Fil d'Ariane">
+      <ol class="flex items-center gap-2 text-gray-500">
+        {breadcrumbs.map((crumb, i) => (
+          <li class="flex items-center gap-2">
+            {i > 0 && <span class="text-amber-400">/</span>}
+            {i === breadcrumbs.length - 1 ? (
+              <span class="text-amber-700 font-medium">{crumb.name}</span>
+            ) : (
+              <a href={crumb.url} class="hover:text-amber-700">{crumb.name}</a>
+            )}
+          </li>
+        ))}
+      </ol>
+    </nav>
+
+    <h1 class="text-3xl sm:text-4xl font-extrabold text-amber-900 mb-4">
+      Charges Sociales de l'Auto-Entrepreneur au Maroc en 2026
+    </h1>
+
+    <p class="text-sm text-gray-500 mb-8">
+      Par <a href="/a-propos/" class="text-amber-700 font-medium">{siteConfig.author.name}</a> ({siteConfig.author.credentials}) &middot; Mis à jour en 2026
+    </p>
+
+    <div class="prose max-w-none">
+      <p>
+        Comprendre les charges sociales est essentiel pour tout auto-entrepreneur au Maroc. Contrairement aux idées
+        reçues, les charges de l'AE ne se limitent pas à l'IR forfaitaire. La cotisation AMO (Assurance Maladie
+        Obligatoire) est une charge sociale obligatoire qui s'ajoute à l'impôt. Ce guide détaille toutes les charges
+        de l'auto-entrepreneur en 2026, leur calcul et leur comparaison avec les autres statuts.
+      </p>
+
+      <h2>Récapitulatif des charges AE en 2026</h2>
+
+      <div class="not-prose my-6">
+        <table class="w-full border-collapse">
+          <thead>
+            <tr class="bg-amber-100">
+              <th class="border border-amber-200 px-4 py-3 text-left text-amber-900">Charge</th>
+              <th class="border border-amber-200 px-4 py-3 text-right text-amber-900">Montant</th>
+              <th class="border border-amber-200 px-4 py-3 text-left text-amber-900">Fréquence</th>
+              <th class="border border-amber-200 px-4 py-3 text-left text-amber-900">Type</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="border border-amber-200 px-4 py-2 font-medium">IR forfaitaire (commerce)</td>
+              <td class="border border-amber-200 px-4 py-2 text-right">1% du CA</td>
+              <td class="border border-amber-200 px-4 py-2">Trimestrielle</td>
+              <td class="border border-amber-200 px-4 py-2">Impôt</td>
+            </tr>
+            <tr class="bg-amber-50">
+              <td class="border border-amber-200 px-4 py-2 font-medium">IR forfaitaire (services)</td>
+              <td class="border border-amber-200 px-4 py-2 text-right">2% du CA</td>
+              <td class="border border-amber-200 px-4 py-2">Trimestrielle</td>
+              <td class="border border-amber-200 px-4 py-2">Impôt</td>
+            </tr>
+            <tr>
+              <td class="border border-amber-200 px-4 py-2 font-medium">Cotisation AMO (CNSS)</td>
+              <td class="border border-amber-200 px-4 py-2 text-right">300 DH/trimestre</td>
+              <td class="border border-amber-200 px-4 py-2">Trimestrielle</td>
+              <td class="border border-amber-200 px-4 py-2">Charge sociale</td>
+            </tr>
+            <tr class="bg-amber-50 font-bold">
+              <td class="border border-amber-200 px-4 py-2">Total annuel (AMO seule)</td>
+              <td class="border border-amber-200 px-4 py-2 text-right">1 200 DH/an</td>
+              <td class="border border-amber-200 px-4 py-2" colspan="2">Fixe, quel que soit le CA</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Exemples de charges totales par niveau de CA</h2>
+
+      <div class="not-prose my-6 overflow-x-auto">
+        <table class="w-full border-collapse text-sm">
+          <thead>
+            <tr class="bg-amber-100">
+              <th class="border border-amber-200 px-4 py-3 text-left text-amber-900">CA mensuel</th>
+              <th class="border border-amber-200 px-4 py-3 text-right text-amber-900">IR annuel (2%)</th>
+              <th class="border border-amber-200 px-4 py-3 text-right text-amber-900">AMO annuelle</th>
+              <th class="border border-amber-200 px-4 py-3 text-right text-amber-900">Total charges</th>
+              <th class="border border-amber-200 px-4 py-3 text-right text-amber-900">Taux effectif</th>
+              <th class="border border-amber-200 px-4 py-3 text-right text-amber-900">Net annuel</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td class="border border-amber-200 px-4 py-2">5 000 DH</td><td class="border border-amber-200 px-4 py-2 text-right">1 200 DH</td><td class="border border-amber-200 px-4 py-2 text-right">1 200 DH</td><td class="border border-amber-200 px-4 py-2 text-right">2 400 DH</td><td class="border border-amber-200 px-4 py-2 text-right">4,0%</td><td class="border border-amber-200 px-4 py-2 text-right">57 600 DH</td></tr>
+            <tr class="bg-amber-50"><td class="border border-amber-200 px-4 py-2">8 000 DH</td><td class="border border-amber-200 px-4 py-2 text-right">1 920 DH</td><td class="border border-amber-200 px-4 py-2 text-right">1 200 DH</td><td class="border border-amber-200 px-4 py-2 text-right">3 120 DH</td><td class="border border-amber-200 px-4 py-2 text-right">3,3%</td><td class="border border-amber-200 px-4 py-2 text-right">92 880 DH</td></tr>
+            <tr><td class="border border-amber-200 px-4 py-2">10 000 DH</td><td class="border border-amber-200 px-4 py-2 text-right">2 400 DH</td><td class="border border-amber-200 px-4 py-2 text-right">1 200 DH</td><td class="border border-amber-200 px-4 py-2 text-right">3 600 DH</td><td class="border border-amber-200 px-4 py-2 text-right">3,0%</td><td class="border border-amber-200 px-4 py-2 text-right">116 400 DH</td></tr>
+            <tr class="bg-amber-50"><td class="border border-amber-200 px-4 py-2">15 000 DH</td><td class="border border-amber-200 px-4 py-2 text-right">3 600 DH</td><td class="border border-amber-200 px-4 py-2 text-right">1 200 DH</td><td class="border border-amber-200 px-4 py-2 text-right">4 800 DH</td><td class="border border-amber-200 px-4 py-2 text-right">2,7%</td><td class="border border-amber-200 px-4 py-2 text-right">175 200 DH</td></tr>
+          </tbody>
+        </table>
+        <p class="text-sm text-gray-500 mt-2">* Calcul pour les prestations de services (IR à 2%)</p>
+      </div>
+
+      <p>
+        Le taux effectif de charges (IR + AMO) diminue à mesure que le CA augmente, grâce à la part fixe de l'AMO.
+        Pour un CA de 15 000 DH/mois, le taux effectif n'est que de <strong>2,7%</strong>. C'est l'un des régimes
+        fiscaux les plus légers au monde pour les travailleurs indépendants.
+      </p>
+
+      <h2>Comparaison des charges : AE vs SARL vs Salarié</h2>
+
+      <div class="not-prose my-6 overflow-x-auto">
+        <table class="w-full border-collapse text-sm">
+          <thead>
+            <tr class="bg-amber-100">
+              <th class="border border-amber-200 px-4 py-3 text-left text-amber-900">Critère</th>
+              <th class="border border-amber-200 px-4 py-3 text-left text-amber-900">AE</th>
+              <th class="border border-amber-200 px-4 py-3 text-left text-amber-900">SARL (gérant)</th>
+              <th class="border border-amber-200 px-4 py-3 text-left text-amber-900">Salarié</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td class="border border-amber-200 px-4 py-2 font-medium">Charges sociales</td><td class="border border-amber-200 px-4 py-2">1 200 DH/an (AMO)</td><td class="border border-amber-200 px-4 py-2">~33% de la rémunération</td><td class="border border-amber-200 px-4 py-2">~33% (patronal + salarial)</td></tr>
+            <tr class="bg-amber-50"><td class="border border-amber-200 px-4 py-2 font-medium">Retraite</td><td class="border border-amber-200 px-4 py-2">Non incluse</td><td class="border border-amber-200 px-4 py-2">CNSS (incluse)</td><td class="border border-amber-200 px-4 py-2">CNSS (incluse)</td></tr>
+            <tr><td class="border border-amber-200 px-4 py-2 font-medium">AMO</td><td class="border border-amber-200 px-4 py-2">Basique</td><td class="border border-amber-200 px-4 py-2">Complète</td><td class="border border-amber-200 px-4 py-2">Complète</td></tr>
+            <tr class="bg-amber-50"><td class="border border-amber-200 px-4 py-2 font-medium">Allocations familiales</td><td class="border border-amber-200 px-4 py-2">Non</td><td class="border border-amber-200 px-4 py-2">Oui</td><td class="border border-amber-200 px-4 py-2">Oui</td></tr>
+            <tr><td class="border border-amber-200 px-4 py-2 font-medium">Taux effectif total</td><td class="border border-amber-200 px-4 py-2">2-4% du CA</td><td class="border border-amber-200 px-4 py-2">~50% du brut</td><td class="border border-amber-200 px-4 py-2">~33% du brut</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Protection sociale : ce qui est couvert et ce qui ne l'est pas</h2>
+      <ul>
+        <li><strong>Couvert par l'AMO AE</strong> : Consultations médicales, médicaments (avec ticket modérateur), hospitalisation, analyses médicales</li>
+        <li><strong>Non couvert</strong> : Retraite (pas de pension), allocations familiales, indemnités de maladie, indemnités de maternité, assurance décès</li>
+      </ul>
+      <p>
+        Il est <strong>fortement recommandé</strong> de souscrire une assurance complémentaire (mutuelle santé) et un
+        plan de retraite privé pour compléter la couverture de base de l'AMO AE. Plusieurs compagnies d'assurance
+        marocaines proposent des produits adaptés aux indépendants.
+      </p>
+
+      <h2>Articles liés</h2>
+      <ul>
+        <li><a href="/calculateur-charges-ae/">Calculateur de charges (simulation personnalisée)</a></li>
+        <li><a href="/guides/cnss-auto-entrepreneur/">CNSS et protection sociale de l'AE</a></li>
+        <li><a href="/plafond/chiffre-affaires-2026/">Plafonds de CA 2026</a></li>
+        <li><a href="/plafond/tva-auto-entrepreneur/">TVA et auto-entrepreneur</a></li>
+        <li><a href="/comparaison/auto-entrepreneur-vs-sarl/">AE vs SARL : comparaison complète</a></li>
+        <li><a href="/guides/">Tous nos guides</a></li>
+      </ul>
+    </div>
+
+    <div class="mt-12">
+      <h2 class="text-2xl font-extrabold text-amber-900 mb-6">Questions fréquentes</h2>
+      <div class="space-y-4">
+        {faqData.map((faq, i) => (
+          <details class="bg-white border border-amber-200 rounded-lg p-4 group" id={`faq-${i}`}>
+            <summary class="cursor-pointer list-none flex items-center justify-between">
+              <h3 class="text-lg font-bold text-amber-900 pr-4">{faq.question}</h3>
+              <span class="text-amber-500 transform group-open:rotate-45 transition-transform text-xl flex-shrink-0">+</span>
+            </summary>
+            <p class="text-gray-700 mt-4 leading-relaxed">{faq.answer}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </article>
+</Layout>

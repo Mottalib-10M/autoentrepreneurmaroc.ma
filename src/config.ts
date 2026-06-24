@@ -31,5 +31,5 @@ export const navLinks = [
   { label: 'Guide Inscription', href: '/guides/inscription-auto-entrepreneur/' },
   { label: 'Comparateur Statuts', href: '/comparateur-statuts/' },
   { label: 'Factures', href: '/generateur-facture/' },
-  { label: 'Guides', href: '/guides/fiscalite-auto-entrepreneur/' },
+  { label: 'Guides', href: '/guides/' },
 ] as const;

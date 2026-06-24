@@ -1,0 +1,153 @@
+---
+import Layout from '../../components/layout/Layout.astro';
+import { siteConfig } from '../../config';
+import { getBreadcrumbSchema, getFAQSchema, getArticleSchema } from '../../lib/seo';
+
+const breadcrumbs = [
+  { name: 'Accueil', url: siteConfig.url + '/' },
+  { name: 'Guides', url: siteConfig.url + '/guides/' },
+  { name: 'AE vs Portage', url: siteConfig.url + '/comparaison/auto-entrepreneur-vs-portage-salarial/' },
+];
+
+const faqData = [
+  { question: 'Qu\'est-ce que le portage salarial au Maroc ?', answer: 'Le portage salarial est un système où une société de portage emploie le travailleur indépendant comme salarié, tout en lui permettant de choisir ses missions et ses clients. Le porté bénéficie de la protection sociale du salarié (CNSS complète, retraite) tout en conservant son autonomie professionnelle.' },
+  { question: 'Le portage salarial existe-t-il officiellement au Maroc ?', answer: 'Le portage salarial n\'est pas encore encadré par une législation spécifique au Maroc, contrairement à la France. Cependant, certaines sociétés de portage opèrent au Maroc en utilisant le contrat de travail classique. Le cadre juridique est en cours de développement.' },
+  { question: 'Quel est le coût du portage salarial comparé à l\'AE ?', answer: 'Le portage salarial coûte significativement plus cher. La société de portage prélève 5 à 15% du CA en frais de gestion, auxquels s\'ajoutent les charges sociales patronales et salariales (~33%). En AE, le coût total est de 2-3% du CA (IR + AMO). Le net est donc nettement supérieur en AE.' },
+  { question: 'Quels sont les avantages du portage sur l\'AE ?', answer: 'Le portage offre une protection sociale complète (CNSS, retraite, assurance maladie, allocations), un statut de salarié (fiches de paie, attestation de travail) facilitant l\'accès au crédit bancaire, et zéro gestion administrative (facturation, déclarations gérées par la société de portage).' },
+  { question: 'Un consultant peut-il hésiter entre AE et portage ?', answer: 'Oui, c\'est un choix courant pour les consultants. L\'AE est préférable si vous valorisez la maximisation du revenu net et la simplicité. Le portage est préférable si vous avez besoin d\'une protection sociale complète, d\'une attestation de travail pour un crédit immobilier, ou si vous ne souhaitez aucune gestion administrative.' },
+];
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    getBreadcrumbSchema(breadcrumbs),
+    getFAQSchema(faqData),
+    getArticleSchema({
+      title: 'Auto-Entrepreneur vs Portage Salarial au Maroc',
+      description: 'Comparaison entre auto-entrepreneur et portage salarial au Maroc : coûts, protection sociale et gestion.',
+      url: siteConfig.url + '/comparaison/auto-entrepreneur-vs-portage-salarial/',
+    }),
+  ],
+};
+---
+
+<Layout
+  title="AE vs Portage Salarial Maroc : Comparaison 2026"
+  description="Comparaison auto-entrepreneur vs portage salarial au Maroc : coûts, protection sociale, gestion administrative et revenus nets. Guide détaillé 2026."
+  type="article"
+  schema={schema}
+>
+  <article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <nav class="mb-6 text-sm" aria-label="Fil d'Ariane">
+      <ol class="flex items-center gap-2 text-gray-500">
+        {breadcrumbs.map((crumb, i) => (
+          <li class="flex items-center gap-2">
+            {i > 0 && <span class="text-amber-400">/</span>}
+            {i === breadcrumbs.length - 1 ? (
+              <span class="text-amber-700 font-medium">{crumb.name}</span>
+            ) : (
+              <a href={crumb.url} class="hover:text-amber-700">{crumb.name}</a>
+            )}
+          </li>
+        ))}
+      </ol>
+    </nav>
+
+    <h1 class="text-3xl sm:text-4xl font-extrabold text-amber-900 mb-4">
+      Auto-Entrepreneur vs Portage Salarial au Maroc : Comparaison 2026
+    </h1>
+
+    <p class="text-sm text-gray-500 mb-8">
+      Par <a href="/a-propos/" class="text-amber-700 font-medium">{siteConfig.author.name}</a> ({siteConfig.author.credentials}) &middot; Mis à jour en 2026
+    </p>
+
+    <div class="prose max-w-none">
+      <p>
+        Le portage salarial est une alternative intéressante au statut auto-entrepreneur pour les travailleurs
+        indépendants au Maroc. Ce système permet de travailler en freelance tout en bénéficiant du statut de
+        salarié, avec une protection sociale complète. Mais à quel coût ? Ce guide compare les deux options pour
+        vous aider à choisir celle qui maximise votre revenu net tout en répondant à vos besoins en protection
+        sociale et en gestion administrative.
+      </p>
+
+      <h2>Tableau comparatif : AE vs Portage Salarial</h2>
+
+      <div class="not-prose my-6 overflow-x-auto">
+        <table class="w-full border-collapse text-sm">
+          <thead>
+            <tr class="bg-amber-100">
+              <th class="border border-amber-200 px-4 py-3 text-left text-amber-900">Critère</th>
+              <th class="border border-amber-200 px-4 py-3 text-left text-amber-900">Auto-Entrepreneur</th>
+              <th class="border border-amber-200 px-4 py-3 text-left text-amber-900">Portage Salarial</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td class="border border-amber-200 px-4 py-2 font-medium">Statut</td><td class="border border-amber-200 px-4 py-2">Entrepreneur individuel</td><td class="border border-amber-200 px-4 py-2">Salarié de la société de portage</td></tr>
+            <tr class="bg-amber-50"><td class="border border-amber-200 px-4 py-2 font-medium">Charges totales</td><td class="border border-amber-200 px-4 py-2">2-3% du CA (IR + AMO)</td><td class="border border-amber-200 px-4 py-2">40-55% du CA (frais + charges sociales)</td></tr>
+            <tr><td class="border border-amber-200 px-4 py-2 font-medium">Protection sociale</td><td class="border border-amber-200 px-4 py-2">AMO basique</td><td class="border border-amber-200 px-4 py-2">CNSS complète (retraite, AMO, alloc.)</td></tr>
+            <tr class="bg-amber-50"><td class="border border-amber-200 px-4 py-2 font-medium">Gestion admin</td><td class="border border-amber-200 px-4 py-2">À votre charge (simple)</td><td class="border border-amber-200 px-4 py-2">Gérée par la société de portage</td></tr>
+            <tr><td class="border border-amber-200 px-4 py-2 font-medium">Fiche de paie</td><td class="border border-amber-200 px-4 py-2">Non</td><td class="border border-amber-200 px-4 py-2">Oui</td></tr>
+            <tr class="bg-amber-50"><td class="border border-amber-200 px-4 py-2 font-medium">Accès crédit bancaire</td><td class="border border-amber-200 px-4 py-2">Difficile</td><td class="border border-amber-200 px-4 py-2">Facilité (salarié)</td></tr>
+            <tr><td class="border border-amber-200 px-4 py-2 font-medium">Revenu net</td><td class="border border-amber-200 px-4 py-2">~97% du CA</td><td class="border border-amber-200 px-4 py-2">~45-60% du CA</td></tr>
+            <tr class="bg-amber-50"><td class="border border-amber-200 px-4 py-2 font-medium">Autonomie</td><td class="border border-amber-200 px-4 py-2">Totale</td><td class="border border-amber-200 px-4 py-2">Grande (choix clients/missions)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Simulation comparative</h2>
+      <p>
+        Pour un consultant facturant 15 000 DH/mois (180 000 DH/an) :
+      </p>
+      <ul>
+        <li><strong>En AE</strong> : IR annuel = 3 600 DH + AMO = 1 200 DH. <strong>Net annuel = 175 200 DH</strong> (97,3% du CA)</li>
+        <li><strong>En portage</strong> : Frais de gestion 10% = 18 000 DH, charges sociales ~33% = 53 460 DH. <strong>Net annuel ~108 540 DH</strong> (60,3% du CA)</li>
+      </ul>
+      <p>
+        La différence est significative : <strong>66 660 DH de plus par an en AE</strong>. Cependant, le portage
+        offre une protection sociale complète, des fiches de paie et un accès facilité au crédit. Le choix dépend
+        de vos priorités personnelles. Si vous prévoyez un crédit immobilier à court terme, le portage salarial
+        peut être stratégiquement préférable malgré le coût plus élevé.
+      </p>
+
+      <h2>Quand choisir l'Auto-Entrepreneur ?</h2>
+      <ul>
+        <li>Vous voulez maximiser votre revenu net</li>
+        <li>Vous êtes à l'aise avec la gestion administrative (très simple en AE)</li>
+        <li>Vous n'avez pas besoin de fiches de paie à court terme</li>
+        <li>Votre CA reste sous les plafonds AE</li>
+      </ul>
+
+      <h2>Quand choisir le Portage Salarial ?</h2>
+      <ul>
+        <li>Vous avez besoin d'une protection sociale complète (retraite, allocations)</li>
+        <li>Vous préparez un crédit immobilier et avez besoin de fiches de paie</li>
+        <li>Vous ne souhaitez aucune gestion administrative</li>
+        <li>La société de portage vous apporte des missions ou un réseau</li>
+      </ul>
+
+      <h2>Articles liés</h2>
+      <ul>
+        <li><a href="/comparaison/auto-entrepreneur-vs-sarl/">Auto-entrepreneur vs SARL</a></li>
+        <li><a href="/comparaison/auto-entrepreneur-vs-freelance/">Auto-entrepreneur vs Freelance</a></li>
+        <li><a href="/calculateur-charges-ae/">Calculateur de charges AE</a></li>
+        <li><a href="/plafond/charges-sociales-2026/">Charges sociales 2026</a></li>
+        <li><a href="/guides/">Tous nos guides</a></li>
+      </ul>
+    </div>
+
+    <div class="mt-12">
+      <h2 class="text-2xl font-extrabold text-amber-900 mb-6">Questions fréquentes</h2>
+      <div class="space-y-4">
+        {faqData.map((faq, i) => (
+          <details class="bg-white border border-amber-200 rounded-lg p-4 group" id={`faq-${i}`}>
+            <summary class="cursor-pointer list-none flex items-center justify-between">
+              <h3 class="text-lg font-bold text-amber-900 pr-4">{faq.question}</h3>
+              <span class="text-amber-500 transform group-open:rotate-45 transition-transform text-xl flex-shrink-0">+</span>
+            </summary>
+            <p class="text-gray-700 mt-4 leading-relaxed">{faq.answer}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </article>
+</Layout>

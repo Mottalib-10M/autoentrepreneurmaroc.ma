@@ -1,0 +1,160 @@
+---
+import Layout from '../../components/layout/Layout.astro';
+import { siteConfig } from '../../config';
+import { getBreadcrumbSchema, getFAQSchema, getArticleSchema } from '../../lib/seo';
+
+const breadcrumbs = [
+  { name: 'Accueil', url: siteConfig.url + '/' },
+  { name: 'Guides', url: siteConfig.url + '/guides/' },
+  { name: 'AE vs Freelance', url: siteConfig.url + '/comparaison/auto-entrepreneur-vs-freelance/' },
+];
+
+const faqData = [
+  { question: 'Quelle est la différence entre auto-entrepreneur et freelance au Maroc ?', answer: 'L\'auto-entrepreneur est un statut juridique officiel au Maroc (Loi 114-13). Le freelance est un mode de travail (indépendant) qui peut s\'exercer sous différents statuts : AE, SARL, ou même informel. En pratique, beaucoup de freelances marocains choisissent le statut AE pour sa simplicité.' },
+  { question: 'Un freelance doit-il obligatoirement être auto-entrepreneur ?', answer: 'Non, un freelance peut exercer sous différents statuts : auto-entrepreneur (le plus courant), SARL (pour les CA élevés), ou même en portage salarial. Cependant, travailler en freelance sans statut officiel est illégal et vous prive de protection sociale.' },
+  { question: 'Peut-on être freelance et salarié en même temps au Maroc ?', answer: 'Oui, il est possible de cumuler un emploi salarié avec le statut auto-entrepreneur au Maroc (sauf pour les fonctionnaires). Vous devez simplement respecter les obligations de votre contrat de travail (clause de non-concurrence, temps de travail) et déclarer votre CA AE trimestriellement.' },
+  { question: 'Quels sont les avantages du statut AE pour un freelance ?', answer: 'L\'AE offre aux freelances un cadre juridique simple, une fiscalité avantageuse (1-2% du CA), une protection sociale (AMO), la possibilité de facturer légalement avec un ICE, et une crédibilité accrue auprès des clients professionnels.' },
+  { question: 'Comment un freelance marocain peut-il facturer des clients étrangers ?', answer: 'Avec le statut AE, vous pouvez facturer en dirhams ou en devises. La facture doit comporter votre ICE et la mention d\'exonération TVA. Le paiement se fait par virement bancaire international. Le CA en devises est converti en DH pour la déclaration trimestrielle.' },
+];
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    getBreadcrumbSchema(breadcrumbs),
+    getFAQSchema(faqData),
+    getArticleSchema({
+      title: 'Auto-Entrepreneur vs Freelance au Maroc',
+      description: 'Différences entre statut auto-entrepreneur et travail freelance au Maroc, avantages et formalités.',
+      url: siteConfig.url + '/comparaison/auto-entrepreneur-vs-freelance/',
+    }),
+  ],
+};
+---
+
+<Layout
+  title="Auto-Entrepreneur vs Freelance au Maroc : Guide 2026"
+  description="Différences entre auto-entrepreneur et freelance au Maroc : statut juridique, fiscalité, protection sociale et obligations. Quel cadre choisir en 2026 ?"
+  type="article"
+  schema={schema}
+>
+  <article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <nav class="mb-6 text-sm" aria-label="Fil d'Ariane">
+      <ol class="flex items-center gap-2 text-gray-500">
+        {breadcrumbs.map((crumb, i) => (
+          <li class="flex items-center gap-2">
+            {i > 0 && <span class="text-amber-400">/</span>}
+            {i === breadcrumbs.length - 1 ? (
+              <span class="text-amber-700 font-medium">{crumb.name}</span>
+            ) : (
+              <a href={crumb.url} class="hover:text-amber-700">{crumb.name}</a>
+            )}
+          </li>
+        ))}
+      </ol>
+    </nav>
+
+    <h1 class="text-3xl sm:text-4xl font-extrabold text-amber-900 mb-4">
+      Auto-Entrepreneur vs Freelance au Maroc : Quelle Différence ?
+    </h1>
+
+    <p class="text-sm text-gray-500 mb-8">
+      Par <a href="/a-propos/" class="text-amber-700 font-medium">{siteConfig.author.name}</a> ({siteConfig.author.credentials}) &middot; Mis à jour en 2026
+    </p>
+
+    <div class="prose max-w-none">
+      <p>
+        Au Maroc, les termes "auto-entrepreneur" et "freelance" sont souvent utilisés de manière interchangeable, mais
+        ils désignent des réalités différentes. L'auto-entrepreneur est un <strong>statut juridique officiel</strong>
+        encadré par la Loi 114-13, tandis que le freelance est un <strong>mode de travail</strong> (indépendant, sans
+        lien de subordination) qui peut s'exercer sous différents statuts juridiques. Ce guide clarifie les différences
+        et vous aide à choisir le cadre le plus adapté.
+      </p>
+
+      <h2>Auto-Entrepreneur : un statut juridique</h2>
+      <p>
+        Le statut d'auto-entrepreneur au Maroc est un régime juridique et fiscal spécifique créé pour simplifier
+        l'entrepreneuriat individuel. Il offre un cadre légal clair avec des règles fiscales définies (IR forfaitaire
+        de 1-2%), des plafonds de CA, et des obligations déclaratives trimestrielles. C'est le statut le plus
+        populaire parmi les travailleurs indépendants marocains grâce à sa simplicité et son coût réduit.
+      </p>
+
+      <h2>Freelance : un mode de travail</h2>
+      <p>
+        Le freelance (ou travailleur indépendant) est une personne qui propose ses services à des clients sans lien
+        de subordination, contrairement à un salarié. Au Maroc, un freelance peut exercer sous plusieurs statuts :
+        auto-entrepreneur (le plus courant), SARL (pour les revenus élevés), ou même de manière informelle (non
+        recommandé car illégal et sans protection sociale). Le choix du statut dépend du volume d'activité, des
+        charges et des ambitions de croissance.
+      </p>
+
+      <h2>Tableau comparatif</h2>
+
+      <div class="not-prose my-6 overflow-x-auto">
+        <table class="w-full border-collapse text-sm">
+          <thead>
+            <tr class="bg-amber-100">
+              <th class="border border-amber-200 px-4 py-3 text-left text-amber-900">Aspect</th>
+              <th class="border border-amber-200 px-4 py-3 text-left text-amber-900">Auto-Entrepreneur (AE)</th>
+              <th class="border border-amber-200 px-4 py-3 text-left text-amber-900">Freelance (sans statut)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td class="border border-amber-200 px-4 py-2 font-medium">Statut légal</td><td class="border border-amber-200 px-4 py-2">Officiel (Loi 114-13)</td><td class="border border-amber-200 px-4 py-2">Informel / Illégal</td></tr>
+            <tr class="bg-amber-50"><td class="border border-amber-200 px-4 py-2 font-medium">Numéro ICE</td><td class="border border-amber-200 px-4 py-2">Oui</td><td class="border border-amber-200 px-4 py-2">Non</td></tr>
+            <tr><td class="border border-amber-200 px-4 py-2 font-medium">Facturation légale</td><td class="border border-amber-200 px-4 py-2">Oui (factures conformes)</td><td class="border border-amber-200 px-4 py-2">Non</td></tr>
+            <tr class="bg-amber-50"><td class="border border-amber-200 px-4 py-2 font-medium">Protection sociale</td><td class="border border-amber-200 px-4 py-2">AMO (300 DH/trimestre)</td><td class="border border-amber-200 px-4 py-2">Aucune</td></tr>
+            <tr><td class="border border-amber-200 px-4 py-2 font-medium">Fiscalité</td><td class="border border-amber-200 px-4 py-2">IR 1-2% du CA</td><td class="border border-amber-200 px-4 py-2">Aucune (mais illégal)</td></tr>
+            <tr class="bg-amber-50"><td class="border border-amber-200 px-4 py-2 font-medium">Accès clients pro</td><td class="border border-amber-200 px-4 py-2">Oui (ICE, factures)</td><td class="border border-amber-200 px-4 py-2">Limité</td></tr>
+            <tr><td class="border border-amber-200 px-4 py-2 font-medium">Accès bancaire</td><td class="border border-amber-200 px-4 py-2">Compte pro possible</td><td class="border border-amber-200 px-4 py-2">Compte personnel uniquement</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Pourquoi formaliser son activité freelance avec le statut AE ?</h2>
+      <p>
+        Travailler en freelance sans statut officiel comporte des risques importants : absence de protection sociale,
+        impossibilité de facturer légalement les entreprises (qui exigent un ICE), risques fiscaux en cas de contrôle,
+        et difficulté à prouver vos revenus auprès des banques. Le statut AE résout tous ces problèmes avec un coût
+        fiscal minimal (1-2% du CA + 300 DH/trimestre d'AMO) et une inscription gratuite en 48 heures.
+      </p>
+
+      <p>
+        De plus, de plus en plus d'entreprises marocaines et de plateformes freelance exigent un numéro ICE pour
+        travailler avec des prestataires indépendants. Sans statut AE, vous vous privez d'un large pan du marché
+        professionnel.
+      </p>
+
+      <h2>Cumul emploi salarié et auto-entrepreneur</h2>
+      <p>
+        Il est tout à fait possible de cumuler un emploi salarié avec le statut auto-entrepreneur au Maroc, à
+        condition de ne pas être fonctionnaire et de respecter les clauses de votre contrat de travail. C'est une
+        excellente manière de tester une activité freelance tout en conservant la sécurité d'un salaire. Vous
+        bénéficiez alors de la protection sociale de votre employeur et de l'AMO AE en complément.
+      </p>
+
+      <h2>Articles liés</h2>
+      <ul>
+        <li><a href="/guides/inscription-auto-entrepreneur/">Guide d'inscription auto-entrepreneur</a></li>
+        <li><a href="/comparaison/auto-entrepreneur-vs-sarl/">Auto-entrepreneur vs SARL</a></li>
+        <li><a href="/comparaison/auto-entrepreneur-vs-portage-salarial/">AE vs Portage salarial</a></li>
+        <li><a href="/calculateur-charges-ae/">Calculateur de charges AE</a></li>
+        <li><a href="/guides/">Tous nos guides</a></li>
+      </ul>
+    </div>
+
+    <div class="mt-12">
+      <h2 class="text-2xl font-extrabold text-amber-900 mb-6">Questions fréquentes</h2>
+      <div class="space-y-4">
+        {faqData.map((faq, i) => (
+          <details class="bg-white border border-amber-200 rounded-lg p-4 group" id={`faq-${i}`}>
+            <summary class="cursor-pointer list-none flex items-center justify-between">
+              <h3 class="text-lg font-bold text-amber-900 pr-4">{faq.question}</h3>
+              <span class="text-amber-500 transform group-open:rotate-45 transition-transform text-xl flex-shrink-0">+</span>
+            </summary>
+            <p class="text-gray-700 mt-4 leading-relaxed">{faq.answer}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </article>
+</Layout>

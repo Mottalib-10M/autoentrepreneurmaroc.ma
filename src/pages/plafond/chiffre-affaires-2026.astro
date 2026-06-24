@@ -1,0 +1,166 @@
+---
+import Layout from '../../components/layout/Layout.astro';
+import { siteConfig } from '../../config';
+import { getBreadcrumbSchema, getFAQSchema, getArticleSchema } from '../../lib/seo';
+
+const breadcrumbs = [
+  { name: 'Accueil', url: siteConfig.url + '/' },
+  { name: 'Guides', url: siteConfig.url + '/guides/' },
+  { name: 'Plafonds CA 2026', url: siteConfig.url + '/plafond/chiffre-affaires-2026/' },
+];
+
+const faqData = [
+  { question: 'Quels sont les plafonds de CA auto-entrepreneur au Maroc en 2026 ?', answer: 'Les plafonds sont de 500 000 DH/an pour les activités commerciales, industrielles et artisanales, et de 200 000 DH/an pour les prestations de services. Ces seuils sont inchangés depuis la création du statut par la Loi 114-13.' },
+  { question: 'Que se passe-t-il si je dépasse le plafond de CA ?', answer: 'Si vous dépassez le plafond pendant une seule année, vous conservez votre statut AE. Si le dépassement se répète pendant 2 années consécutives, vous devez obligatoirement passer au régime réel (SARL, SAS ou entreprise individuelle classique) dans les 3 mois suivant la fin de la deuxième année.' },
+  { question: 'Le plafond est-il calculé sur l\'année civile ?', answer: 'Oui, le plafond est calculé sur l\'année civile complète (1er janvier au 31 décembre). Si vous vous inscrivez en cours d\'année, le plafond est proratisé en fonction du nombre de mois d\'activité restants dans l\'année.' },
+  { question: 'Peut-on exercer deux activités avec des plafonds différents ?', answer: 'Oui, vous pouvez exercer une activité commerciale et une activité de services en même temps. Chaque activité a son propre plafond et son propre taux d\'IR. Le CA de chaque activité est déclaré séparément.' },
+  { question: 'Comment suivre son CA pour ne pas dépasser le plafond ?', answer: 'Utilisez notre outil de suivi du chiffre d\'affaires pour suivre votre CA mois par mois, visualiser votre progression par rapport au plafond annuel et anticiper un éventuel dépassement. Tenez aussi à jour votre registre des ventes.' },
+];
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    getBreadcrumbSchema(breadcrumbs),
+    getFAQSchema(faqData),
+    getArticleSchema({
+      title: 'Plafonds de Chiffre d\'Affaires Auto-Entrepreneur Maroc 2026',
+      description: 'Plafonds de CA de l\'auto-entrepreneur au Maroc en 2026 : seuils, conséquences du dépassement et stratégies.',
+      url: siteConfig.url + '/plafond/chiffre-affaires-2026/',
+    }),
+  ],
+};
+---
+
+<Layout
+  title="Plafond CA Auto-Entrepreneur Maroc 2026 : Seuils et Limites"
+  description="Plafonds de chiffre d'affaires auto-entrepreneur au Maroc en 2026 : 200 000 DH (services) et 500 000 DH (commerce). Seuils, conséquences et stratégies."
+  type="article"
+  schema={schema}
+>
+  <article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <nav class="mb-6 text-sm" aria-label="Fil d'Ariane">
+      <ol class="flex items-center gap-2 text-gray-500">
+        {breadcrumbs.map((crumb, i) => (
+          <li class="flex items-center gap-2">
+            {i > 0 && <span class="text-amber-400">/</span>}
+            {i === breadcrumbs.length - 1 ? (
+              <span class="text-amber-700 font-medium">{crumb.name}</span>
+            ) : (
+              <a href={crumb.url} class="hover:text-amber-700">{crumb.name}</a>
+            )}
+          </li>
+        ))}
+      </ol>
+    </nav>
+
+    <h1 class="text-3xl sm:text-4xl font-extrabold text-amber-900 mb-4">
+      Plafonds de Chiffre d'Affaires Auto-Entrepreneur au Maroc en 2026
+    </h1>
+
+    <p class="text-sm text-gray-500 mb-8">
+      Par <a href="/a-propos/" class="text-amber-700 font-medium">{siteConfig.author.name}</a> ({siteConfig.author.credentials}) &middot; Mis à jour en 2026
+    </p>
+
+    <div class="prose max-w-none">
+      <p>
+        Les plafonds de chiffre d'affaires sont l'une des caractéristiques fondamentales du statut auto-entrepreneur
+        au Maroc. Ces seuils déterminent si vous pouvez continuer à bénéficier du régime forfaitaire simplifié ou
+        si vous devez passer au régime réel. Ce guide détaille les plafonds en vigueur en 2026, les conséquences
+        du dépassement et les stratégies pour gérer votre CA de manière optimale.
+      </p>
+
+      <h2>Les plafonds de CA en 2026</h2>
+
+      <div class="not-prose my-6">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <div class="bg-amber-50 border border-amber-200 rounded-xl p-6 text-center">
+            <p class="text-sm text-amber-700 font-medium mb-2">Activités commerciales, industrielles et artisanales</p>
+            <p class="text-4xl font-extrabold text-amber-900">500 000 DH</p>
+            <p class="text-sm text-gray-600 mt-2">par an &middot; IR à 1% du CA</p>
+          </div>
+          <div class="bg-amber-50 border border-amber-200 rounded-xl p-6 text-center">
+            <p class="text-sm text-amber-700 font-medium mb-2">Prestations de services</p>
+            <p class="text-4xl font-extrabold text-amber-900">200 000 DH</p>
+            <p class="text-sm text-gray-600 mt-2">par an &middot; IR à 2% du CA</p>
+          </div>
+        </div>
+      </div>
+
+      <h2>Quelles activités relèvent de quel plafond ?</h2>
+
+      <div class="not-prose my-6 overflow-x-auto">
+        <table class="w-full border-collapse text-sm">
+          <thead>
+            <tr class="bg-amber-100">
+              <th class="border border-amber-200 px-4 py-3 text-left text-amber-900">Plafond 500 000 DH (commerce)</th>
+              <th class="border border-amber-200 px-4 py-3 text-left text-amber-900">Plafond 200 000 DH (services)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td class="border border-amber-200 px-4 py-2">Vente de marchandises</td><td class="border border-amber-200 px-4 py-2">Consultant, conseil</td></tr>
+            <tr class="bg-amber-50"><td class="border border-amber-200 px-4 py-2">Commerce de détail / gros</td><td class="border border-amber-200 px-4 py-2">Développeur web, graphiste</td></tr>
+            <tr><td class="border border-amber-200 px-4 py-2">Artisanat (fabrication + vente)</td><td class="border border-amber-200 px-4 py-2">Formateur, coach</td></tr>
+            <tr class="bg-amber-50"><td class="border border-amber-200 px-4 py-2">Restauration rapide</td><td class="border border-amber-200 px-4 py-2">Photographe, vidéaste</td></tr>
+            <tr><td class="border border-amber-200 px-4 py-2">Alimentation</td><td class="border border-amber-200 px-4 py-2">Coiffeur, esthéticienne</td></tr>
+            <tr class="bg-amber-50"><td class="border border-amber-200 px-4 py-2">Industrie légère</td><td class="border border-amber-200 px-4 py-2">Traducteur, rédacteur web</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Conséquences du dépassement du plafond</h2>
+
+      <h3>Dépassement ponctuel (1 année)</h3>
+      <p>
+        Si vous dépassez le plafond de CA pendant une seule année, vous conservez votre statut auto-entrepreneur.
+        Cependant, l'IR forfaitaire continue de s'appliquer sur l'intégralité de votre CA, y compris la part
+        au-dessus du seuil. Cela peut représenter un montant significatif si le dépassement est important.
+      </p>
+
+      <h3>Dépassement 2 années consécutives</h3>
+      <p>
+        Si le dépassement se répète pendant <strong>2 années consécutives</strong>, vous perdez le bénéfice du
+        statut auto-entrepreneur. Vous devez alors :
+      </p>
+      <ul>
+        <li>Vous radier du registre des auto-entrepreneurs dans les <strong>3 mois</strong> suivant la fin de la deuxième année</li>
+        <li>Créer une structure juridique au régime réel (SARL, SAS ou entreprise individuelle classique)</li>
+        <li>Commencer à tenir une comptabilité complète</li>
+        <li>Vous soumettre à la TVA (si applicable)</li>
+      </ul>
+
+      <h2>Stratégies pour gérer votre plafond</h2>
+      <ul>
+        <li><strong>Suivez votre CA mensuellement</strong> avec notre <a href="/suivi-chiffre-affaires/">outil de suivi du CA</a></li>
+        <li><strong>Anticipez le dépassement</strong> : si votre CA semestriel dépasse 50% du plafond, modérez ou préparez la transition</li>
+        <li><strong>Préparez la transition</strong> : utilisez notre <a href="/comparateur-statuts/">comparateur de statuts</a> pour simuler le passage à la SARL</li>
+        <li><strong>Diversifiez vos activités</strong> : si possible, répartissez entre activité commerciale (500k) et services (200k)</li>
+      </ul>
+
+      <h2>Articles liés</h2>
+      <ul>
+        <li><a href="/suivi-chiffre-affaires/">Outil de suivi du chiffre d'affaires</a></li>
+        <li><a href="/calculateur-charges-ae/">Calculateur de charges AE</a></li>
+        <li><a href="/plafond/tva-auto-entrepreneur/">TVA et auto-entrepreneur</a></li>
+        <li><a href="/plafond/charges-sociales-2026/">Charges sociales 2026</a></li>
+        <li><a href="/comparaison/auto-entrepreneur-vs-sarl/">AE vs SARL</a></li>
+        <li><a href="/guides/passer-ae-sarl/">Guide : passer de l'AE à la SARL</a></li>
+        <li><a href="/guides/">Tous nos guides</a></li>
+      </ul>
+    </div>
+
+    <div class="mt-12">
+      <h2 class="text-2xl font-extrabold text-amber-900 mb-6">Questions fréquentes</h2>
+      <div class="space-y-4">
+        {faqData.map((faq, i) => (
+          <details class="bg-white border border-amber-200 rounded-lg p-4 group" id={`faq-${i}`}>
+            <summary class="cursor-pointer list-none flex items-center justify-between">
+              <h3 class="text-lg font-bold text-amber-900 pr-4">{faq.question}</h3>
+              <span class="text-amber-500 transform group-open:rotate-45 transition-transform text-xl flex-shrink-0">+</span>
+            </summary>
+            <p class="text-gray-700 mt-4 leading-relaxed">{faq.answer}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </article>
+</Layout>

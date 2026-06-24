@@ -1,0 +1,167 @@
+---
+import Layout from '../../components/layout/Layout.astro';
+import { siteConfig } from '../../config';
+import { getBreadcrumbSchema, getArticleSchema } from '../../lib/seo';
+import { activites } from '../../data/activites';
+
+const breadcrumbs = [
+  { name: 'Accueil', url: siteConfig.url + '/' },
+  { name: 'Guides', url: siteConfig.url + '/guides/' },
+];
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    getBreadcrumbSchema(breadcrumbs),
+    getArticleSchema({
+      title: 'Guides Auto-Entrepreneur Maroc',
+      description: 'Tous les guides pratiques pour auto-entrepreneurs au Maroc : inscription, fiscalité, facturation, CNSS, transition vers la SARL et plus.',
+      url: siteConfig.url + '/guides/',
+    }),
+  ],
+};
+
+const guides = [
+  { title: 'Inscription Auto-Entrepreneur', description: 'Guide complet étape par étape pour s\'inscrire sur ae.gov.ma. Documents, procédure et conseils pratiques.', href: '/guides/inscription-auto-entrepreneur/' },
+  { title: 'Fiscalité de l\'Auto-Entrepreneur', description: 'IR forfaitaire 1-2%, déclaration trimestrielle, paiement des impôts et pénalités de retard expliqués.', href: '/guides/fiscalite-auto-entrepreneur/' },
+  { title: 'Passer de l\'AE à la SARL', description: 'Quand et comment transitionner vers la SARL. Procédure complète, avantages et inconvénients détaillés.', href: '/guides/passer-ae-sarl/' },
+  { title: 'Obligations de Facturation', description: 'Mentions obligatoires, numéro ICE, registre des ventes et conformité légale de vos factures.', href: '/guides/obligations-facturation/' },
+  { title: 'CNSS Auto-Entrepreneur', description: 'Couverture AMO, cotisation trimestrielle de 300 DH, droits sociaux et adhésion volontaire.', href: '/guides/cnss-auto-entrepreneur/' },
+];
+
+const comparisons = [
+  { title: 'Auto-Entrepreneur vs SARL', href: '/comparaison/auto-entrepreneur-vs-sarl/' },
+  { title: 'Auto-Entrepreneur vs SAS', href: '/comparaison/auto-entrepreneur-vs-sas/' },
+  { title: 'Auto-Entrepreneur vs Freelance', href: '/comparaison/auto-entrepreneur-vs-freelance/' },
+  { title: 'AE vs Portage Salarial', href: '/comparaison/auto-entrepreneur-vs-portage-salarial/' },
+  { title: 'Régime Forfaitaire vs Réel', href: '/comparaison/regime-forfaitaire-vs-reel/' },
+];
+
+const thresholds = [
+  { title: 'Plafonds de CA 2026', description: 'Seuils annuels de chiffre d\'affaires et conséquences du dépassement.', href: '/plafond/chiffre-affaires-2026/' },
+  { title: 'TVA Auto-Entrepreneur', description: 'Règles d\'exonération TVA, mentions obligatoires et implications.', href: '/plafond/tva-auto-entrepreneur/' },
+  { title: 'Charges Sociales 2026', description: 'Détail complet des charges sociales : AMO, IR et cotisations.', href: '/plafond/charges-sociales-2026/' },
+];
+---
+
+<Layout
+  title="Guides Auto-Entrepreneur Maroc : Tous les Guides 2026"
+  description="Tous les guides pratiques pour auto-entrepreneurs au Maroc : inscription, fiscalité, facturation, CNSS, comparaisons de statuts et plafonds de CA 2026."
+  type="article"
+  schema={schema}
+>
+  <section class="bg-gradient-to-br from-amber-600 via-amber-700 to-amber-800 text-white py-12 sm:py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- Breadcrumbs -->
+      <nav class="mb-6 text-sm" aria-label="Fil d'Ariane">
+        <ol class="flex items-center gap-2 text-amber-200">
+          {breadcrumbs.map((crumb, i) => (
+            <li class="flex items-center gap-2">
+              {i > 0 && <span class="text-amber-400">/</span>}
+              {i === breadcrumbs.length - 1 ? (
+                <span class="text-white font-medium">{crumb.name}</span>
+              ) : (
+                <a href={crumb.url} class="hover:text-white">{crumb.name}</a>
+              )}
+            </li>
+          ))}
+        </ol>
+      </nav>
+      <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white mb-4">
+        Guides Auto-Entrepreneur au Maroc
+      </h1>
+      <p class="text-xl text-amber-100 max-w-3xl leading-relaxed">
+        Retrouvez tous nos guides pratiques pour créer, gérer et développer votre activité d'auto-entrepreneur
+        au Maroc. De l'inscription à la transition vers la SARL, en passant par la fiscalité et la facturation,
+        chaque guide est rédigé pour vous accompagner pas à pas dans votre parcours entrepreneurial. Nos contenus
+        sont mis à jour régulièrement pour refléter la législation et les taux en vigueur en 2026.
+      </p>
+      <p class="text-amber-200 text-sm mt-4">
+        Par {siteConfig.author.name} ({siteConfig.author.credentials}) &middot; {guides.length + comparisons.length + thresholds.length + activites.length}+ articles disponibles
+      </p>
+    </div>
+  </section>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <!-- Guides principaux -->
+    <section class="mb-16">
+      <h2 class="text-2xl font-extrabold text-amber-900 mb-6">Guides Essentiels</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {guides.map((guide) => (
+          <a href={guide.href} class="card group hover:no-underline">
+            <h3 class="text-lg font-bold text-amber-900 mb-2 group-hover:text-amber-700">{guide.title}</h3>
+            <p class="text-gray-600 text-sm">{guide.description}</p>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <!-- Comparaisons -->
+    <section class="mb-16">
+      <h2 class="text-2xl font-extrabold text-amber-900 mb-6">Comparaisons de Statuts</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {comparisons.map((comp) => (
+          <a href={comp.href} class="card group hover:no-underline">
+            <h3 class="text-lg font-bold text-amber-900 mb-2 group-hover:text-amber-700">{comp.title}</h3>
+            <p class="text-gray-600 text-sm">Comparaison détaillée avec tableau, avantages, inconvénients et FAQ.</p>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <!-- Plafonds et seuils -->
+    <section class="mb-16">
+      <h2 class="text-2xl font-extrabold text-amber-900 mb-6">Plafonds et Charges</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {thresholds.map((t) => (
+          <a href={t.href} class="card group hover:no-underline">
+            <h3 class="text-lg font-bold text-amber-900 mb-2 group-hover:text-amber-700">{t.title}</h3>
+            <p class="text-gray-600 text-sm">{t.description}</p>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <!-- Guides par activité -->
+    <section class="mb-16">
+      <h2 class="text-2xl font-extrabold text-amber-900 mb-6">Guides par Activité</h2>
+      <p class="text-gray-600 mb-6">
+        Retrouvez un guide dédié pour chaque métier populaire en auto-entrepreneur au Maroc, avec les charges
+        spécifiques, les revenus attendus, les autorisations nécessaires et des conseils pratiques.
+      </p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        {activites.map((activite) => (
+          <a href={`/activite/${activite.slug}/`} class="flex items-center gap-3 p-3 bg-white border border-amber-200 rounded-lg hover:bg-amber-50 transition-colors hover:no-underline group">
+            <div>
+              <p class="font-bold text-amber-900 group-hover:text-amber-700 text-sm">{activite.nom}</p>
+              <p class="text-xs text-gray-500">{activite.revenuMoyen.min.toLocaleString('fr-FR')}-{activite.revenuMoyen.max.toLocaleString('fr-FR')} DH/mois</p>
+            </div>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <!-- Outils -->
+    <section class="bg-amber-50 border border-amber-200 rounded-xl p-8">
+      <h2 class="text-2xl font-extrabold text-amber-900 mb-6">Outils Gratuits</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <a href="/calculateur-charges-ae/" class="bg-white p-4 rounded-lg border border-amber-100 hover:border-amber-300 transition-colors hover:no-underline">
+          <p class="font-bold text-amber-900">Calculateur de Charges</p>
+          <p class="text-sm text-gray-600">Simulez IR, AMO et revenu net</p>
+        </a>
+        <a href="/comparateur-statuts/" class="bg-white p-4 rounded-lg border border-amber-100 hover:border-amber-300 transition-colors hover:no-underline">
+          <p class="font-bold text-amber-900">Comparateur de Statuts</p>
+          <p class="text-sm text-gray-600">AE vs SARL vs SAS</p>
+        </a>
+        <a href="/generateur-facture/" class="bg-white p-4 rounded-lg border border-amber-100 hover:border-amber-300 transition-colors hover:no-underline">
+          <p class="font-bold text-amber-900">Générateur de Factures</p>
+          <p class="text-sm text-gray-600">Factures conformes avec ICE</p>
+        </a>
+        <a href="/suivi-chiffre-affaires/" class="bg-white p-4 rounded-lg border border-amber-100 hover:border-amber-300 transition-colors hover:no-underline">
+          <p class="font-bold text-amber-900">Suivi du CA</p>
+          <p class="text-sm text-gray-600">Suivez votre progression</p>
+        </a>
+      </div>
+    </section>
+  </div>
+</Layout>

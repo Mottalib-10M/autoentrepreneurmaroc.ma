@@ -1,0 +1,271 @@
+---
+import Layout from '../../components/layout/Layout.astro';
+import { siteConfig } from '../../config';
+import { getBreadcrumbSchema, getFAQSchema, getArticleSchema } from '../../lib/seo';
+import { activites } from '../../data/activites';
+import type { Activite } from '../../data/activites';
+
+export function getStaticPaths() {
+  return activites.map((activite) => ({
+    params: { slug: activite.slug },
+    props: { activite },
+  }));
+}
+
+interface Props {
+  activite: Activite;
+}
+
+const { activite } = Astro.props;
+
+const pageTitle = `Auto-Entrepreneur ${activite.nom} au Maroc : charges et revenus`;
+const pageDescription = `Tout savoir pour devenir ${activite.nom.toLowerCase()} auto-entrepreneur au Maroc. Charges (IR ${activite.tauxIR * 100}%), revenus, tarifs et démarches 2026.`;
+
+const breadcrumbs = [
+  { name: 'Accueil', url: siteConfig.url + '/' },
+  { name: 'Activités', url: siteConfig.url + '/activite/' },
+  { name: activite.nom, url: siteConfig.url + '/activite/' + activite.slug + '/' },
+];
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    getBreadcrumbSchema(breadcrumbs),
+    getFAQSchema(activite.faqs),
+    getArticleSchema({
+      title: pageTitle,
+      description: pageDescription,
+      url: siteConfig.url + '/activite/' + activite.slug + '/',
+    }),
+  ],
+};
+
+const irAnnuel = activite.revenuMoyen.min * 12 * activite.tauxIR;
+const amoAnnuel = 1_200;
+const chargesAnnuelles = irAnnuel + amoAnnuel;
+const revenuNetMensuel = activite.revenuMoyen.min - (chargesAnnuelles / 12);
+const tauxEffectif = ((chargesAnnuelles / (activite.revenuMoyen.min * 12)) * 100).toFixed(1);
+---
+
+<Layout
+  title={pageTitle}
+  description={pageDescription}
+  type="article"
+  schema={schema}
+>
+  <article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <!-- Breadcrumbs -->
+    <nav class="mb-6 text-sm" aria-label="Fil d'Ariane">
+      <ol class="flex items-center gap-2 text-gray-500">
+        {breadcrumbs.map((crumb, i) => (
+          <li class="flex items-center gap-2">
+            {i > 0 && <span class="text-amber-400">/</span>}
+            {i === breadcrumbs.length - 1 ? (
+              <span class="text-amber-700 font-medium">{crumb.name}</span>
+            ) : (
+              <a href={crumb.url} class="hover:text-amber-700">{crumb.name}</a>
+            )}
+          </li>
+        ))}
+      </ol>
+    </nav>
+
+    <h1 class="text-3xl sm:text-4xl font-extrabold text-amber-900 mb-4">
+      {activite.nom} Auto-Entrepreneur au Maroc : Guide Complet 2026
+    </h1>
+
+    <p class="text-sm text-gray-500 mb-8">
+      Par <a href="/a-propos/" class="text-amber-700 font-medium">{siteConfig.author.name}</a> ({siteConfig.author.credentials})
+      &middot; Mis à jour en 2026
+    </p>
+
+    <div class="prose max-w-none">
+      <p class="text-lg text-gray-700 leading-relaxed">
+        {activite.description} Découvrez les charges, les revenus attendus, les tarifs du marché et toutes les démarches
+        pour exercer comme {activite.nom.toLowerCase()} avec le statut auto-entrepreneur au Maroc en 2026.
+      </p>
+
+      <!-- Tableau récapitulatif -->
+      <div class="not-prose my-8 bg-amber-50 border border-amber-200 rounded-xl p-6">
+        <h2 class="text-xl font-bold text-amber-900 mb-4">Fiche récapitulative : {activite.nom} AE</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div class="bg-white rounded-lg p-4 border border-amber-100">
+            <p class="text-sm text-gray-500">Type d'activité</p>
+            <p class="text-lg font-bold text-amber-800">
+              {activite.type === 'services' ? 'Prestation de services' : 'Commerciale / Artisanale'}
+            </p>
+          </div>
+          <div class="bg-white rounded-lg p-4 border border-amber-100">
+            <p class="text-sm text-gray-500">Taux IR forfaitaire</p>
+            <p class="text-lg font-bold text-amber-800">{activite.tauxIR * 100}% du CA</p>
+          </div>
+          <div class="bg-white rounded-lg p-4 border border-amber-100">
+            <p class="text-sm text-gray-500">Plafond CA annuel</p>
+            <p class="text-lg font-bold text-amber-800">{activite.plafondCA.toLocaleString('fr-FR')} DH</p>
+          </div>
+          <div class="bg-white rounded-lg p-4 border border-amber-100">
+            <p class="text-sm text-gray-500">Revenu mensuel moyen</p>
+            <p class="text-lg font-bold text-amber-800">{activite.revenuMoyen.min.toLocaleString('fr-FR')} - {activite.revenuMoyen.max.toLocaleString('fr-FR')} DH</p>
+          </div>
+          <div class="bg-white rounded-lg p-4 border border-amber-100">
+            <p class="text-sm text-gray-500">Tarifs du marché</p>
+            <p class="text-lg font-bold text-amber-800">{activite.tarifMoyen}</p>
+          </div>
+          <div class="bg-white rounded-lg p-4 border border-amber-100">
+            <p class="text-sm text-gray-500">Taux effectif de charges</p>
+            <p class="text-lg font-bold text-amber-800">{tauxEffectif}% du CA</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Calcul des charges -->
+      <h2>Charges détaillées : {activite.nom} auto-entrepreneur</h2>
+
+      <p>
+        En tant que {activite.nom.toLowerCase()} auto-entrepreneur au Maroc, vos charges se composent de deux éléments
+        principaux : l'impôt sur le revenu (IR) forfaitaire et la cotisation AMO.
+      </p>
+
+      <div class="not-prose my-6">
+        <table class="w-full border-collapse">
+          <thead>
+            <tr class="bg-amber-100">
+              <th class="border border-amber-200 px-4 py-2 text-left text-amber-900">Charge</th>
+              <th class="border border-amber-200 px-4 py-2 text-right text-amber-900">Montant</th>
+              <th class="border border-amber-200 px-4 py-2 text-left text-amber-900">Fréquence</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="border border-amber-200 px-4 py-2">IR forfaitaire ({activite.tauxIR * 100}% du CA)</td>
+              <td class="border border-amber-200 px-4 py-2 text-right">{Math.round(irAnnuel).toLocaleString('fr-FR')} DH/an</td>
+              <td class="border border-amber-200 px-4 py-2">Trimestrielle</td>
+            </tr>
+            <tr class="bg-amber-50">
+              <td class="border border-amber-200 px-4 py-2">Cotisation AMO (CNSS)</td>
+              <td class="border border-amber-200 px-4 py-2 text-right">1 200 DH/an</td>
+              <td class="border border-amber-200 px-4 py-2">Trimestrielle (300 DH)</td>
+            </tr>
+            <tr class="font-bold">
+              <td class="border border-amber-200 px-4 py-2">Total charges annuelles</td>
+              <td class="border border-amber-200 px-4 py-2 text-right">{Math.round(chargesAnnuelles).toLocaleString('fr-FR')} DH/an</td>
+              <td class="border border-amber-200 px-4 py-2">-</td>
+            </tr>
+          </tbody>
+        </table>
+        <p class="text-sm text-gray-500 mt-2">
+          * Calcul basé sur un CA mensuel de {activite.revenuMoyen.min.toLocaleString('fr-FR')} DH (fourchette basse)
+        </p>
+      </div>
+
+      <p>
+        Avec un CA mensuel de {activite.revenuMoyen.min.toLocaleString('fr-FR')} DH, votre revenu net mensuel (après IR et AMO)
+        est d'environ <strong>{Math.round(revenuNetMensuel).toLocaleString('fr-FR')} DH</strong>, soit un taux effectif de
+        charges de seulement <strong>{tauxEffectif}%</strong>. Utilisez notre
+        <a href="/calculateur-charges-ae/">calculateur de charges</a> pour simuler avec votre CA réel.
+      </p>
+
+      <!-- Revenus et tarifs -->
+      <h2>Revenus et tarifs du marché</h2>
+
+      <p>
+        Le chiffre d'affaires d'un {activite.nom.toLowerCase()} auto-entrepreneur au Maroc varie entre
+        <strong>{activite.revenuMoyen.min.toLocaleString('fr-FR')} DH</strong> et
+        <strong>{activite.revenuMoyen.max.toLocaleString('fr-FR')} DH par mois</strong>.
+        Les tarifs du marché se situent autour de <strong>{activite.tarifMoyen}</strong>.
+        Ces chiffres dépendent de votre expérience, de votre spécialisation et de votre localisation géographique.
+      </p>
+
+      {activite.autorisations.length > 0 && (
+        <>
+          <h2>Autorisations et formalités spécifiques</h2>
+          <p>
+            L'exercice de l'activité de {activite.nom.toLowerCase()} en auto-entrepreneur au Maroc peut nécessiter
+            certaines autorisations ou formalités spécifiques :
+          </p>
+          <ul>
+            {activite.autorisations.map((auth) => (
+              <li><strong>{auth}</strong></li>
+            ))}
+          </ul>
+          <p>
+            Renseignez-vous auprès de votre commune et des organismes compétents pour connaître les exigences
+            exactes dans votre ville et pour votre spécialité.
+          </p>
+        </>
+      )}
+
+      <!-- Contenu éditorial -->
+      <h2>Devenir {activite.nom.toLowerCase()} auto-entrepreneur au Maroc</h2>
+
+      {activite.editorial.split('\n\n').map((paragraph) => (
+        <p>{paragraph}</p>
+      ))}
+
+      <!-- Liens utiles -->
+      <div class="not-prose my-8 bg-white border border-amber-200 rounded-xl p-6">
+        <h2 class="text-xl font-bold text-amber-900 mb-4">Outils utiles pour les {activite.nom.toLowerCase()}s AE</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <a href="/calculateur-charges-ae/" class="flex items-center gap-3 p-3 rounded-lg bg-amber-50 hover:bg-amber-100 transition-colors hover:no-underline">
+            <span class="text-xl">&#9998;</span>
+            <div>
+              <p class="font-bold text-amber-900">Calculateur de charges</p>
+              <p class="text-sm text-gray-600">Simulez votre IR, AMO et revenu net</p>
+            </div>
+          </a>
+          <a href="/generateur-facture/" class="flex items-center gap-3 p-3 rounded-lg bg-amber-50 hover:bg-amber-100 transition-colors hover:no-underline">
+            <span class="text-xl">&#9993;</span>
+            <div>
+              <p class="font-bold text-amber-900">Générateur de factures</p>
+              <p class="text-sm text-gray-600">Créez des factures conformes</p>
+            </div>
+          </a>
+          <a href="/suivi-chiffre-affaires/" class="flex items-center gap-3 p-3 rounded-lg bg-amber-50 hover:bg-amber-100 transition-colors hover:no-underline">
+            <span class="text-xl">&#9632;</span>
+            <div>
+              <p class="font-bold text-amber-900">Suivi du CA</p>
+              <p class="text-sm text-gray-600">Suivez votre progression mensuelle</p>
+            </div>
+          </a>
+          <a href="/comparateur-statuts/" class="flex items-center gap-3 p-3 rounded-lg bg-amber-50 hover:bg-amber-100 transition-colors hover:no-underline">
+            <span class="text-xl">&#9878;</span>
+            <div>
+              <p class="font-bold text-amber-900">Comparateur de statuts</p>
+              <p class="text-sm text-gray-600">AE vs SARL vs SAS</p>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <!-- Articles liés -->
+      <h2>Articles liés</h2>
+      <ul>
+        <li><a href="/guides/inscription-auto-entrepreneur/">Comment s'inscrire comme auto-entrepreneur au Maroc</a></li>
+        <li><a href="/guides/fiscalite-auto-entrepreneur/">Fiscalité de l'auto-entrepreneur au Maroc</a></li>
+        <li><a href="/guides/obligations-facturation/">Obligations de facturation de l'AE</a></li>
+        <li><a href="/guides/cnss-auto-entrepreneur/">CNSS et protection sociale de l'AE</a></li>
+        <li><a href="/comparaison/auto-entrepreneur-vs-sarl/">Auto-entrepreneur vs SARL : comparaison détaillée</a></li>
+        <li><a href="/plafond/chiffre-affaires-2026/">Plafonds de chiffre d'affaires 2026</a></li>
+        <li><a href="/guides/">Tous nos guides pour auto-entrepreneurs</a></li>
+      </ul>
+    </div>
+
+    <!-- FAQ Section -->
+    <div class="mt-12">
+      <h2 class="text-2xl font-extrabold text-amber-900 mb-6">
+        Questions fréquentes : {activite.nom} auto-entrepreneur
+      </h2>
+      <div class="space-y-4">
+        {activite.faqs.map((faq, i) => (
+          <details class="bg-white border border-amber-200 rounded-lg p-4 group" id={`faq-${i}`}>
+            <summary class="cursor-pointer list-none flex items-center justify-between">
+              <h3 class="text-lg font-bold text-amber-900 pr-4">{faq.question}</h3>
+              <span class="text-amber-500 transform group-open:rotate-45 transition-transform text-xl flex-shrink-0">+</span>
+            </summary>
+            <p class="text-gray-700 mt-4 leading-relaxed">{faq.answer}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </article>
+</Layout>

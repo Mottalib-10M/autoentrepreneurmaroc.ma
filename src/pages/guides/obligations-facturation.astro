@@ -5,7 +5,7 @@ import { getArticleSchema, getBreadcrumbSchema } from '../../lib/seo';
 
 const breadcrumbs = [
   { name: 'Accueil', url: siteConfig.url + '/' },
-  { name: 'Guides', url: siteConfig.url + '/' },
+  { name: 'Guides', url: siteConfig.url + '/guides/' },
   { name: 'Obligations Facturation', url: siteConfig.url + '/guides/obligations-facturation/' },
 ];
 
@@ -222,6 +222,15 @@ const schema = {
         Vos informations sont sauvegardées pour une utilisation future.
       </p>
 
+      <h2>Articles liés</h2>
+      <ul>
+        <li><a href="/generateur-facture/">Générateur de factures conforme</a></li>
+        <li><a href="/plafond/tva-auto-entrepreneur/">TVA et auto-entrepreneur</a></li>
+        <li><a href="/guides/fiscalite-auto-entrepreneur/">Fiscalité de l'AE</a></li>
+        <li><a href="/guides/inscription-auto-entrepreneur/">Guide d'inscription AE</a></li>
+        <li><a href="/plafond/charges-sociales-2026/">Charges sociales 2026</a></li>
+        <li><a href="/guides/">Tous nos guides</a></li>
+      </ul>
       <h2>Sources et références</h2>
 
       <ul>

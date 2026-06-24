@@ -1,0 +1,186 @@
+---
+import Layout from '../../components/layout/Layout.astro';
+import { siteConfig } from '../../config';
+import { getBreadcrumbSchema, getFAQSchema, getArticleSchema } from '../../lib/seo';
+
+const breadcrumbs = [
+  { name: 'Accueil', url: siteConfig.url + '/' },
+  { name: 'Guides', url: siteConfig.url + '/guides/' },
+  { name: 'AE vs SARL', url: siteConfig.url + '/comparaison/auto-entrepreneur-vs-sarl/' },
+];
+
+const faqData = [
+  { question: 'Quelle est la principale différence entre AE et SARL au Maroc ?', answer: 'L\'AE paie un IR forfaitaire de 1-2% sur le CA brut sans déduction de charges. La SARL est soumise à l\'IS (10-31%) sur le bénéfice net après déduction de toutes les charges professionnelles. L\'AE est limité en CA (200k-500k DH/an) tandis que la SARL n\'a pas de plafond.' },
+  { question: 'À partir de quel CA la SARL devient-elle plus avantageuse ?', answer: 'En règle générale, si votre CA annuel dépasse 150 000 DH avec des charges professionnelles supérieures à 40% du CA, la SARL peut devenir plus avantageuse. Utilisez notre comparateur de statuts pour simuler votre situation exacte.' },
+  { question: 'Peut-on passer facilement de l\'AE à la SARL ?', answer: 'Oui, la transition est possible et prend 2 à 4 semaines. Elle implique la radiation du registre AE, la création de la SARL (statuts, capital, immatriculation RC) et le transfert de l\'activité. Le passage est obligatoire si vous dépassez les seuils de CA pendant 2 ans consécutifs.' },
+  { question: 'L\'auto-entrepreneur peut-il embaucher des salariés ?', answer: 'Non, l\'AE ne peut pas embaucher. Si vous devez recruter, vous devez passer à la SARL ou une autre forme sociétaire. C\'est l\'une des limites majeures du statut AE.' },
+  { question: 'Quel statut offre une meilleure protection sociale ?', answer: 'La SARL offre une meilleure protection sociale. Le gérant salarié bénéficie de la CNSS complète (retraite, allocations familiales, AMO). L\'AE ne bénéficie que de l\'AMO de base à 300 DH/trimestre.' },
+];
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    getBreadcrumbSchema(breadcrumbs),
+    getFAQSchema(faqData),
+    getArticleSchema({
+      title: 'Auto-Entrepreneur vs SARL au Maroc',
+      description: 'Comparaison détaillée entre le statut auto-entrepreneur et la SARL au Maroc : fiscalité, charges, protection sociale et formalités.',
+      url: siteConfig.url + '/comparaison/auto-entrepreneur-vs-sarl/',
+    }),
+  ],
+};
+---
+
+<Layout
+  title="Auto-Entrepreneur vs SARL au Maroc : Comparaison 2026"
+  description="Comparaison complète auto-entrepreneur vs SARL au Maroc : fiscalité, charges sociales, protection juridique, plafonds et formalités. Guide détaillé 2026."
+  type="article"
+  schema={schema}
+>
+  <article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <nav class="mb-6 text-sm" aria-label="Fil d'Ariane">
+      <ol class="flex items-center gap-2 text-gray-500">
+        {breadcrumbs.map((crumb, i) => (
+          <li class="flex items-center gap-2">
+            {i > 0 && <span class="text-amber-400">/</span>}
+            {i === breadcrumbs.length - 1 ? (
+              <span class="text-amber-700 font-medium">{crumb.name}</span>
+            ) : (
+              <a href={crumb.url} class="hover:text-amber-700">{crumb.name}</a>
+            )}
+          </li>
+        ))}
+      </ol>
+    </nav>
+
+    <h1 class="text-3xl sm:text-4xl font-extrabold text-amber-900 mb-4">
+      Auto-Entrepreneur vs SARL au Maroc : Comparaison Complète 2026
+    </h1>
+
+    <p class="text-sm text-gray-500 mb-8">
+      Par <a href="/a-propos/" class="text-amber-700 font-medium">{siteConfig.author.name}</a> ({siteConfig.author.credentials})
+      &middot; Mis à jour en 2026
+    </p>
+
+    <div class="prose max-w-none">
+      <p>
+        Le choix entre le statut d'auto-entrepreneur (AE) et la SARL (Société à Responsabilité Limitée) est une question
+        fondamentale pour tout entrepreneur marocain. Ces deux structures juridiques offrent des avantages et des
+        inconvénients bien distincts en matière de fiscalité, de protection sociale, de responsabilité juridique et de
+        formalités administratives. Ce guide comparatif détaillé vous aide à faire le bon choix en 2026.
+      </p>
+
+      <h2>Tableau comparatif : Auto-Entrepreneur vs SARL</h2>
+
+      <div class="not-prose my-6 overflow-x-auto">
+        <table class="w-full border-collapse text-sm">
+          <thead>
+            <tr class="bg-amber-100">
+              <th class="border border-amber-200 px-4 py-3 text-left text-amber-900">Critère</th>
+              <th class="border border-amber-200 px-4 py-3 text-left text-amber-900">Auto-Entrepreneur</th>
+              <th class="border border-amber-200 px-4 py-3 text-left text-amber-900">SARL</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td class="border border-amber-200 px-4 py-2 font-medium">Forme juridique</td><td class="border border-amber-200 px-4 py-2">Personne physique</td><td class="border border-amber-200 px-4 py-2">Personne morale</td></tr>
+            <tr class="bg-amber-50"><td class="border border-amber-200 px-4 py-2 font-medium">Capital minimum</td><td class="border border-amber-200 px-4 py-2">0 DH</td><td class="border border-amber-200 px-4 py-2">1 DH (libre)</td></tr>
+            <tr><td class="border border-amber-200 px-4 py-2 font-medium">Imposition</td><td class="border border-amber-200 px-4 py-2">IR forfaitaire 1-2% du CA</td><td class="border border-amber-200 px-4 py-2">IS 10-31% du bénéfice net</td></tr>
+            <tr class="bg-amber-50"><td class="border border-amber-200 px-4 py-2 font-medium">Plafond CA</td><td class="border border-amber-200 px-4 py-2">200k DH (services) / 500k DH (commerce)</td><td class="border border-amber-200 px-4 py-2">Aucun plafond</td></tr>
+            <tr><td class="border border-amber-200 px-4 py-2 font-medium">Déduction charges</td><td class="border border-amber-200 px-4 py-2">Non</td><td class="border border-amber-200 px-4 py-2">Oui (toutes les charges)</td></tr>
+            <tr class="bg-amber-50"><td class="border border-amber-200 px-4 py-2 font-medium">TVA</td><td class="border border-amber-200 px-4 py-2">Exonéré</td><td class="border border-amber-200 px-4 py-2">Assujetti (récupération possible)</td></tr>
+            <tr><td class="border border-amber-200 px-4 py-2 font-medium">Responsabilité</td><td class="border border-amber-200 px-4 py-2">Illimitée (patrimoine personnel)</td><td class="border border-amber-200 px-4 py-2">Limitée aux apports</td></tr>
+            <tr class="bg-amber-50"><td class="border border-amber-200 px-4 py-2 font-medium">Embauche</td><td class="border border-amber-200 px-4 py-2">Non autorisée</td><td class="border border-amber-200 px-4 py-2">Autorisée (sans limite)</td></tr>
+            <tr><td class="border border-amber-200 px-4 py-2 font-medium">Protection sociale</td><td class="border border-amber-200 px-4 py-2">AMO basique (300 DH/trimestre)</td><td class="border border-amber-200 px-4 py-2">CNSS complète (retraite, AMO, alloc.)</td></tr>
+            <tr class="bg-amber-50"><td class="border border-amber-200 px-4 py-2 font-medium">Comptabilité</td><td class="border border-amber-200 px-4 py-2">Registre achats/ventes</td><td class="border border-amber-200 px-4 py-2">Comptabilité complète obligatoire</td></tr>
+            <tr><td class="border border-amber-200 px-4 py-2 font-medium">Délai de création</td><td class="border border-amber-200 px-4 py-2">48 heures</td><td class="border border-amber-200 px-4 py-2">2 à 4 semaines</td></tr>
+            <tr class="bg-amber-50"><td class="border border-amber-200 px-4 py-2 font-medium">Coût de création</td><td class="border border-amber-200 px-4 py-2">Gratuit</td><td class="border border-amber-200 px-4 py-2">3 000 à 8 000 DH</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Avantages de l'Auto-Entrepreneur</h2>
+      <ul>
+        <li><strong>Fiscalité ultra-simple</strong> : IR forfaitaire de 1-2% du CA, sans calcul de bénéfice</li>
+        <li><strong>Création rapide et gratuite</strong> : Inscription en ligne sur ae.gov.ma en 48 heures</li>
+        <li><strong>Comptabilité simplifiée</strong> : Simple registre des achats et ventes</li>
+        <li><strong>Pas de capital minimum</strong> : Aucun investissement initial requis</li>
+        <li><strong>Exonération TVA</strong> : Pas de gestion de la TVA</li>
+      </ul>
+
+      <h2>Inconvénients de l'Auto-Entrepreneur</h2>
+      <ul>
+        <li><strong>Plafond de CA</strong> : 200 000 DH (services) ou 500 000 DH (commerce) par an</li>
+        <li><strong>Pas de déduction de charges</strong> : IR sur le CA brut, pas sur le bénéfice</li>
+        <li><strong>Responsabilité illimitée</strong> : Patrimoine personnel engagé</li>
+        <li><strong>Impossible d'embaucher</strong> : Pas de salariés autorisés</li>
+        <li><strong>Protection sociale limitée</strong> : Seulement l'AMO de base</li>
+      </ul>
+
+      <h2>Avantages de la SARL</h2>
+      <ul>
+        <li><strong>Responsabilité limitée</strong> : Patrimoine personnel protégé</li>
+        <li><strong>Déduction des charges</strong> : Toutes les charges professionnelles sont déductibles</li>
+        <li><strong>Pas de plafond de CA</strong> : Aucune limite de chiffre d'affaires</li>
+        <li><strong>Protection sociale complète</strong> : CNSS avec retraite, AMO et allocations</li>
+        <li><strong>Possibilité d'embaucher</strong> : Recrutement de salariés sans limite</li>
+        <li><strong>Crédibilité</strong> : Meilleure image auprès des banques et grands clients</li>
+      </ul>
+
+      <h2>Inconvénients de la SARL</h2>
+      <ul>
+        <li><strong>Complexité administrative</strong> : Comptabilité complète, assemblées générales, obligations déclaratives multiples</li>
+        <li><strong>Coût de création</strong> : 3 000 à 8 000 DH (statuts, RC, publications)</li>
+        <li><strong>Charges sociales élevées</strong> : ~33% de charges patronales + salariales sur la rémunération du gérant</li>
+        <li><strong>Fiscalité plus lourde</strong> : IS 10-31% + IR sur les dividendes (15%)</li>
+        <li><strong>Coût comptable annuel</strong> : 10 000 à 30 000 DH pour un expert-comptable</li>
+      </ul>
+
+      <h2>Quand choisir l'Auto-Entrepreneur ?</h2>
+      <p>
+        Le statut AE est idéal si vous démarrez une activité avec un CA modeste, si vos charges professionnelles
+        sont faibles (moins de 30% du CA), si vous travaillez seul sans besoin d'embaucher, et si vous valorisez
+        la simplicité administrative. C'est le choix optimal pour tester une idée d'entreprise avant de s'engager
+        dans une structure plus lourde.
+      </p>
+
+      <h2>Quand choisir la SARL ?</h2>
+      <p>
+        La SARL est recommandée si votre CA dépasse ou risque de dépasser les plafonds AE, si vous avez des
+        charges professionnelles importantes (loyer, salariés, matériel), si vous avez besoin de protéger votre
+        patrimoine personnel, ou si vous souhaitez bénéficier d'une meilleure protection sociale et crédibilité
+        auprès des banques et des grands clients.
+      </p>
+
+      <p>
+        Simulez votre situation avec notre <a href="/comparateur-statuts/">comparateur de statuts interactif</a>
+        pour voir exactement combien vous gagneriez net dans chaque scénario.
+      </p>
+
+      <h2>Articles liés</h2>
+      <ul>
+        <li><a href="/comparateur-statuts/">Comparateur de statuts interactif AE vs SARL vs SAS</a></li>
+        <li><a href="/calculateur-charges-ae/">Calculateur de charges auto-entrepreneur</a></li>
+        <li><a href="/guides/passer-ae-sarl/">Guide : passer de l'AE à la SARL</a></li>
+        <li><a href="/comparaison/auto-entrepreneur-vs-sas/">Auto-Entrepreneur vs SAS</a></li>
+        <li><a href="/plafond/chiffre-affaires-2026/">Plafonds de CA 2026</a></li>
+        <li><a href="/guides/">Tous nos guides</a></li>
+      </ul>
+    </div>
+
+    <!-- FAQ -->
+    <div class="mt-12">
+      <h2 class="text-2xl font-extrabold text-amber-900 mb-6">Questions fréquentes</h2>
+      <div class="space-y-4">
+        {faqData.map((faq, i) => (
+          <details class="bg-white border border-amber-200 rounded-lg p-4 group" id={`faq-${i}`}>
+            <summary class="cursor-pointer list-none flex items-center justify-between">
+              <h3 class="text-lg font-bold text-amber-900 pr-4">{faq.question}</h3>
+              <span class="text-amber-500 transform group-open:rotate-45 transition-transform text-xl flex-shrink-0">+</span>
+            </summary>
+            <p class="text-gray-700 mt-4 leading-relaxed">{faq.answer}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </article>
+</Layout>

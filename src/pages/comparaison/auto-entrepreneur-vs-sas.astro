@@ -1,0 +1,145 @@
+---
+import Layout from '../../components/layout/Layout.astro';
+import { siteConfig } from '../../config';
+import { getBreadcrumbSchema, getFAQSchema, getArticleSchema } from '../../lib/seo';
+
+const breadcrumbs = [
+  { name: 'Accueil', url: siteConfig.url + '/' },
+  { name: 'Guides', url: siteConfig.url + '/guides/' },
+  { name: 'AE vs SAS', url: siteConfig.url + '/comparaison/auto-entrepreneur-vs-sas/' },
+];
+
+const faqData = [
+  { question: 'Quand choisir la SAS plutôt que l\'AE au Maroc ?', answer: 'La SAS est recommandée si vous avez plusieurs associés, prévoyez des levées de fonds, ou avez besoin d\'une grande flexibilité statutaire. Elle est plus adaptée aux projets de startup et aux activités à fort potentiel de croissance dépassant les plafonds AE.' },
+  { question: 'La SAS est-elle plus avantageuse fiscalement que l\'AE ?', answer: 'Cela dépend du CA et des charges. L\'AE est plus avantageux pour les petits CA avec peu de charges. La SAS permet de déduire toutes les charges et est soumise à l\'IS (10-31% sur le bénéfice). Pour un CA élevé avec des charges importantes, la SAS peut être plus intéressante.' },
+  { question: 'Quel est le capital minimum pour créer une SAS au Maroc ?', answer: 'Le capital minimum de la SAS est libre (à partir de 1 DH). Cependant, un capital plus conséquent renforce la crédibilité de l\'entreprise auprès des banques et des partenaires. Un capital de 10 000 à 100 000 DH est couramment pratiqué.' },
+  { question: 'La SAS permet-elle d\'avoir des investisseurs ?', answer: 'Oui, c\'est l\'un des principaux avantages de la SAS. La flexibilité des statuts permet de créer différentes catégories d\'actions, de prévoir des clauses d\'agrément et de dilution, facilitant ainsi l\'entrée d\'investisseurs au capital.' },
+  { question: 'Peut-on transformer un AE en SAS ?', answer: 'Il n\'y a pas de transformation directe. Il faut radier l\'AE puis créer la SAS. Le processus prend 2 à 4 semaines et nécessite la rédaction de statuts, le dépôt du capital et l\'immatriculation au Registre du Commerce.' },
+];
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    getBreadcrumbSchema(breadcrumbs),
+    getFAQSchema(faqData),
+    getArticleSchema({
+      title: 'Auto-Entrepreneur vs SAS au Maroc',
+      description: 'Comparaison entre auto-entrepreneur et SAS au Maroc : fiscalité, flexibilité, investisseurs et croissance.',
+      url: siteConfig.url + '/comparaison/auto-entrepreneur-vs-sas/',
+    }),
+  ],
+};
+---
+
+<Layout
+  title="Auto-Entrepreneur vs SAS au Maroc : Comparaison 2026"
+  description="Comparaison détaillée auto-entrepreneur vs SAS au Maroc : fiscalité, capital, flexibilité statutaire, investisseurs et charges sociales. Guide complet 2026."
+  type="article"
+  schema={schema}
+>
+  <article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <nav class="mb-6 text-sm" aria-label="Fil d'Ariane">
+      <ol class="flex items-center gap-2 text-gray-500">
+        {breadcrumbs.map((crumb, i) => (
+          <li class="flex items-center gap-2">
+            {i > 0 && <span class="text-amber-400">/</span>}
+            {i === breadcrumbs.length - 1 ? (
+              <span class="text-amber-700 font-medium">{crumb.name}</span>
+            ) : (
+              <a href={crumb.url} class="hover:text-amber-700">{crumb.name}</a>
+            )}
+          </li>
+        ))}
+      </ol>
+    </nav>
+
+    <h1 class="text-3xl sm:text-4xl font-extrabold text-amber-900 mb-4">
+      Auto-Entrepreneur vs SAS au Maroc : Comparaison Complète 2026
+    </h1>
+
+    <p class="text-sm text-gray-500 mb-8">
+      Par <a href="/a-propos/" class="text-amber-700 font-medium">{siteConfig.author.name}</a> ({siteConfig.author.credentials}) &middot; Mis à jour en 2026
+    </p>
+
+    <div class="prose max-w-none">
+      <p>
+        La SAS (Société par Actions Simplifiée) est une forme juridique relativement récente au Maroc qui offre une grande
+        flexibilité statutaire. Comparée au statut auto-entrepreneur, elle s'adresse à des projets de plus grande
+        envergure, notamment ceux qui impliquent plusieurs associés ou des levées de fonds. Ce guide compare en détail
+        les deux statuts pour vous aider à choisir celui qui correspond à votre projet entrepreneurial.
+      </p>
+
+      <h2>Tableau comparatif : Auto-Entrepreneur vs SAS</h2>
+
+      <div class="not-prose my-6 overflow-x-auto">
+        <table class="w-full border-collapse text-sm">
+          <thead>
+            <tr class="bg-amber-100">
+              <th class="border border-amber-200 px-4 py-3 text-left text-amber-900">Critère</th>
+              <th class="border border-amber-200 px-4 py-3 text-left text-amber-900">Auto-Entrepreneur</th>
+              <th class="border border-amber-200 px-4 py-3 text-left text-amber-900">SAS</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td class="border border-amber-200 px-4 py-2 font-medium">Forme juridique</td><td class="border border-amber-200 px-4 py-2">Personne physique</td><td class="border border-amber-200 px-4 py-2">Personne morale (société par actions)</td></tr>
+            <tr class="bg-amber-50"><td class="border border-amber-200 px-4 py-2 font-medium">Nombre d'associés</td><td class="border border-amber-200 px-4 py-2">1 seul (le fondateur)</td><td class="border border-amber-200 px-4 py-2">1 minimum (SASU), pas de maximum</td></tr>
+            <tr><td class="border border-amber-200 px-4 py-2 font-medium">Capital minimum</td><td class="border border-amber-200 px-4 py-2">0 DH</td><td class="border border-amber-200 px-4 py-2">Libre (à partir de 1 DH)</td></tr>
+            <tr class="bg-amber-50"><td class="border border-amber-200 px-4 py-2 font-medium">Imposition</td><td class="border border-amber-200 px-4 py-2">IR forfaitaire 1-2% du CA</td><td class="border border-amber-200 px-4 py-2">IS 10-31% du bénéfice</td></tr>
+            <tr><td class="border border-amber-200 px-4 py-2 font-medium">Plafond CA</td><td class="border border-amber-200 px-4 py-2">200k-500k DH/an</td><td class="border border-amber-200 px-4 py-2">Aucun plafond</td></tr>
+            <tr class="bg-amber-50"><td class="border border-amber-200 px-4 py-2 font-medium">Flexibilité statuts</td><td class="border border-amber-200 px-4 py-2">Aucune</td><td class="border border-amber-200 px-4 py-2">Très grande</td></tr>
+            <tr><td class="border border-amber-200 px-4 py-2 font-medium">Investisseurs</td><td class="border border-amber-200 px-4 py-2">Non possible</td><td class="border border-amber-200 px-4 py-2">Facilité (actions, catégories)</td></tr>
+            <tr class="bg-amber-50"><td class="border border-amber-200 px-4 py-2 font-medium">Responsabilité</td><td class="border border-amber-200 px-4 py-2">Illimitée</td><td class="border border-amber-200 px-4 py-2">Limitée aux apports</td></tr>
+            <tr><td class="border border-amber-200 px-4 py-2 font-medium">Embauche</td><td class="border border-amber-200 px-4 py-2">Non autorisée</td><td class="border border-amber-200 px-4 py-2">Autorisée</td></tr>
+            <tr class="bg-amber-50"><td class="border border-amber-200 px-4 py-2 font-medium">Création</td><td class="border border-amber-200 px-4 py-2">48h, gratuit</td><td class="border border-amber-200 px-4 py-2">2-4 semaines, 5 000-15 000 DH</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Quand choisir l'Auto-Entrepreneur ?</h2>
+      <p>
+        Le statut AE convient si vous lancez une activité solo avec un CA modeste, sans besoin d'associés ni
+        d'investisseurs. Sa simplicité administrative et sa fiscalité légère en font le choix idéal pour tester
+        une idée de business ou exercer une activité complémentaire.
+      </p>
+
+      <h2>Quand choisir la SAS ?</h2>
+      <p>
+        La SAS est le choix privilégié pour les projets ambitieux : startups, activités à forte croissance,
+        projets avec plusieurs associés ou nécessitant des investissements externes. Sa flexibilité statutaire
+        permet de créer des structures de gouvernance sur mesure et d'organiser l'entrée et la sortie d'actionnaires
+        de manière fluide. Si vous visez une levée de fonds ou une croissance rapide dépassant les plafonds AE,
+        la SAS est la structure à privilégier.
+      </p>
+
+      <p>
+        La SAS est également recommandée si vous avez des charges professionnelles importantes à déduire, si vous
+        souhaitez une protection juridique renforcée (responsabilité limitée) ou si vous avez besoin de crédibilité
+        auprès de partenaires financiers et institutionnels.
+      </p>
+
+      <h2>Articles liés</h2>
+      <ul>
+        <li><a href="/comparaison/auto-entrepreneur-vs-sarl/">Auto-Entrepreneur vs SARL</a></li>
+        <li><a href="/comparateur-statuts/">Comparateur de statuts interactif</a></li>
+        <li><a href="/guides/passer-ae-sarl/">Guide : passer de l'AE à la SARL</a></li>
+        <li><a href="/plafond/chiffre-affaires-2026/">Plafonds de CA 2026</a></li>
+        <li><a href="/guides/">Tous nos guides</a></li>
+      </ul>
+    </div>
+
+    <div class="mt-12">
+      <h2 class="text-2xl font-extrabold text-amber-900 mb-6">Questions fréquentes</h2>
+      <div class="space-y-4">
+        {faqData.map((faq, i) => (
+          <details class="bg-white border border-amber-200 rounded-lg p-4 group" id={`faq-${i}`}>
+            <summary class="cursor-pointer list-none flex items-center justify-between">
+              <h3 class="text-lg font-bold text-amber-900 pr-4">{faq.question}</h3>
+              <span class="text-amber-500 transform group-open:rotate-45 transition-transform text-xl flex-shrink-0">+</span>
+            </summary>
+            <p class="text-gray-700 mt-4 leading-relaxed">{faq.answer}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </article>
+</Layout>

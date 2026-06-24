@@ -1,0 +1,151 @@
+---
+import Layout from '../../components/layout/Layout.astro';
+import { siteConfig } from '../../config';
+import { getBreadcrumbSchema, getFAQSchema, getArticleSchema } from '../../lib/seo';
+
+const breadcrumbs = [
+  { name: 'Accueil', url: siteConfig.url + '/' },
+  { name: 'Guides', url: siteConfig.url + '/guides/' },
+  { name: 'TVA AE', url: siteConfig.url + '/plafond/tva-auto-entrepreneur/' },
+];
+
+const faqData = [
+  { question: 'L\'auto-entrepreneur est-il exonéré de TVA au Maroc ?', answer: 'Oui, l\'auto-entrepreneur est totalement exonéré de TVA au Maroc. Il ne facture pas de TVA à ses clients et ne peut pas récupérer la TVA sur ses achats. Chaque facture doit porter la mention obligatoire "Exonéré de TVA - Statut Auto-Entrepreneur, Loi 114-13".' },
+  { question: 'Quelles mentions TVA mettre sur les factures AE ?', answer: 'Chaque facture doit obligatoirement porter la mention "Exonéré de TVA" ou plus précisément "Exonéré de TVA - Article 89-I-12° du CGI / Loi 114-13 relative au statut de l\'auto-entrepreneur". L\'absence de cette mention peut entraîner des sanctions.' },
+  { question: 'Peut-on récupérer la TVA sur les achats en tant qu\'AE ?', answer: 'Non, l\'auto-entrepreneur ne peut pas récupérer la TVA payée sur ses achats professionnels (matériel, fournitures, logiciels). C\'est un inconvénient si vos achats TTC sont importants. La TVA payée est une charge définitive pour l\'AE.' },
+  { question: 'Doit-on facturer la TVA à des clients étrangers en AE ?', answer: 'Non, l\'AE est exonéré de TVA quelle que soit la nationalité du client. Pour les prestations à des clients étrangers (hors Maroc), la TVA ne s\'applique pas de toute façon. Mentionnez simplement votre statut d\'exonération sur la facture.' },
+  { question: 'Quand commence-t-on à payer la TVA si on quitte le statut AE ?', answer: 'Si vous passez à la SARL ou SAS, vous serez assujetti à la TVA (20% standard). Vous devrez la facturer à vos clients et la reverser à l\'État, mais vous pourrez aussi récupérer la TVA sur vos achats. Le taux standard est de 20%, avec des taux réduits (7%, 10%, 14%) pour certaines activités.' },
+];
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    getBreadcrumbSchema(breadcrumbs),
+    getFAQSchema(faqData),
+    getArticleSchema({
+      title: 'TVA Auto-Entrepreneur au Maroc',
+      description: 'Exonération TVA de l\'auto-entrepreneur au Maroc : règles, mentions obligatoires et implications pratiques.',
+      url: siteConfig.url + '/plafond/tva-auto-entrepreneur/',
+    }),
+  ],
+};
+---
+
+<Layout
+  title="TVA Auto-Entrepreneur Maroc : Exonération et Règles 2026"
+  description="TVA et auto-entrepreneur au Maroc : exonération complète, mentions obligatoires sur les factures, récupération TVA et implications pratiques. Guide 2026."
+  type="article"
+  schema={schema}
+>
+  <article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <nav class="mb-6 text-sm" aria-label="Fil d'Ariane">
+      <ol class="flex items-center gap-2 text-gray-500">
+        {breadcrumbs.map((crumb, i) => (
+          <li class="flex items-center gap-2">
+            {i > 0 && <span class="text-amber-400">/</span>}
+            {i === breadcrumbs.length - 1 ? (
+              <span class="text-amber-700 font-medium">{crumb.name}</span>
+            ) : (
+              <a href={crumb.url} class="hover:text-amber-700">{crumb.name}</a>
+            )}
+          </li>
+        ))}
+      </ol>
+    </nav>
+
+    <h1 class="text-3xl sm:text-4xl font-extrabold text-amber-900 mb-4">
+      TVA et Auto-Entrepreneur au Maroc : Guide Complet de l'Exonération 2026
+    </h1>
+
+    <p class="text-sm text-gray-500 mb-8">
+      Par <a href="/a-propos/" class="text-amber-700 font-medium">{siteConfig.author.name}</a> ({siteConfig.author.credentials}) &middot; Mis à jour en 2026
+    </p>
+
+    <div class="prose max-w-none">
+      <p>
+        L'exonération de TVA est l'un des avantages majeurs du statut auto-entrepreneur au Maroc. Contrairement aux
+        sociétés (SARL, SAS) qui doivent facturer, collecter et reverser la TVA, l'auto-entrepreneur en est totalement
+        dispensé. Ce guide explique en détail le fonctionnement de cette exonération, ses avantages, ses inconvénients
+        et les mentions obligatoires à faire figurer sur vos factures.
+      </p>
+
+      <h2>L'exonération TVA de l'auto-entrepreneur</h2>
+      <p>
+        En vertu de la <strong>Loi 114-13</strong> relative au statut de l'auto-entrepreneur et de l'article 89-I-12°
+        du Code Général des Impôts (CGI), l'auto-entrepreneur bénéficie d'une <strong>exonération totale de TVA</strong>.
+        Concrètement, cela signifie :
+      </p>
+      <ul>
+        <li><strong>Pas de TVA facturée</strong> : Vous ne facturez pas de TVA à vos clients. Vos prix sont TTC par définition.</li>
+        <li><strong>Pas de TVA récupérable</strong> : Vous ne pouvez pas récupérer la TVA payée sur vos achats professionnels.</li>
+        <li><strong>Pas de déclaration de TVA</strong> : Aucune obligation déclarative liée à la TVA.</li>
+        <li><strong>Pas de comptabilité TVA</strong> : Pas de compte TVA à gérer dans votre registre.</li>
+      </ul>
+
+      <h2>Mentions obligatoires sur les factures</h2>
+      <p>
+        Chaque facture émise par un auto-entrepreneur doit obligatoirement comporter la mention d'exonération de TVA.
+        La formulation recommandée est :
+      </p>
+
+      <div class="not-prose my-6 bg-amber-50 border border-amber-200 rounded-xl p-6">
+        <p class="text-amber-900 font-medium text-center text-lg">
+          "Exonéré de TVA - Auto-Entrepreneur - Loi 114-13"
+        </p>
+      </div>
+
+      <p>
+        L'absence de cette mention peut entraîner des sanctions administratives et créer de la confusion chez vos
+        clients professionnels qui ne pourront pas déduire de TVA sur votre facture. Utilisez notre
+        <a href="/generateur-facture/">générateur de factures</a> qui inclut automatiquement toutes les mentions obligatoires.
+      </p>
+
+      <h2>Avantages de l'exonération TVA</h2>
+      <ul>
+        <li><strong>Prix compétitifs pour les particuliers</strong> : Vos prix sont automatiquement 20% moins chers qu'un prestataire assujetti à la TVA (pour les clients particuliers qui ne récupèrent pas la TVA)</li>
+        <li><strong>Simplicité de gestion</strong> : Pas de déclaration TVA, pas de comptabilité TVA</li>
+        <li><strong>Trésorerie préservée</strong> : Pas de TVA collectée à reverser à l'État</li>
+      </ul>
+
+      <h2>Inconvénients de l'exonération TVA</h2>
+      <ul>
+        <li><strong>TVA non récupérable sur les achats</strong> : Si vous achetez du matériel à 10 000 DH TTC, vous ne pouvez pas récupérer les ~1 667 DH de TVA inclus</li>
+        <li><strong>Désavantage avec les clients assujettis</strong> : Les entreprises assujetties à la TVA préfèrent parfois des fournisseurs qui facturent la TVA, car elles peuvent la déduire</li>
+        <li><strong>Pas de facturation inter-entreprises optimale</strong> : Dans une chaîne de valeur avec TVA, l'AE peut créer une rupture dans la chaîne de déduction</li>
+      </ul>
+
+      <h2>Impact sur vos tarifs et votre compétitivité</h2>
+      <p>
+        L'exonération de TVA vous donne un avantage tarifaire naturel auprès des <strong>clients particuliers</strong>
+        (qui ne récupèrent pas la TVA). Pour les <strong>clients professionnels</strong> assujettis, l'impact est neutre
+        car ils auraient récupéré la TVA de toute façon. En pratique, la plupart des auto-entrepreneurs bénéficient de
+        cette exonération comme d'un avantage compétitif réel, surtout dans les services aux particuliers.
+      </p>
+
+      <h2>Articles liés</h2>
+      <ul>
+        <li><a href="/generateur-facture/">Générateur de factures conformes (avec mention TVA)</a></li>
+        <li><a href="/guides/obligations-facturation/">Obligations de facturation de l'AE</a></li>
+        <li><a href="/plafond/chiffre-affaires-2026/">Plafonds de CA 2026</a></li>
+        <li><a href="/plafond/charges-sociales-2026/">Charges sociales 2026</a></li>
+        <li><a href="/guides/fiscalite-auto-entrepreneur/">Fiscalité de l'AE</a></li>
+        <li><a href="/guides/">Tous nos guides</a></li>
+      </ul>
+    </div>
+
+    <div class="mt-12">
+      <h2 class="text-2xl font-extrabold text-amber-900 mb-6">Questions fréquentes</h2>
+      <div class="space-y-4">
+        {faqData.map((faq, i) => (
+          <details class="bg-white border border-amber-200 rounded-lg p-4 group" id={`faq-${i}`}>
+            <summary class="cursor-pointer list-none flex items-center justify-between">
+              <h3 class="text-lg font-bold text-amber-900 pr-4">{faq.question}</h3>
+              <span class="text-amber-500 transform group-open:rotate-45 transition-transform text-xl flex-shrink-0">+</span>
+            </summary>
+            <p class="text-gray-700 mt-4 leading-relaxed">{faq.answer}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </article>
+</Layout>

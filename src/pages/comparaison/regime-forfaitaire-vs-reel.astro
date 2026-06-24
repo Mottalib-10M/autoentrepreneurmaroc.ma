@@ -1,0 +1,160 @@
+---
+import Layout from '../../components/layout/Layout.astro';
+import { siteConfig } from '../../config';
+import { getBreadcrumbSchema, getFAQSchema, getArticleSchema } from '../../lib/seo';
+
+const breadcrumbs = [
+  { name: 'Accueil', url: siteConfig.url + '/' },
+  { name: 'Guides', url: siteConfig.url + '/guides/' },
+  { name: 'Forfaitaire vs Réel', url: siteConfig.url + '/comparaison/regime-forfaitaire-vs-reel/' },
+];
+
+const faqData = [
+  { question: 'Qu\'est-ce que le régime forfaitaire au Maroc ?', answer: 'Le régime forfaitaire est le mode d\'imposition de l\'auto-entrepreneur : un taux fixe de 1% (commerce) ou 2% (services) appliqué directement sur le chiffre d\'affaires brut, sans possibilité de déduire les charges. C\'est le système le plus simple qui existe au Maroc.' },
+  { question: 'Qu\'est-ce que le régime réel ?', answer: 'Le régime réel est le mode d\'imposition des sociétés (SARL, SAS) et des entreprises individuelles classiques. L\'impôt est calculé sur le bénéfice net (CA - charges déductibles). Il nécessite une comptabilité complète et permet de déduire toutes les charges professionnelles.' },
+  { question: 'Quand le régime réel est-il plus avantageux ?', answer: 'Le régime réel est plus avantageux lorsque vos charges professionnelles dépassent environ 40% de votre CA. Dans ce cas, l\'impôt sur le bénéfice net sera inférieur à l\'IR forfaitaire de 1-2% sur le CA brut. C\'est souvent le cas pour les activités avec loyer, salariés ou matériel coûteux.' },
+  { question: 'Peut-on choisir entre forfaitaire et réel ?', answer: 'Non, le régime forfaitaire est automatiquement appliqué au statut auto-entrepreneur. Le régime réel s\'applique aux autres formes juridiques (SARL, SAS, entreprise individuelle classique). Pour changer de régime, il faut changer de statut juridique.' },
+  { question: 'Le passage du forfaitaire au réel est-il obligatoire ?', answer: 'Oui, si vous dépassez les plafonds de CA de l\'AE (200k ou 500k DH) pendant 2 années consécutives, vous devez obligatoirement passer au régime réel en créant une société (SARL, SAS) ou en passant à l\'entreprise individuelle classique.' },
+];
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    getBreadcrumbSchema(breadcrumbs),
+    getFAQSchema(faqData),
+    getArticleSchema({
+      title: 'Régime Forfaitaire vs Réel au Maroc',
+      description: 'Comparaison entre le régime forfaitaire (auto-entrepreneur) et le régime réel (SARL) au Maroc.',
+      url: siteConfig.url + '/comparaison/regime-forfaitaire-vs-reel/',
+    }),
+  ],
+};
+---
+
+<Layout
+  title="Régime Forfaitaire vs Réel au Maroc : Comparaison 2026"
+  description="Comparaison régime forfaitaire (auto-entrepreneur) vs régime réel (SARL/SAS) au Maroc : calcul d'impôt, déduction des charges et seuils de rentabilité."
+  type="article"
+  schema={schema}
+>
+  <article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <nav class="mb-6 text-sm" aria-label="Fil d'Ariane">
+      <ol class="flex items-center gap-2 text-gray-500">
+        {breadcrumbs.map((crumb, i) => (
+          <li class="flex items-center gap-2">
+            {i > 0 && <span class="text-amber-400">/</span>}
+            {i === breadcrumbs.length - 1 ? (
+              <span class="text-amber-700 font-medium">{crumb.name}</span>
+            ) : (
+              <a href={crumb.url} class="hover:text-amber-700">{crumb.name}</a>
+            )}
+          </li>
+        ))}
+      </ol>
+    </nav>
+
+    <h1 class="text-3xl sm:text-4xl font-extrabold text-amber-900 mb-4">
+      Régime Forfaitaire vs Régime Réel au Maroc : Guide Complet 2026
+    </h1>
+
+    <p class="text-sm text-gray-500 mb-8">
+      Par <a href="/a-propos/" class="text-amber-700 font-medium">{siteConfig.author.name}</a> ({siteConfig.author.credentials}) &middot; Mis à jour en 2026
+    </p>
+
+    <div class="prose max-w-none">
+      <p>
+        Au Maroc, deux grands régimes fiscaux s'offrent aux entrepreneurs : le <strong>régime forfaitaire</strong>
+        (applicable aux auto-entrepreneurs) et le <strong>régime réel</strong> (applicable aux sociétés et entreprises
+        individuelles classiques). Comprendre les différences entre ces deux régimes est essentiel pour optimiser
+        votre fiscalité et choisir le statut le plus adapté à votre situation. Ce guide compare les deux approches
+        en détail avec des exemples chiffrés concrets.
+      </p>
+
+      <h2>Le régime forfaitaire : simplicité maximale</h2>
+      <p>
+        Le régime forfaitaire est le mode d'imposition exclusif du statut auto-entrepreneur. Son principe est
+        d'une simplicité remarquable : l'impôt est un pourcentage fixe du chiffre d'affaires brut, sans aucune
+        déduction possible. Les taux sont de <strong>1% pour les activités commerciales</strong> et de
+        <strong>2% pour les prestations de services</strong>. Aucune comptabilité complexe n'est nécessaire.
+      </p>
+
+      <h2>Le régime réel : optimisation par les charges</h2>
+      <p>
+        Le régime réel impose le bénéfice net de l'entreprise, c'est-à-dire le chiffre d'affaires moins toutes
+        les charges déductibles (loyer, salaires, fournitures, amortissements, frais de déplacement, honoraires
+        comptables, etc.). L'impôt (IS pour les sociétés, IR progressif pour les entreprises individuelles) est
+        calculé sur ce bénéfice net. Ce régime nécessite une comptabilité complète et souvent l'intervention
+        d'un expert-comptable.
+      </p>
+
+      <h2>Tableau comparatif détaillé</h2>
+
+      <div class="not-prose my-6 overflow-x-auto">
+        <table class="w-full border-collapse text-sm">
+          <thead>
+            <tr class="bg-amber-100">
+              <th class="border border-amber-200 px-4 py-3 text-left text-amber-900">Critère</th>
+              <th class="border border-amber-200 px-4 py-3 text-left text-amber-900">Forfaitaire (AE)</th>
+              <th class="border border-amber-200 px-4 py-3 text-left text-amber-900">Réel (SARL/SAS)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td class="border border-amber-200 px-4 py-2 font-medium">Base d'imposition</td><td class="border border-amber-200 px-4 py-2">CA brut</td><td class="border border-amber-200 px-4 py-2">Bénéfice net (CA - charges)</td></tr>
+            <tr class="bg-amber-50"><td class="border border-amber-200 px-4 py-2 font-medium">Taux</td><td class="border border-amber-200 px-4 py-2">1% (commerce) / 2% (services)</td><td class="border border-amber-200 px-4 py-2">IS : 10-31% / IR : 0-38%</td></tr>
+            <tr><td class="border border-amber-200 px-4 py-2 font-medium">Déduction charges</td><td class="border border-amber-200 px-4 py-2">Non</td><td class="border border-amber-200 px-4 py-2">Oui (toutes charges justifiées)</td></tr>
+            <tr class="bg-amber-50"><td class="border border-amber-200 px-4 py-2 font-medium">Comptabilité</td><td class="border border-amber-200 px-4 py-2">Registre simple</td><td class="border border-amber-200 px-4 py-2">Complète (bilan, CPC)</td></tr>
+            <tr><td class="border border-amber-200 px-4 py-2 font-medium">Expert-comptable</td><td class="border border-amber-200 px-4 py-2">Non nécessaire</td><td class="border border-amber-200 px-4 py-2">Fortement recommandé (10-30k DH/an)</td></tr>
+            <tr class="bg-amber-50"><td class="border border-amber-200 px-4 py-2 font-medium">TVA</td><td class="border border-amber-200 px-4 py-2">Exonéré</td><td class="border border-amber-200 px-4 py-2">Assujetti (récupérable)</td></tr>
+            <tr><td class="border border-amber-200 px-4 py-2 font-medium">Simplicité</td><td class="border border-amber-200 px-4 py-2">Très simple</td><td class="border border-amber-200 px-4 py-2">Complexe</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Exemple chiffré : quel régime est le plus avantageux ?</h2>
+
+      <h3>Scénario 1 : Consultant avec peu de charges</h3>
+      <p>CA : 150 000 DH/an, charges professionnelles : 15 000 DH/an (10% du CA)</p>
+      <ul>
+        <li><strong>Forfaitaire</strong> : IR = 150 000 x 2% = 3 000 DH + AMO 1 200 DH = <strong>4 200 DH</strong></li>
+        <li><strong>Réel (SARL)</strong> : Bénéfice net = 135 000 DH, IS = 13 500 DH + CNSS ~44 550 DH + comptable 15 000 DH = <strong>~73 050 DH</strong></li>
+      </ul>
+      <p>Verdict : Le <strong>forfaitaire est nettement plus avantageux</strong> (4 200 DH vs 73 050 DH de charges).</p>
+
+      <h3>Scénario 2 : Commerce avec charges élevées</h3>
+      <p>CA : 400 000 DH/an, charges : 300 000 DH/an (75% du CA)</p>
+      <ul>
+        <li><strong>Forfaitaire</strong> : IR = 400 000 x 1% = 4 000 DH + AMO 1 200 DH = <strong>5 200 DH</strong></li>
+        <li><strong>Réel (SARL)</strong> : Bénéfice net = 100 000 DH, IS = 10 000 DH + charges sociales + comptable = <strong>~40 000 DH</strong></li>
+      </ul>
+      <p>
+        Verdict : Le <strong>forfaitaire reste avantageux</strong> en termes de charges fiscales directes.
+        Cependant, en réel, les charges de 300 000 DH ont été déduites, ce qui reflète mieux la réalité économique.
+      </p>
+
+      <h2>Articles liés</h2>
+      <ul>
+        <li><a href="/comparaison/auto-entrepreneur-vs-sarl/">Auto-entrepreneur vs SARL</a></li>
+        <li><a href="/comparateur-statuts/">Comparateur de statuts interactif</a></li>
+        <li><a href="/calculateur-charges-ae/">Calculateur de charges AE</a></li>
+        <li><a href="/plafond/chiffre-affaires-2026/">Plafonds de CA 2026</a></li>
+        <li><a href="/plafond/charges-sociales-2026/">Charges sociales détaillées 2026</a></li>
+        <li><a href="/guides/">Tous nos guides</a></li>
+      </ul>
+    </div>
+
+    <div class="mt-12">
+      <h2 class="text-2xl font-extrabold text-amber-900 mb-6">Questions fréquentes</h2>
+      <div class="space-y-4">
+        {faqData.map((faq, i) => (
+          <details class="bg-white border border-amber-200 rounded-lg p-4 group" id={`faq-${i}`}>
+            <summary class="cursor-pointer list-none flex items-center justify-between">
+              <h3 class="text-lg font-bold text-amber-900 pr-4">{faq.question}</h3>
+              <span class="text-amber-500 transform group-open:rotate-45 transition-transform text-xl flex-shrink-0">+</span>
+            </summary>
+            <p class="text-gray-700 mt-4 leading-relaxed">{faq.answer}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </article>
+</Layout>
