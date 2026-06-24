@@ -16,11 +16,10 @@ export interface SEOProps {
 }
 
 /**
- * Génère le titre complet de la page
+ * Génère le titre complet de la page (sans suffixe de marque pour rester sous 60 caractères)
  */
 export function getFullTitle(pageTitle: string): string {
-  if (pageTitle === siteConfig.name) return pageTitle;
-  return `${pageTitle} | ${siteConfig.name}`;
+  return pageTitle;
 }
 
 /**
@@ -38,6 +37,29 @@ export function getWebsiteSchema() {
       '@type': 'Person',
       name: siteConfig.author.name,
       url: siteConfig.author.url,
+    },
+  };
+}
+
+/**
+ * Génère les données structurées Organization
+ */
+export function getOrganizationSchema() {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: siteConfig.name,
+    url: siteConfig.url,
+    logo: siteConfig.url + '/favicon.svg',
+    founder: {
+      '@type': 'Person',
+      name: siteConfig.author.name,
+      jobTitle: siteConfig.author.credentials,
+    },
+    contactPoint: {
+      '@type': 'ContactPoint',
+      email: siteConfig.contact?.email || 'contact@autoentrepreneurmaroc.ma',
+      contactType: 'customer service',
     },
   };
 }

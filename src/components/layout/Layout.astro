@@ -2,7 +2,7 @@
 import Header from './Header.astro';
 import Footer from './Footer.astro';
 import { siteConfig } from '../../config';
-import { getFullTitle, getWebsiteSchema } from '../../lib/seo';
+import { getFullTitle, getWebsiteSchema, getOrganizationSchema } from '../../lib/seo';
 import '../../styles/global.css';
 
 export interface Props {
@@ -28,6 +28,7 @@ const {
 const fullTitle = getFullTitle(title);
 const canonicalURL = canonical || new URL(Astro.url.pathname, siteConfig.url).toString();
 const websiteSchema = getWebsiteSchema();
+const organizationSchema = getOrganizationSchema();
 ---
 
 <!DOCTYPE html>
@@ -40,8 +41,13 @@ const websiteSchema = getWebsiteSchema();
     <!-- SEO -->
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
+    <meta name="author" content="Mottalib Radif" />
     <link rel="canonical" href={canonicalURL} />
     {noindex && <meta name="robots" content="noindex, nofollow" />}
+
+    <!-- Search Engine Verification -->
+    <meta name="google-site-verification" content="GOOGLE_VERIFICATION_CODE" />
+    <meta name="msvalidate.01" content="BING_VERIFICATION_CODE" />
 
     <!-- Open Graph -->
     <meta property="og:title" content={fullTitle} />
@@ -61,18 +67,20 @@ const websiteSchema = getWebsiteSchema();
     <link rel="manifest" href="/manifest.webmanifest" />
     <meta name="theme-color" content="#D97706" />
 
-    <!-- Preconnect for fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <!-- Self-hosted font -->
+    <link rel="preload" href="/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin />
 
     <!-- Schema.org -->
     <script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(organizationSchema)} />
     {schema && <script type="application/ld+json" set:html={JSON.stringify(schema)} />}
   </head>
   <body class="min-h-screen flex flex-col">
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-white focus:text-green-600 focus:rounded focus:shadow-lg">
+      Aller au contenu
+    </a>
     <Header />
-    <main class="flex-1">
+    <main id="main-content" class="flex-1">
       <slot />
     </main>
     <Footer />
