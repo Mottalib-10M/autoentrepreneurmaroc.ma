@@ -1,14 +1,26 @@
 import { useState, useMemo } from 'react';
 import ChampMontant from '../ui/ChampMontant';
+import ShareButtons from '../ui/ShareButtons';
 import { simulerRevenuAnnuel, verifierSeuil, calculerChargesAE } from '../../lib/ae-engine';
 import { formatMontant, formatPourcentage, parseMontant } from '../../lib/format';
 import { AE_CONFIG } from '../../data/ae-config';
 import type { TypeActivite } from '../../data/ae-config';
+import { useUrlParam, stringParam } from '../../hooks/useUrlState';
 
 export default function CalculateurAE() {
-  const [montantSaisi, setMontantSaisi] = useState('');
-  const [typeActivite, setTypeActivite] = useState<TypeActivite>('services');
-  const [periodeSaisie, setPeriodeSaisie] = useState<'mensuel' | 'trimestriel'>('mensuel');
+  const [montantSaisi, setMontantSaisi] = useUrlParam(stringParam('ca', ''));
+  const [typeActivite, setTypeActivite] = useUrlParam({
+    key: 'type',
+    defaultValue: 'services' as TypeActivite,
+    parse: (v) => (v === 'commercial' ? 'commercial' : 'services') as TypeActivite,
+    serialize: (v) => v,
+  });
+  const [periodeSaisie, setPeriodeSaisie] = useUrlParam({
+    key: 'periode',
+    defaultValue: 'mensuel' as 'mensuel' | 'trimestriel',
+    parse: (v) => (v === 'trimestriel' ? 'trimestriel' : 'mensuel') as 'mensuel' | 'trimestriel',
+    serialize: (v) => v,
+  });
 
   const montant = parseMontant(montantSaisi);
 
@@ -20,6 +32,11 @@ export default function CalculateurAE() {
 
   const pourcentageSeuil = Math.min(seuil.pourcentageUtilise * 100, 150);
   const seuilLabel = AE_CONFIG.seuils[typeActivite].toLocaleString('fr-FR');
+
+  // Share text for results
+  const shareText = montant > 0
+    ? `Mes charges auto-entrepreneur : ${formatMontant(chargesTrim.totalCharges)}/trimestre pour ${formatMontant(simulation.caAnnuel)} de CA annuel. Calculez les vôtres :`
+    : '';
 
   return (
     <div className="space-y-8">
@@ -168,6 +185,9 @@ export default function CalculateurAE() {
               (IR + AMO), soit un taux effectif de <strong>{formatPourcentage(simulation.tauxEffectifAnnuel)}</strong>.
               Votre revenu net mensuel moyen sera de <strong>{formatMontant(simulation.netMensuelMoyen)}</strong>.
             </p>
+
+            {/* Share Buttons */}
+            <ShareButtons text={shareText} />
           </div>
         </>
       )}

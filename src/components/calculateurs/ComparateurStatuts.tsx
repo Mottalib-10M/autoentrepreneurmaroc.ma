@@ -1,13 +1,20 @@
 import { useState, useMemo } from 'react';
 import ChampMontant from '../ui/ChampMontant';
+import ShareButtons from '../ui/ShareButtons';
 import { comparerStatuts } from '../../lib/ae-engine';
 import { formatMontant, formatPourcentage, parseMontant } from '../../lib/format';
+import { useUrlParam, stringParam } from '../../hooks/useUrlState';
 
 export default function ComparateurStatuts() {
-  const [caSaisi, setCaSaisi] = useState('');
-  const [chargesSaisies, setChargesSaisies] = useState('');
-  const [modeCharges, setModeCharges] = useState<'pourcentage' | 'montant'>('pourcentage');
-  const [pourcentageCharges, setPourcentageCharges] = useState('30');
+  const [caSaisi, setCaSaisi] = useUrlParam(stringParam('ca', ''));
+  const [chargesSaisies, setChargesSaisies] = useUrlParam(stringParam('charges', ''));
+  const [modeCharges, setModeCharges] = useUrlParam({
+    key: 'mode',
+    defaultValue: 'pourcentage' as 'pourcentage' | 'montant',
+    parse: (v) => (v === 'montant' ? 'montant' : 'pourcentage') as 'pourcentage' | 'montant',
+    serialize: (v) => v,
+  });
+  const [pourcentageCharges, setPourcentageCharges] = useUrlParam(stringParam('pct', '30'));
 
   const caAnnuel = parseMontant(caSaisi);
   const chargesEstimees = modeCharges === 'pourcentage'
@@ -18,6 +25,11 @@ export default function ComparateurStatuts() {
     () => caAnnuel > 0 ? comparerStatuts(caAnnuel, chargesEstimees) : null,
     [caAnnuel, chargesEstimees]
   );
+
+  // Share text
+  const shareText = comparaison
+    ? `Comparaison AE vs SARL vs SAS pour ${formatMontant(caAnnuel)} de CA : le statut ${comparaison.recommandation} est recommandé. Comparez avec vos chiffres :`
+    : '';
 
   return (
     <div className="space-y-8">
@@ -101,6 +113,9 @@ export default function ComparateurStatuts() {
                 <p className="text-gray-700 mt-1">{comparaison.raisonRecommandation}</p>
               </div>
             </div>
+
+            {/* Share Buttons */}
+            <ShareButtons text={shareText} />
           </div>
 
           {/* Comparaison Cards */}

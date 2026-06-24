@@ -1,0 +1,33 @@
+---
+import { siteConfig } from '../../config';
+import CalculateurAE from '../../components/calculateurs/CalculateurAE';
+import '../../styles/global.css';
+---
+
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Calculateur Charges Auto-Entrepreneur Maroc | Widget</title>
+    <meta name="description" content="Widget intégrable - Calculateur de charges auto-entrepreneur au Maroc." />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preload" href="/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin />
+    <style>
+      body {
+        margin: 0;
+        padding: 1rem;
+        background: transparent;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="max-w-2xl mx-auto">
+      <CalculateurAE client:idle />
+      <p class="text-center text-xs text-gray-400 mt-6">
+        Propulsé par <a href={siteConfig.url + '/calculateur-charges-ae/'} target="_blank" rel="noopener" class="text-amber-600 hover:text-amber-700 font-medium">{siteConfig.name}</a>
+      </p>
+    </div>
+  </body>
+</html>

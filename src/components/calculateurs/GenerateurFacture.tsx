@@ -1,7 +1,9 @@
 import { useState, useEffect, useRef } from 'react';
+import ShareButtons from '../ui/ShareButtons';
 import { calculerFacture } from '../../lib/ae-engine';
 import { formatMontant, formatDateCourte } from '../../lib/format';
 import type { LigneFacture } from '../../lib/ae-engine';
+import { useUrlParam, stringParam } from '../../hooks/useUrlState';
 
 interface InfoAE {
   nom: string;
@@ -52,8 +54,19 @@ export default function GenerateurFacture() {
   const [numeroFacture, setNumeroFacture] = useState('');
   const printRef = useRef<HTMLDivElement>(null);
 
+  // URL params for pre-filling client name and first line designation
+  const [urlClientName] = useUrlParam(stringParam('client', ''));
+  const [urlDesignation] = useUrlParam(stringParam('designation', ''));
+
   useEffect(() => {
     setNumeroFacture(getNextNumber());
+    // Pre-fill from URL params on mount
+    if (urlClientName) {
+      setClient((prev) => ({ ...prev, nom: urlClientName }));
+    }
+    if (urlDesignation) {
+      setLignes([{ designation: urlDesignation, quantite: 1, prixUnitaire: 0 }]);
+    }
   }, []);
 
   // Save AE info to localStorage
@@ -90,6 +103,9 @@ export default function GenerateurFacture() {
   }
 
   const dateParsed = new Date(dateFacture + 'T00:00:00');
+
+  // Share text
+  const shareText = 'Générez vos factures auto-entrepreneur conformes gratuitement (ICE, exonération TVA) :';
 
   return (
     <div className="space-y-8">
@@ -301,11 +317,14 @@ export default function GenerateurFacture() {
         </div>
       </div>
 
-      {/* Print Button */}
-      <div className="no-print flex gap-4">
-        <button type="button" onClick={handlePrint} className="btn-primary">
-          Imprimer / Télécharger PDF
-        </button>
+      {/* Print Button + Share */}
+      <div className="no-print">
+        <div className="flex flex-wrap gap-4 items-center">
+          <button type="button" onClick={handlePrint} className="btn-primary">
+            Imprimer / Télécharger PDF
+          </button>
+        </div>
+        <ShareButtons text={shareText} />
       </div>
 
       {/* Invoice Preview */}

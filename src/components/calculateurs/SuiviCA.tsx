@@ -1,8 +1,10 @@
 import { useState, useEffect, useMemo } from 'react';
+import ShareButtons from '../ui/ShareButtons';
 import { verifierSeuil } from '../../lib/ae-engine';
 import { formatMontant, parseMontant } from '../../lib/format';
 import { AE_CONFIG } from '../../data/ae-config';
 import type { TypeActivite } from '../../data/ae-config';
+import { useUrlParam } from '../../hooks/useUrlState';
 
 const STORAGE_KEY = 'ae-suivi-ca';
 
@@ -33,6 +35,21 @@ function getStoredData(): SuiviData {
 
 export default function SuiviCA() {
   const [data, setData] = useState<SuiviData>(getStoredData);
+
+  // URL param for activity type
+  const [urlType, setUrlType] = useUrlParam({
+    key: 'type',
+    defaultValue: '' as string,
+    parse: (v) => v,
+    serialize: (v) => v,
+  });
+
+  // Sync URL type param to data on mount
+  useEffect(() => {
+    if (urlType === 'commercial' || urlType === 'services') {
+      setData((prev) => ({ ...prev, typeActivite: urlType as TypeActivite }));
+    }
+  }, []);
 
   // Save to localStorage
   useEffect(() => {
@@ -71,6 +88,11 @@ export default function SuiviCA() {
     setData({ ...data, mois: newMois });
   }
 
+  function handleTypeChange(newType: TypeActivite) {
+    setData({ ...data, typeActivite: newType });
+    setUrlType(newType);
+  }
+
   function resetData() {
     if (confirm('Voulez-vous vraiment réinitialiser le suivi ?')) {
       setData({
@@ -91,6 +113,11 @@ export default function SuiviCA() {
     { label: 'T4 (Oct-Déc)', total: montantsMois.slice(9, 12).reduce((a, b) => a + b, 0) },
   ];
 
+  // Share text
+  const shareText = totalCA > 0
+    ? `Mon suivi CA auto-entrepreneur : ${formatMontant(totalCA)} cumulé sur ${moisRemplis} mois (${(seuil.pourcentageUtilise * 100).toFixed(0)}% du seuil). Suivez le vôtre :`
+    : '';
+
   return (
     <div className="space-y-8">
       {/* Config */}
@@ -100,7 +127,7 @@ export default function SuiviCA() {
           <div className="flex gap-4 items-center">
             <select
               value={data.typeActivite}
-              onChange={e => setData({ ...data, typeActivite: e.target.value as TypeActivite })}
+              onChange={e => handleTypeChange(e.target.value as TypeActivite)}
               className="input-field text-sm py-2 w-auto"
             >
               <option value="services">Services (seuil 200 000 DH)</option>
@@ -262,6 +289,9 @@ export default function SuiviCA() {
               {formatMontant(seuilValue - caProjeteFin)}.
             </p>
           )}
+
+          {/* Share Buttons */}
+          <ShareButtons text={shareText} />
         </div>
       )}
     </div>
