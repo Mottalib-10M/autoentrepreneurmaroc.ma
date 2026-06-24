@@ -1,4 +1,4 @@
-import { type ChangeEvent } from 'react';
+import { type ChangeEvent, type FocusEvent } from 'react';
 
 interface ChampMontantProps {
   label: string;
@@ -30,6 +30,14 @@ export default function ChampMontant({
     onChange(cleaned);
   }
 
+  function handleBlur(_e: FocusEvent<HTMLInputElement>) {
+    // Strip leading zeros (e.g. "007" → "7", "000" → "0")
+    const stripped = value.replace(/^0+(\d)/, '$1');
+    if (stripped !== value) {
+      onChange(stripped);
+    }
+  }
+
   return (
     <div className="mb-4">
       <label htmlFor={fieldId} className="block text-sm font-semibold text-amber-900 mb-1">
@@ -42,6 +50,7 @@ export default function ChampMontant({
           id={fieldId}
           value={value}
           onChange={handleChange}
+          onBlur={handleBlur}
           placeholder={placeholder}
           className="input-field pr-12"
           autoComplete="off"

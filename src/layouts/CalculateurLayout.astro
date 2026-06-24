@@ -8,9 +8,10 @@ export interface Props {
   description: string;
   toolName: string;
   breadcrumbs?: Array<{ name: string; url: string }>;
+  extraSchemas?: object[];
 }
 
-const { title, description, toolName, breadcrumbs } = Astro.props;
+const { title, description, toolName, breadcrumbs, extraSchemas } = Astro.props;
 
 const defaultBreadcrumbs = [
   { name: 'Accueil', url: siteConfig.url + '/' },
@@ -19,16 +20,22 @@ const defaultBreadcrumbs = [
 
 const crumbs = breadcrumbs || defaultBreadcrumbs;
 
+const graphItems: object[] = [
+  getBreadcrumbSchema(crumbs),
+  getSoftwareAppSchema({
+    name: toolName,
+    description,
+    url: siteConfig.url + Astro.url.pathname,
+  }),
+];
+
+if (extraSchemas) {
+  graphItems.push(...extraSchemas);
+}
+
 const schema = {
   '@context': 'https://schema.org',
-  '@graph': [
-    getBreadcrumbSchema(crumbs),
-    getSoftwareAppSchema({
-      name: toolName,
-      description,
-      url: siteConfig.url + Astro.url.pathname,
-    }),
-  ],
+  '@graph': graphItems,
 };
 ---
 

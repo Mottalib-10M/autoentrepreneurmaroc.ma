@@ -1,12 +1,37 @@
 ---
 import CalculateurLayout from '../layouts/CalculateurLayout.astro';
 import ComparateurStatuts from '../components/calculateurs/ComparateurStatuts';
+import { getFAQSchema } from '../lib/seo';
+
+const faqData = [
+  {
+    question: "Quelle est la différence principale entre AE et SARL au Maroc ?",
+    answer: "L'auto-entrepreneur (AE) paie un impôt forfaitaire de 1 à 2% sur le chiffre d'affaires brut, sans déduction de charges. La SARL est soumise à l'IS (10 à 31%) sur le bénéfice net après déduction de toutes les charges professionnelles. L'AE est plus simple mais limité en CA (200k-500k DH/an), tandis que la SARL n'a pas de plafond.",
+  },
+  {
+    question: "Quel statut est le plus avantageux fiscalement ?",
+    answer: "Cela dépend de votre situation. Pour un CA faible avec peu de charges professionnelles, l'AE est nettement plus avantageux (taux effectif de 2-3%). Pour un CA élevé avec des charges importantes (loyer, salariés, matériel), la SARL permet de déduire ces charges et peut être plus avantageuse. Notre comparateur simule les deux scénarios avec vos chiffres réels.",
+  },
+  {
+    question: "Peut-on passer de l'auto-entrepreneur à la SARL facilement ?",
+    answer: "Oui, la transition est possible. Elle implique la radiation du registre AE, la création de la SARL (rédaction des statuts, dépôt du capital, immatriculation au RC), et le transfert de l'activité. Le processus prend généralement 2 à 4 semaines. Notez que le passage est obligatoire si vous dépassez les seuils de CA pendant 2 années consécutives.",
+  },
+  {
+    question: "Quelle est la différence entre SARL et SAS au Maroc ?",
+    answer: "Les deux structures offrent la responsabilité limitée et sont soumises à l'IS. La SARL est plus réglementée (nombre d'associés limité à 50, cession de parts encadrée), tandis que la SAS offre plus de flexibilité dans la rédaction des statuts et la répartition des pouvoirs. La SAS est privilégiée pour les projets avec investisseurs ou plusieurs associés.",
+  },
+  {
+    question: "L'auto-entrepreneur peut-il embaucher des salariés ?",
+    answer: "Non. Le statut auto-entrepreneur ne permet pas d'embaucher des salariés. Si vous avez besoin de recruter, vous devez passer à une forme sociétaire (SARL, SAS). C'est l'une des limites principales du statut AE, en plus des plafonds de CA et de l'impossibilité de déduire les charges.",
+  },
+];
 ---
 
 <CalculateurLayout
   title="Comparateur AE vs SARL vs SAS au Maroc - Gratuit 2026"
   description="Comparez les statuts Auto-Entrepreneur, SARL et SAS au Maroc : impôts, charges sociales, revenu net final et complexité. Simulateur gratuit et détaillé 2026."
   toolName="Comparateur de Statuts"
+  extraSchemas={[getFAQSchema(faqData)]}
 >
   <ComparateurStatuts client:idle />
 
@@ -119,4 +144,20 @@ import ComparateurStatuts from '../components/calculateurs/ComparateurStatuts';
       toute la procédure.
     </p>
   </div>
+
+  <!-- FAQ Section -->
+  <section class="mt-16 max-w-4xl">
+    <h2 class="text-2xl font-extrabold text-amber-900 mb-6">Questions Fréquentes sur les Statuts Juridiques</h2>
+    <div class="space-y-4">
+      {faqData.map((faq, i) => (
+        <details class="card group" id={`faq-${i}`}>
+          <summary class="cursor-pointer list-none flex items-center justify-between">
+            <h3 class="text-lg font-bold text-amber-900 pr-4">{faq.question}</h3>
+            <span class="text-amber-500 transform group-open:rotate-45 transition-transform text-xl flex-shrink-0">+</span>
+          </summary>
+          <p class="text-gray-700 mt-4 leading-relaxed">{faq.answer}</p>
+        </details>
+      ))}
+    </div>
+  </section>
 </CalculateurLayout>

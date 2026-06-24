@@ -1,12 +1,37 @@
 ---
 import CalculateurLayout from '../layouts/CalculateurLayout.astro';
 import CalculateurAE from '../components/calculateurs/CalculateurAE';
+import { getFAQSchema } from '../lib/seo';
+
+const faqData = [
+  {
+    question: "Quel est le taux d'IR forfaitaire pour un auto-entrepreneur au Maroc ?",
+    answer: "Le taux d'IR forfaitaire dépend de votre activité : 1% du chiffre d'affaires pour les activités commerciales, industrielles et artisanales, et 2% du CA pour les prestations de services. Ce taux s'applique directement au CA déclaré, sans aucune déduction de charges.",
+  },
+  {
+    question: "Combien coûte la cotisation AMO pour un auto-entrepreneur ?",
+    answer: "La cotisation AMO (Assurance Maladie Obligatoire) est fixée à 300 DH par trimestre, soit 1 200 DH par an. Ce montant est forfaitaire et ne dépend pas de votre chiffre d'affaires : il reste le même que vous gagniez 1 000 DH ou 100 000 DH par trimestre.",
+  },
+  {
+    question: "Quand faut-il payer les charges trimestrielles ?",
+    answer: "Les charges (IR forfaitaire + AMO) sont à payer chaque trimestre lors de votre déclaration de CA sur la plateforme ae.gov.ma. Les échéances sont : fin mars (T1), fin juin (T2), fin septembre (T3) et fin décembre (T4). Même si votre CA est de 0 DH, la déclaration est obligatoire.",
+  },
+  {
+    question: "Peut-on déduire des charges professionnelles en auto-entrepreneur ?",
+    answer: "Non. Le régime auto-entrepreneur est un régime forfaitaire : l'impôt est calculé directement sur le chiffre d'affaires brut, sans possibilité de déduire les charges professionnelles (loyer, matériel, déplacements, etc.). Si vos charges sont élevées (plus de 40-50% du CA), le passage à la SARL peut être plus avantageux.",
+  },
+  {
+    question: "Que se passe-t-il si je ne déclare pas mon CA trimestriel ?",
+    answer: "Le défaut de déclaration trimestrielle entraîne des pénalités de retard. Après plusieurs trimestres sans déclaration, vous risquez la radiation du registre des auto-entrepreneurs. Il est donc essentiel de déclarer chaque trimestre, même avec un CA de 0 DH.",
+  },
+];
 ---
 
 <CalculateurLayout
   title="Calculateur de Charges Auto-Entrepreneur Maroc 2026"
   description="Calculez votre IR forfaitaire, cotisation AMO et revenu net d'auto-entrepreneur au Maroc. Simulation gratuite et instantanée basée sur les taux officiels 2026."
   toolName="Calculateur de Charges AE"
+  extraSchemas={[getFAQSchema(faqData)]}
 >
   <CalculateurAE client:idle />
 
@@ -107,4 +132,20 @@ import CalculateurAE from '../components/calculateurs/CalculateurAE';
       Notre calculateur affiche automatiquement votre pourcentage d'utilisation du seuil.
     </p>
   </div>
+
+  <!-- FAQ Section -->
+  <section class="mt-16 max-w-4xl">
+    <h2 class="text-2xl font-extrabold text-amber-900 mb-6">Questions Fréquentes sur les Charges AE</h2>
+    <div class="space-y-4">
+      {faqData.map((faq, i) => (
+        <details class="card group" id={`faq-${i}`}>
+          <summary class="cursor-pointer list-none flex items-center justify-between">
+            <h3 class="text-lg font-bold text-amber-900 pr-4">{faq.question}</h3>
+            <span class="text-amber-500 transform group-open:rotate-45 transition-transform text-xl flex-shrink-0">+</span>
+          </summary>
+          <p class="text-gray-700 mt-4 leading-relaxed">{faq.answer}</p>
+        </details>
+      ))}
+    </div>
+  </section>
 </CalculateurLayout>

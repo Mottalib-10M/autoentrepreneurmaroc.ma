@@ -1,7 +1,7 @@
 ---
 import Layout from '../components/layout/Layout.astro';
 import { siteConfig } from '../config';
-import { getFAQSchema, getBreadcrumbSchema } from '../lib/seo';
+import { getFAQSchema, getBreadcrumbSchema, buildPersonSchema } from '../lib/seo';
 
 const faqData = [
   {
@@ -31,6 +31,7 @@ const schema = {
   '@graph': [
     getBreadcrumbSchema([{ name: 'Accueil', url: siteConfig.url + '/' }]),
     getFAQSchema(faqData),
+    buildPersonSchema(),
   ],
 };
 ---
@@ -39,6 +40,7 @@ const schema = {
   title="Auto-Entrepreneur Maroc : Guide Complet et Outils 2026"
   description="Guide complet de l'auto-entrepreneur au Maroc : calculateur de charges, comparateur de statuts, générateur de factures. Outils gratuits et guides pratiques."
   schema={schema}
+  isHomepage={true}
 >
   <!-- Hero Section -->
   <section class="bg-gradient-to-br from-amber-600 via-amber-700 to-amber-800 text-white py-16 sm:py-24">

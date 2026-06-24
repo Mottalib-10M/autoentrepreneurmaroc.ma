@@ -1,13 +1,43 @@
 ---
 import Layout from '../components/layout/Layout.astro';
 import { siteConfig } from '../config';
+import { getBreadcrumbSchema } from '../lib/seo';
+
+const breadcrumbs = [
+  { name: 'Accueil', url: siteConfig.url + '/' },
+  { name: 'À Propos', url: siteConfig.url + '/a-propos/' },
+];
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    getBreadcrumbSchema(breadcrumbs),
+  ],
+};
 ---
 
 <Layout
   title="À Propos du Guide Auto-Entrepreneur Maroc en Ligne"
   description="Découvrez l'équipe derrière Auto-Entrepreneur Maroc : guide complet, calculateurs et outils 100% gratuits pour les auto-entrepreneurs au Maroc en 2026."
+  schema={schema}
 >
   <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <!-- Breadcrumbs -->
+    <nav class="mb-6 text-sm" aria-label="Fil d'Ariane">
+      <ol class="flex items-center gap-2 text-gray-500">
+        {breadcrumbs.map((crumb, i) => (
+          <li class="flex items-center gap-2">
+            {i > 0 && <span class="text-amber-400">/</span>}
+            {i === breadcrumbs.length - 1 ? (
+              <span class="text-amber-700 font-medium">{crumb.name}</span>
+            ) : (
+              <a href={crumb.url} class="hover:text-amber-700">{crumb.name}</a>
+            )}
+          </li>
+        ))}
+      </ol>
+    </nav>
+
     <h1 class="text-3xl sm:text-4xl font-extrabold text-amber-900 mb-8">
       À Propos d'Auto-Entrepreneur Maroc
     </h1>

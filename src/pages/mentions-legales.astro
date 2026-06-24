@@ -1,14 +1,44 @@
 ---
 import Layout from '../components/layout/Layout.astro';
 import { siteConfig } from '../config';
+import { getBreadcrumbSchema } from '../lib/seo';
+
+const breadcrumbs = [
+  { name: 'Accueil', url: siteConfig.url + '/' },
+  { name: 'Mentions Légales', url: siteConfig.url + '/mentions-legales/' },
+];
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    getBreadcrumbSchema(breadcrumbs),
+  ],
+};
 ---
 
 <Layout
   title="Mentions Légales - Autoentrepreneurmaroc.ma (2026)"
   description="Mentions légales du site autoentrepreneurmaroc.ma : informations sur l'éditeur, hébergement, propriété intellectuelle, protection des données et responsabilité."
   noindex={true}
+  schema={schema}
 >
   <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <!-- Breadcrumbs -->
+    <nav class="mb-6 text-sm" aria-label="Fil d'Ariane">
+      <ol class="flex items-center gap-2 text-gray-500">
+        {breadcrumbs.map((crumb, i) => (
+          <li class="flex items-center gap-2">
+            {i > 0 && <span class="text-amber-400">/</span>}
+            {i === breadcrumbs.length - 1 ? (
+              <span class="text-amber-700 font-medium">{crumb.name}</span>
+            ) : (
+              <a href={crumb.url} class="hover:text-amber-700">{crumb.name}</a>
+            )}
+          </li>
+        ))}
+      </ol>
+    </nav>
+
     <h1 class="text-3xl sm:text-4xl font-extrabold text-amber-900 mb-8">
       Mentions Légales
     </h1>

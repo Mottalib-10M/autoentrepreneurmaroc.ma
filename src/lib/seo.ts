@@ -23,7 +23,7 @@ export function getFullTitle(pageTitle: string): string {
 }
 
 /**
- * Génère les données structurées Schema.org pour le site
+ * Génère les données structurées Schema.org pour le site (homepage only)
  */
 export function getWebsiteSchema() {
   return {
@@ -33,11 +33,37 @@ export function getWebsiteSchema() {
     url: siteConfig.url,
     description: siteConfig.description,
     inLanguage: 'fr-MA',
+    potentialAction: {
+      '@type': 'SearchAction',
+      target: siteConfig.url + '/?s={search_term_string}',
+      'query-input': 'required name=search_term_string',
+    },
     author: {
       '@type': 'Person',
       name: siteConfig.author.name,
       url: siteConfig.author.url,
     },
+  };
+}
+
+/**
+ * Génère les données structurées Person
+ */
+export function buildPersonSchema() {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    name: siteConfig.author.name,
+    url: siteConfig.author.url,
+    jobTitle: 'Fondateur',
+    worksFor: {
+      '@type': 'Organization',
+      name: siteConfig.name,
+      url: siteConfig.url,
+    },
+    sameAs: [
+      'https://www.linkedin.com/in/mottalib/',
+    ],
   };
 }
 
@@ -50,12 +76,20 @@ export function getOrganizationSchema() {
     '@type': 'Organization',
     name: siteConfig.name,
     url: siteConfig.url,
-    logo: siteConfig.url + '/favicon.svg',
+    logo: {
+      '@type': 'ImageObject',
+      url: siteConfig.url + '/og-default.png',
+      width: 1200,
+      height: 630,
+    },
     founder: {
       '@type': 'Person',
       name: siteConfig.author.name,
-      jobTitle: siteConfig.author.credentials,
+      jobTitle: 'Fondateur',
     },
+    sameAs: [
+      'https://www.linkedin.com/company/autoentrepreneurmaroc/',
+    ],
     contactPoint: {
       '@type': 'ContactPoint',
       email: siteConfig.contact?.email || 'contact@autoentrepreneurmaroc.ma',
@@ -81,6 +115,7 @@ export function getArticleSchema(props: {
     description: props.description,
     url: props.url,
     inLanguage: 'fr-MA',
+    image: siteConfig.url + '/og-default.png',
     author: {
       '@type': 'Person',
       name: siteConfig.author.name,

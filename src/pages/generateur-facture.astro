@@ -1,12 +1,37 @@
 ---
 import CalculateurLayout from '../layouts/CalculateurLayout.astro';
 import GenerateurFacture from '../components/calculateurs/GenerateurFacture';
+import { getFAQSchema } from '../lib/seo';
+
+const faqData = [
+  {
+    question: "Quelles mentions sont obligatoires sur une facture d'auto-entrepreneur ?",
+    answer: "Toute facture d'AE doit comporter : le nom et prénom de l'auto-entrepreneur, le numéro ICE, l'adresse, le numéro et la date de la facture, la désignation et quantité des biens ou services, le prix unitaire HT, le montant total, et la mention « Exonéré de TVA » conformément à la Loi 114-13.",
+  },
+  {
+    question: "L'auto-entrepreneur doit-il facturer la TVA ?",
+    answer: "Non. L'auto-entrepreneur est exonéré de TVA. Il ne facture pas de TVA à ses clients et ne peut pas récupérer la TVA sur ses achats. Chaque facture doit obligatoirement porter la mention « Exonéré de TVA » pour être conforme à la législation marocaine.",
+  },
+  {
+    question: "Comment numéroter ses factures correctement ?",
+    answer: "Les factures doivent être numérotées de manière séquentielle et continue, sans rupture dans la numérotation (par exemple : F-001, F-002, F-003). Il est recommandé d'inclure l'année dans le format (F-2026-001). Notre générateur gère automatiquement cette numérotation séquentielle.",
+  },
+  {
+    question: "Combien de temps faut-il conserver ses factures ?",
+    answer: "L'auto-entrepreneur doit conserver toutes ses factures (émises et reçues) pendant une durée minimale de 10 ans, conformément à la réglementation fiscale marocaine. Il est recommandé de les stocker en format PDF en complément des copies papier pour plus de sécurité.",
+  },
+  {
+    question: "Que risque-t-on en cas de facture non conforme ?",
+    answer: "Une facture non conforme (mentions manquantes, absence d'ICE, pas de mention d'exonération TVA) peut entraîner des sanctions fiscales lors d'un contrôle. De plus, le client professionnel ne pourra pas comptabiliser la charge correspondante. Il est donc essentiel de respecter toutes les mentions obligatoires.",
+  },
+];
 ---
 
 <CalculateurLayout
   title="Générateur de Factures Auto-Entrepreneur Maroc 2026"
   description="Créez des factures conformes pour auto-entrepreneur au Maroc avec toutes les mentions obligatoires : ICE, exonération TVA. Outil 100% gratuit et imprimable."
   toolName="Générateur de Factures"
+  extraSchemas={[getFAQSchema(faqData)]}
 >
   <GenerateurFacture client:idle />
 
@@ -60,4 +85,20 @@ import GenerateurFacture from '../components/calculateurs/GenerateurFacture';
       fonction d'impression de votre navigateur.
     </p>
   </div>
+
+  <!-- FAQ Section -->
+  <section class="mt-16 max-w-4xl">
+    <h2 class="text-2xl font-extrabold text-amber-900 mb-6">Questions Fréquentes sur la Facturation AE</h2>
+    <div class="space-y-4">
+      {faqData.map((faq, i) => (
+        <details class="card group" id={`faq-${i}`}>
+          <summary class="cursor-pointer list-none flex items-center justify-between">
+            <h3 class="text-lg font-bold text-amber-900 pr-4">{faq.question}</h3>
+            <span class="text-amber-500 transform group-open:rotate-45 transition-transform text-xl flex-shrink-0">+</span>
+          </summary>
+          <p class="text-gray-700 mt-4 leading-relaxed">{faq.answer}</p>
+        </details>
+      ))}
+    </div>
+  </section>
 </CalculateurLayout>

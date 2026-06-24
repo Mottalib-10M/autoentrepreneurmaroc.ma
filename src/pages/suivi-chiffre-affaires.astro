@@ -1,12 +1,37 @@
 ---
 import CalculateurLayout from '../layouts/CalculateurLayout.astro';
 import SuiviCA from '../components/calculateurs/SuiviCA';
+import { getFAQSchema } from '../lib/seo';
+
+const faqData = [
+  {
+    question: "Quels sont les seuils de CA pour un auto-entrepreneur au Maroc ?",
+    answer: "Les seuils annuels sont de 500 000 DH pour les activités commerciales, industrielles et artisanales, et de 200 000 DH pour les prestations de services. Ces plafonds sont calculés sur l'année civile (janvier à décembre). Si vous exercez une activité mixte, chaque type d'activité a son propre seuil.",
+  },
+  {
+    question: "Que se passe-t-il si je dépasse le seuil de CA ?",
+    answer: "Le dépassement du seuil pendant une seule année n'entraîne pas de conséquence immédiate. Cependant, si vous dépassez le seuil pendant 2 années consécutives, vous êtes obligé de quitter le régime auto-entrepreneur et de passer au régime réel (SARL ou autre forme juridique). Il est donc essentiel de suivre votre CA de près.",
+  },
+  {
+    question: "Comment déclarer mon CA trimestriel sur ae.gov.ma ?",
+    answer: "Connectez-vous à votre espace personnel sur ae.gov.ma, accédez à la rubrique « Déclaration trimestrielle », saisissez votre CA du trimestre et validez. Le montant de l'IR forfaitaire et de l'AMO sera calculé automatiquement. Vous pouvez ensuite procéder au paiement en ligne. N'oubliez pas : la déclaration est obligatoire même si votre CA est de 0 DH.",
+  },
+  {
+    question: "Mes données de suivi sont-elles confidentielles ?",
+    answer: "Oui, totalement. Toutes les données saisies dans cet outil de suivi sont stockées localement dans votre navigateur (localStorage). Elles ne sont jamais transmises à un serveur et restent entièrement privées. Si vous changez de navigateur ou effacez vos données de navigation, les montants saisis seront perdus.",
+  },
+  {
+    question: "Comment anticiper le passage au régime réel ?",
+    answer: "Utilisez la projection annuelle de notre outil pour estimer votre CA en fin d'année. Si la projection dépasse 80% du seuil, commencez à vous renseigner sur les démarches de transition vers la SARL. Préparez un business plan, consultez un expert-comptable et évaluez vos charges déductibles pour vérifier si la SARL serait fiscalement avantageuse.",
+  },
+];
 ---
 
 <CalculateurLayout
   title="Suivi du Chiffre d'Affaires Auto-Entrepreneur Maroc"
   description="Suivez votre CA mensuel, visualisez votre progression et anticipez le dépassement du seuil auto-entrepreneur au Maroc. Données sauvegardées localement."
   toolName="Suivi du Chiffre d'Affaires"
+  extraSchemas={[getFAQSchema(faqData)]}
 >
   <SuiviCA client:idle />
 
@@ -56,5 +81,32 @@ import SuiviCA from '../components/calculateurs/SuiviCA';
       de cet outil vous permet de retrouver facilement le montant à déclarer. N'oubliez pas : même si
       votre CA est de 0, la déclaration est obligatoire.
     </p>
+
+    <h3>Bonnes pratiques de suivi</h3>
+
+    <p>
+      Pour une gestion optimale, mettez à jour votre CA dès réception de chaque paiement. Un suivi
+      régulier vous permet d'identifier les mois faibles, de planifier votre trésorerie et d'ajuster
+      votre stratégie commerciale. Pensez également à croiser vos données avec vos factures émises
+      pour détecter d'éventuels impayés. Si votre projection annuelle approche les 80% du seuil,
+      consultez un expert-comptable pour évaluer l'intérêt d'un passage anticipé à la SARL, qui
+      permet de déduire vos charges professionnelles et d'optimiser votre fiscalité.
+    </p>
   </div>
+
+  <!-- FAQ Section -->
+  <section class="mt-16 max-w-4xl">
+    <h2 class="text-2xl font-extrabold text-amber-900 mb-6">Questions Fréquentes sur le Suivi du CA</h2>
+    <div class="space-y-4">
+      {faqData.map((faq, i) => (
+        <details class="card group" id={`faq-${i}`}>
+          <summary class="cursor-pointer list-none flex items-center justify-between">
+            <h3 class="text-lg font-bold text-amber-900 pr-4">{faq.question}</h3>
+            <span class="text-amber-500 transform group-open:rotate-45 transition-transform text-xl flex-shrink-0">+</span>
+          </summary>
+          <p class="text-gray-700 mt-4 leading-relaxed">{faq.answer}</p>
+        </details>
+      ))}
+    </div>
+  </section>
 </CalculateurLayout>
