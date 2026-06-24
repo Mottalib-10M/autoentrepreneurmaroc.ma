@@ -13,6 +13,7 @@ export interface Props {
   type?: 'website' | 'article';
   noindex?: boolean;
   schema?: object;
+  isHomepage?: boolean;
 }
 
 const {
@@ -23,12 +24,14 @@ const {
   type = 'website',
   noindex = false,
   schema,
+  isHomepage = false,
 } = Astro.props;
 
 const fullTitle = getFullTitle(title);
 const canonicalURL = canonical || new URL(Astro.url.pathname, siteConfig.url).toString();
-const websiteSchema = getWebsiteSchema();
+const ogImageURL = ogImage || siteConfig.url + '/og-default.png';
 const organizationSchema = getOrganizationSchema();
+const websiteSchema = isHomepage ? getWebsiteSchema() : null;
 ---
 
 <!DOCTYPE html>
@@ -56,14 +59,21 @@ const organizationSchema = getOrganizationSchema();
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:site_name" content={siteConfig.name} />
     <meta property="og:locale" content="fr_MA" />
+    <meta property="og:image" content={ogImageURL} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={`${siteConfig.name} – ${title}`} />
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={fullTitle} />
     <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageURL} />
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" href="/icon-192.png" />
     <link rel="manifest" href="/manifest.webmanifest" />
     <meta name="theme-color" content="#D97706" />
 
@@ -71,7 +81,7 @@ const organizationSchema = getOrganizationSchema();
     <link rel="preload" href="/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin />
 
     <!-- Schema.org -->
-    <script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
+    {websiteSchema && <script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />}
     <script type="application/ld+json" set:html={JSON.stringify(organizationSchema)} />
     {schema && <script type="application/ld+json" set:html={JSON.stringify(schema)} />}
   </head>
@@ -84,5 +94,16 @@ const organizationSchema = getOrganizationSchema();
       <slot />
     </main>
     <Footer />
+
+    <!-- Microsoft Clarity - deferred 3s -->
+    <script is:inline>
+      setTimeout(function(){
+        (function(c,l,a,r,i,t,y){
+          c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+          t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+          y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window,document,"clarity","script","CLARITY_PROJECT_ID");
+      }, 3000);
+    </script>
   </body>
 </html>
