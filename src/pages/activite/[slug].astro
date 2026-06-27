@@ -18,8 +18,8 @@ interface Props {
 
 const { activite } = Astro.props;
 
-const pageTitle = `Auto-Entrepreneur ${activite.nom} au Maroc : charges et revenus`;
-const pageDescription = `Tout savoir pour devenir ${activite.nom.toLowerCase()} auto-entrepreneur au Maroc. Charges (IR ${activite.tauxIR * 100}%), revenus, tarifs et démarches 2026.`;
+const pageTitle = `${activite.nom} Auto-Entrepreneur au Maroc : guide charges`;
+const pageDescription = `Guide pour devenir ${activite.nom.toLowerCase()} auto-entrepreneur au Maroc en 2026 : taux IR forfaitaire, cotisation AMO, revenus moyens, tarifs, formalites d inscription.`;
 
 const breadcrumbs = [
   { name: 'Accueil', url: siteConfig.url + '/' },

@@ -1,0 +1,178 @@
+---
+import Layout from '../components/layout/Layout.astro';
+import { siteConfig } from '../config';
+import { getBreadcrumbSchema } from '../lib/seo';
+
+const breadcrumbs = [
+  { name: 'Accueil', url: siteConfig.url + '/' },
+  { name: 'Notre Méthodologie', url: siteConfig.url + '/methodologie/' },
+];
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    getBreadcrumbSchema(breadcrumbs),
+  ],
+};
+---
+
+<Layout
+  title="Notre Méthodologie : Sources et Calculs Auto-Entrepreneur"
+  description="Découvrez la méthodologie d'Auto-Entrepreneur Maroc : sources officielles DGI et CNSS, formules de calcul IR et AMO, et processus de vérification des données."
+  schema={schema}
+>
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <!-- Breadcrumbs -->
+    <nav class="mb-6 text-sm" aria-label="Fil d'Ariane">
+      <ol class="flex items-center gap-2 text-gray-500">
+        {breadcrumbs.map((crumb, i) => (
+          <li class="flex items-center gap-2">
+            {i > 0 && <span class="text-amber-400">/</span>}
+            {i === breadcrumbs.length - 1 ? (
+              <span class="text-amber-700 font-medium">{crumb.name}</span>
+            ) : (
+              <a href={crumb.url} class="hover:text-amber-700">{crumb.name}</a>
+            )}
+          </li>
+        ))}
+      </ol>
+    </nav>
+
+    <h1 class="text-3xl sm:text-4xl font-extrabold text-amber-900 mb-8">
+      Notre Méthodologie
+    </h1>
+
+    <div class="prose max-w-none">
+      <p>
+        Chez <strong>Auto-Entrepreneur Maroc</strong>, nous nous engageons à fournir des informations précises, à jour et vérifiables sur le statut d'auto-entrepreneur au Maroc. Cette page détaille les sources de données que nous utilisons, les formules de calcul implémentées dans nos outils, et notre processus de vérification continue. Notre objectif est de permettre à chaque auto-entrepreneur de prendre des décisions éclairées en toute confiance.
+      </p>
+
+      <h2>Sources de données officielles</h2>
+
+      <p>
+        Toutes les informations présentées sur notre site proviennent exclusivement de sources officielles marocaines. Nous ne nous appuyons jamais sur des sources secondaires non vérifiées ou des estimations approximatives. Voici les principales sources que nous consultons et référençons systématiquement :
+      </p>
+
+      <h3>Direction Générale des Impôts (DGI)</h3>
+
+      <p>
+        La DGI est notre source principale pour tout ce qui concerne la fiscalité de l'auto-entrepreneur. Nous référençons directement les textes de loi, les circulaires et les notes de service publiées par la DGI pour garantir l'exactitude de nos informations. Cela inclut notamment :
+      </p>
+
+      <ul>
+        <li><strong>Taux de l'Impôt sur le Revenu Professionnel (IR) :</strong> Les taux forfaitaires appliqués au chiffre d'affaires des auto-entrepreneurs (0,5% pour les activités commerciales, industrielles et artisanales, et 1% pour les prestations de services) sont extraits directement du Code Général des Impôts et des circulaires de la DGI.</li>
+        <li><strong>Seuils de chiffre d'affaires :</strong> Les plafonds de CA (500 000 DH pour les activités commerciales, industrielles et artisanales, et 200 000 DH pour les prestations de services) proviennent de la Loi 114-13 relative au statut de l'auto-entrepreneur et de ses textes d'application.</li>
+        <li><strong>Obligations déclaratives :</strong> Les modalités et échéances de déclaration trimestrielle du chiffre d'affaires sont documentées à partir des publications officielles de la DGI et du portail de l'auto-entrepreneur.</li>
+        <li><strong>Régime TVA :</strong> Les règles d'exonération de TVA applicables aux auto-entrepreneurs et les seuils de franchissement sont tirés du Code Général des Impôts.</li>
+      </ul>
+
+      <h3>Caisse Nationale de Sécurité Sociale (CNSS)</h3>
+
+      <p>
+        La CNSS administre le régime de protection sociale spécifique aux auto-entrepreneurs. Nous consultons les publications et barèmes officiels de la CNSS pour les données suivantes :
+      </p>
+
+      <ul>
+        <li><strong>Cotisations Assurance Maladie Obligatoire (AMO) :</strong> Les taux de cotisation AMO applicables aux auto-entrepreneurs sont extraits des textes réglementaires de la CNSS. Le taux actuel de cotisation est appliqué sur le chiffre d'affaires selon les barèmes en vigueur.</li>
+        <li><strong>Prestations sociales :</strong> Les droits ouverts par les cotisations CNSS (couverture maladie, allocations familiales, pension de retraite) sont documentés à partir des publications officielles de la CNSS.</li>
+        <li><strong>Modalités de paiement :</strong> Les échéances et modes de règlement des cotisations sociales sont tirés du portail de la CNSS et des circulaires d'application.</li>
+      </ul>
+
+      <h3>Loi 114-13 et textes d'application</h3>
+
+      <p>
+        La Loi 114-13 relative au statut de l'auto-entrepreneur, publiée au Bulletin Officiel, constitue le cadre juridique fondamental de toutes nos informations. Nous référençons également les décrets d'application, les arrêtés ministériels et les circulaires interprétatives qui précisent les modalités d'application de cette loi. Ces textes couvrent notamment les conditions d'éligibilité, les activités autorisées, les obligations comptables simplifiées et les sanctions en cas de non-respect des obligations.
+      </p>
+
+      <h2>Formules de calcul utilisées</h2>
+
+      <p>
+        Nos calculateurs implémentent les formules exactes prévues par la législation marocaine en vigueur. Chaque calcul est transparent et reproductible. Voici le détail des formules utilisées dans nos principaux outils :
+      </p>
+
+      <h3>Calculateur de charges AE</h3>
+
+      <p>
+        Le calculateur de charges applique les formules suivantes, basées sur le chiffre d'affaires déclaré par l'utilisateur :
+      </p>
+
+      <ul>
+        <li><strong>IR forfaitaire :</strong> Chiffre d'affaires x taux IR applicable (0,5% ou 1% selon la nature de l'activité). Ce taux forfaitaire et libératoire remplace le barème progressif de l'IR applicable aux autres contribuables.</li>
+        <li><strong>Cotisation AMO :</strong> Chiffre d'affaires x taux AMO en vigueur. La cotisation AMO est calculée trimestriellement sur le CA déclaré et ouvre droit à la couverture maladie de base.</li>
+        <li><strong>Revenu net estimé :</strong> Chiffre d'affaires - IR - AMO - charges professionnelles estimées. Le résultat donne une estimation du revenu disponible après déduction de toutes les charges obligatoires.</li>
+      </ul>
+
+      <h3>Comparateur de statuts</h3>
+
+      <p>
+        Le comparateur de statuts évalue les différences entre le régime d'auto-entrepreneur et les autres formes juridiques (SARL, SAS, portage salarial) en se basant sur les charges fiscales et sociales réelles de chaque statut. Pour chaque statut, nous appliquons les taux d'imposition en vigueur (IS pour la SARL, IR pour l'AE), les cotisations sociales obligatoires, et les frais administratifs typiques. Les résultats permettent une comparaison objective pour un même niveau de chiffre d'affaires.
+      </p>
+
+      <h3>Générateur de factures</h3>
+
+      <p>
+        Le générateur de factures produit des documents conformes aux exigences légales marocaines. Il intègre automatiquement les mentions obligatoires prévues par la loi : identifiant ICE, numéro d'identification fiscale, mention d'exonération de TVA le cas échéant, et numérotation séquentielle des factures. Les modèles sont mis à jour lorsque la réglementation en matière de facturation évolue.
+      </p>
+
+      <h2>Processus de vérification et de mise à jour</h2>
+
+      <p>
+        La fiabilité de nos informations repose sur un processus rigoureux de vérification et de mise à jour continue. Nous appliquons les étapes suivantes :
+      </p>
+
+      <h3>Vérification initiale</h3>
+
+      <p>
+        Avant publication, chaque information est vérifiée par recoupement entre au moins deux sources officielles. Les taux, seuils et formules de calcul sont comparés avec les textes de loi originaux, les publications de la DGI et de la CNSS, et les informations disponibles sur le portail officiel de l'auto-entrepreneur. Les calculs sont testés avec des scénarios connus pour vérifier la cohérence des résultats.
+      </p>
+
+      <h3>Mises à jour régulières</h3>
+
+      <p>
+        Nous effectuons une veille juridique et réglementaire continue pour détecter tout changement susceptible d'affecter les informations publiées sur notre site. Les Lois de Finances annuelles, qui peuvent modifier les taux d'imposition ou les seuils de chiffre d'affaires, font l'objet d'une attention particulière. Lorsqu'un changement est identifié, nous mettons à jour nos contenus et nos calculateurs dans les meilleurs délais après la publication officielle au Bulletin Officiel.
+      </p>
+
+      <h3>Signalement d'erreurs</h3>
+
+      <p>
+        Nous encourageons nos utilisateurs à signaler toute erreur ou incohérence qu'ils pourraient constater. Chaque signalement est vérifié et, si l'erreur est confirmée, corrigée dans les plus brefs délais. Vous pouvez nous contacter à <a href={`mailto:${siteConfig.contact.email}`}>{siteConfig.contact.email}</a> pour tout signalement.
+      </p>
+
+      <h2>Limites et avertissements</h2>
+
+      <p>
+        Malgré notre engagement envers la précision, il est important de comprendre les limites inhérentes à nos informations et outils :
+      </p>
+
+      <ul>
+        <li><strong>Caractère informatif :</strong> Les informations publiées sur ce site ont une vocation strictement informative et pédagogique. Elles ne constituent en aucun cas un conseil fiscal, juridique ou comptable personnalisé.</li>
+        <li><strong>Délai de mise à jour :</strong> Il peut exister un délai entre la publication d'un nouveau texte de loi au Bulletin Officiel et la mise à jour correspondante sur notre site. Nous nous efforçons de réduire ce délai au minimum, mais il est recommandé de vérifier les informations critiques auprès des sources officielles.</li>
+        <li><strong>Estimation des charges professionnelles :</strong> Les charges professionnelles (loyer, fournitures, déplacements) varient considérablement d'un auto-entrepreneur à l'autre. Nos estimations sont basées sur des moyennes sectorielles et ne peuvent pas refléter la situation exacte de chaque utilisateur.</li>
+        <li><strong>Cas particuliers :</strong> Certaines situations spécifiques (cumul d'activités, activités réglementées, situations transfrontalières) peuvent nécessiter une analyse individualisée qui dépasse le cadre de nos outils génériques.</li>
+      </ul>
+
+      <h2>Recommandation professionnelle</h2>
+
+      <p>
+        Pour toute décision importante concernant votre activité d'auto-entrepreneur, en particulier la création, la transformation de statut, ou la gestion de situations fiscales complexes, nous recommandons de consulter un expert-comptable ou un conseiller fiscal agréé. Nos outils et guides constituent un excellent point de départ pour comprendre vos obligations et estimer vos charges, mais ils ne remplacent pas l'accompagnement personnalisé d'un professionnel.
+      </p>
+
+      <h2>Transparence et indépendance</h2>
+
+      <p>
+        <strong>Auto-Entrepreneur Maroc</strong> est un site totalement indépendant. Nous ne sommes affiliés à aucune administration, aucun cabinet comptable ni aucun prestataire de services aux auto-entrepreneurs. Nos recommandations et classements, lorsqu'ils existent, sont fondés exclusivement sur des critères objectifs et documentés. Notre modèle économique repose sur la publicité contextuelle et ne compromet en aucun cas l'objectivité de nos informations.
+      </p>
+
+      <p>
+        Cette méthodologie est elle-même soumise à révision et amélioration. Si vous avez des suggestions pour renforcer la fiabilité ou la transparence de nos informations, n'hésitez pas à nous contacter.
+      </p>
+
+      <h2>Contact</h2>
+
+      <p>
+        Pour toute question relative à notre méthodologie, nos sources ou nos calculs :
+        <a href={`mailto:${siteConfig.contact.email}`}>{siteConfig.contact.email}</a>
+      </p>
+    </div>
+  </div>
+</Layout>

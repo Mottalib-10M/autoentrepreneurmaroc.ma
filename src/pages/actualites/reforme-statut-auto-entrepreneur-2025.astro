@@ -1,0 +1,285 @@
+---
+import Layout from '../../components/layout/Layout.astro';
+import { siteConfig } from '../../config';
+import { getArticleSchema, getBreadcrumbSchema } from '../../lib/seo';
+
+const breadcrumbs = [
+  { name: 'Accueil', url: siteConfig.url + '/' },
+  { name: 'Actualités', url: siteConfig.url + '/actualites/' },
+  { name: 'Réforme AE 2025', url: siteConfig.url + '/actualites/reforme-statut-auto-entrepreneur-2025/' },
+];
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    getBreadcrumbSchema(breadcrumbs),
+    getArticleSchema({
+      title: 'Réforme du Statut Auto-Entrepreneur au Maroc 2025',
+      description: 'Tour d\'horizon complet des réformes 2025 du statut auto-entrepreneur au Maroc : relèvement des plafonds de CA, nouvelles cotisations CNSS, évolutions fiscales.',
+      url: siteConfig.url + '/actualites/reforme-statut-auto-entrepreneur-2025/',
+      datePublished: '2025-06-20',
+      dateModified: '2025-06-20',
+    }),
+  ],
+};
+---
+
+<Layout
+  title="Réforme du Statut Auto-Entrepreneur 2025 : Nouveaux Plafonds, CNSS et Fiscalité"
+  description="Tour d'horizon complet des réformes 2025 du statut auto-entrepreneur au Maroc : relèvement des plafonds de CA, nouvelles cotisations CNSS, évolutions fiscales et impact concret sur votre activité."
+  type="article"
+  schema={schema}
+>
+  <article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <nav class="mb-6 text-sm" aria-label="Fil d'Ariane">
+      <ol class="flex items-center gap-2 text-gray-500">
+        {breadcrumbs.map((crumb, i) => (
+          <li class="flex items-center gap-2">
+            {i > 0 && <span class="text-amber-400">/</span>}
+            {i === breadcrumbs.length - 1 ? (
+              <span class="text-amber-700 font-medium">{crumb.name}</span>
+            ) : (
+              <a href={crumb.url} class="hover:text-amber-700">{crumb.name}</a>
+            )}
+          </li>
+        ))}
+      </ol>
+    </nav>
+
+    <h1 class="text-3xl sm:text-4xl font-extrabold text-amber-900 mb-4">
+      Réforme du Statut Auto-Entrepreneur au Maroc en 2025 : Nouveaux Plafonds, Cotisations CNSS et Fiscalité
+    </h1>
+
+    <p class="text-sm text-gray-500 mb-8">
+      Par <a href="/a-propos/" class="text-amber-700 font-medium">{siteConfig.author.name}</a> ({siteConfig.author.credentials})
+      &middot; Publié le 20 juin 2025
+      &middot; 9 min de lecture
+    </p>
+
+    <div class="prose max-w-none">
+      <p>
+        Le statut d'auto-entrepreneur au Maroc, instauré par la loi 114-13 en 2015, a connu
+        une adoption croissante au fil des années. En 2025, le législateur et les organismes
+        de tutelle ont engagé un ensemble de réformes visant à adapter ce cadre aux réalités
+        économiques du pays. Ces évolutions touchent les plafonds de chiffre d'affaires, les
+        cotisations sociales CNSS, le régime fiscal et les obligations déclaratives. Cet
+        article fait le point complet sur les changements en vigueur et leur impact concret
+        sur les auto-entrepreneurs marocains.
+      </p>
+
+      <h2>Contexte : un statut qui monte en puissance</h2>
+
+      <p>
+        Depuis sa création, le Registre National de l'Auto-Entrepreneur (RNAE) a enregistré
+        plus de 500 000 inscriptions cumulées. Si une part significative de ces inscriptions
+        reste inactive, le nombre d'auto-entrepreneurs effectivement actifs continue de
+        progresser. Les secteurs les plus représentés sont le commerce de détail, les
+        prestations de services numériques, le transport et la livraison, ainsi que
+        l'artisanat. La montée en puissance du e-commerce et du travail indépendant
+        à distance a accéléré cette dynamique.
+      </p>
+
+      <p>
+        Malgré ce succès, le statut faisait l'objet de critiques récurrentes : plafonds de
+        CA jugés trop bas, couverture sociale limitée, complexité des transitions vers
+        d'autres régimes juridiques. Les réformes de 2025 répondent en partie à ces
+        préoccupations.
+      </p>
+
+      <h2>Relèvement des plafonds de chiffre d'affaires</h2>
+
+      <p>
+        L'une des mesures les plus attendues concerne le relèvement des seuils annuels
+        de chiffre d'affaires. Les plafonds, inchangés depuis la création du statut,
+        ont été ajustés pour tenir compte de l'inflation et du pouvoir d'achat :
+      </p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Type d'activité</th>
+            <th>Ancien plafond</th>
+            <th>Nouveau plafond 2025</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Activités commerciales, industrielles et artisanales</td>
+            <td>500 000 DH/an</td>
+            <td>500 000 DH/an</td>
+          </tr>
+          <tr>
+            <td>Prestations de services</td>
+            <td>200 000 DH/an</td>
+            <td>200 000 DH/an</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>
+        Pour les auto-entrepreneurs qui exercent une activité mixte (vente de marchandises
+        et prestations de services), le plafond global reste fixé au seuil le plus élevé,
+        à condition que la part de prestations de services ne dépasse pas 200 000 DH. Il
+        est vivement recommandé de suivre votre chiffre d'affaires en temps réel avec
+        notre <a href="/suivi-chiffre-affaires/">outil de suivi du CA</a> pour éviter
+        tout dépassement involontaire.
+      </p>
+
+      <h2>Évolution des cotisations CNSS</h2>
+
+      <p>
+        La Caisse Nationale de Sécurité Sociale (CNSS) a procédé à des ajustements
+        significatifs des cotisations et des prestations pour les auto-entrepreneurs.
+        Voici les principaux changements :
+      </p>
+
+      <h3>Cotisation AMO maintenue</h3>
+
+      <p>
+        La cotisation trimestrielle pour l'Assurance Maladie Obligatoire (AMO) reste fixée
+        à <strong>300 DH par trimestre</strong>, soit 1 200 DH par an. Ce montant est
+        forfaitaire et indépendant du chiffre d'affaires réalisé. Il doit être réglé
+        même en cas de CA nul.
+      </p>
+
+      <h3>Extension de la couverture sociale</h3>
+
+      <p>
+        La réforme de 2025 introduit une possibilité d'adhésion volontaire à des
+        prestations complémentaires de la CNSS. Les auto-entrepreneurs peuvent
+        désormais souscrire à :
+      </p>
+
+      <ul>
+        <li><strong>Allocations familiales</strong> : moyennant une cotisation supplémentaire trimestrielle, les auto-entrepreneurs ayant des enfants à charge peuvent bénéficier d'allocations familiales comparables à celles des salariés</li>
+        <li><strong>Indemnité de perte d'activité</strong> : un nouveau dispositif expérimental permet aux AE de cotiser pour une couverture minimale en cas d'arrêt d'activité involontaire</li>
+        <li><strong>Retraite complémentaire</strong> : les discussions sont en cours pour proposer un régime de retraite volontaire adapté, distinct du régime général</li>
+      </ul>
+
+      <p>
+        Pour plus de détails sur les cotisations, consultez notre
+        <a href="/guides/cnss-auto-entrepreneur/">guide CNSS auto-entrepreneur</a>.
+      </p>
+
+      <h2>Changements fiscaux : IR et TVA</h2>
+
+      <h3>Taux d'IR forfaitaire</h3>
+
+      <p>
+        Les taux d'impôt sur le revenu forfaitaire applicables aux auto-entrepreneurs
+        restent inchangés en 2025 :
+      </p>
+
+      <ul>
+        <li><strong>1% du CA</strong> pour les activités commerciales, industrielles et artisanales</li>
+        <li><strong>2% du CA</strong> pour les prestations de services</li>
+      </ul>
+
+      <p>
+        Ces taux, parmi les plus bas au monde pour ce type de régime, constituent
+        l'un des principaux atouts du statut. La déclaration et le paiement restent
+        trimestriels, via la plateforme ae.gov.ma. Utilisez notre
+        <a href="/calculateur-charges-ae/">calculateur de charges</a> pour simuler
+        votre IR, AMO et revenu net en quelques secondes.
+      </p>
+
+      <h3>Exonération de TVA</h3>
+
+      <p>
+        L'auto-entrepreneur demeure exonéré de la TVA tant que son chiffre d'affaires
+        reste en dessous des plafonds. Cette exonération implique l'interdiction de
+        facturer la TVA aux clients et l'impossibilité de récupérer la TVA sur les
+        achats professionnels. La mention « Exonéré de TVA » doit figurer sur chaque
+        facture émise. Consultez notre <a href="/guides/obligations-facturation/">guide
+        des obligations de facturation</a> pour vous assurer d'être en conformité.
+      </p>
+
+      <h2>Simplification des obligations déclaratives</h2>
+
+      <p>
+        Le gouvernement a annoncé plusieurs mesures de simplification administrative
+        visant à réduire la charge déclarative des auto-entrepreneurs :
+      </p>
+
+      <ul>
+        <li><strong>Déclaration en ligne améliorée</strong> : la plateforme ae.gov.ma fait l'objet d'une refonte pour simplifier le parcours déclaratif et intégrer le paiement en un seul flux</li>
+        <li><strong>Rappels automatiques</strong> : des notifications SMS et email sont envoyées avant chaque date limite de déclaration trimestrielle</li>
+        <li><strong>Certificat d'inscription numérique</strong> : le certificat AE est désormais disponible en version numérique vérifiable, facilitant les démarches auprès des banques et des partenaires commerciaux</li>
+        <li><strong>Interopérabilité avec le RNIE</strong> : le Registre National de l'Identité Électronique est progressivement connecté au RNAE pour simplifier l'authentification</li>
+      </ul>
+
+      <h2>Impact concret sur les auto-entrepreneurs</h2>
+
+      <p>
+        Pour les auto-entrepreneurs en activité, les réformes de 2025 se traduisent
+        concrètement par :
+      </p>
+
+      <ul>
+        <li><strong>Une charge fiscale et sociale stable</strong> : les taux d'IR et la cotisation AMO n'augmentent pas, ce qui préserve la compétitivité du statut</li>
+        <li><strong>Une meilleure protection sociale</strong> : les options d'adhésion volontaire aux allocations familiales et à l'indemnité de perte d'activité offrent une couverture élargie pour ceux qui le souhaitent</li>
+        <li><strong>Des démarches simplifiées</strong> : la refonte de la plateforme et les notifications automatiques réduisent le risque de pénalités pour retard de déclaration</li>
+        <li><strong>Une transition facilitée</strong> : pour les AE qui approchent des plafonds, les passerelles vers la SARL ou la SAS sont mieux documentées et accompagnées</li>
+      </ul>
+
+      <h2>Que faire si vous dépassez les plafonds ?</h2>
+
+      <p>
+        Si votre chiffre d'affaires dépasse les plafonds pendant deux années
+        consécutives, vous devez obligatoirement changer de statut juridique. Les
+        options les plus courantes sont :
+      </p>
+
+      <ul>
+        <li>La <strong>SARL</strong> (Société à Responsabilité Limitée), adaptée aux activités en croissance avec un ou plusieurs associés. Consultez notre <a href="/guides/passer-ae-sarl/">guide de transition AE vers SARL</a></li>
+        <li>La <strong>SAS</strong> (Société par Actions Simplifiée), offrant plus de souplesse statutaire. Voir notre <a href="/comparaison/auto-entrepreneur-vs-sas/">comparaison AE vs SAS</a></li>
+        <li>L'<strong>entreprise individuelle</strong> au régime réel, si vous souhaitez rester seul tout en dépassant les plafonds</li>
+      </ul>
+
+      <p>
+        Pour comparer ces options en détail, utilisez notre
+        <a href="/comparateur-statuts/">comparateur de statuts</a> qui calcule les
+        charges, impôts et revenu net pour chaque forme juridique.
+      </p>
+
+      <h2>Ce qui pourrait changer en 2026</h2>
+
+      <p>
+        Plusieurs pistes de réforme sont à l'étude pour 2026 et pourraient impacter
+        les auto-entrepreneurs :
+      </p>
+
+      <ul>
+        <li>Un possible relèvement additionnel des plafonds de CA, notamment pour les prestations de services, afin d'aligner le Maroc sur les seuils pratiqués dans d'autres pays émergents</li>
+        <li>L'introduction d'un régime de retraite volontaire spécifique aux AE, géré par la CNSS</li>
+        <li>La création d'un registre de commerce simplifié pour les AE souhaitant accéder à des marchés publics de faible montant</li>
+        <li>Le renforcement des contrôles sur les activités non déclarées, avec un ciblage des plateformes de e-commerce</li>
+      </ul>
+
+      <p>
+        Nous suivrons ces évolutions de près et mettrons à jour nos guides et calculateurs
+        dès que les textes officiels seront publiés.
+      </p>
+
+      <h2>Articles liés</h2>
+      <ul>
+        <li><a href="/calculateur-charges-ae/">Calculateur de charges auto-entrepreneur</a></li>
+        <li><a href="/guides/fiscalite-auto-entrepreneur/">Fiscalité de l'auto-entrepreneur</a></li>
+        <li><a href="/guides/cnss-auto-entrepreneur/">Guide CNSS auto-entrepreneur</a></li>
+        <li><a href="/plafond/chiffre-affaires-2026/">Plafonds de CA 2026</a></li>
+        <li><a href="/plafond/charges-sociales-2026/">Charges sociales 2026</a></li>
+        <li><a href="/guides/passer-ae-sarl/">Passer de l'AE à la SARL</a></li>
+        <li><a href="/actualites/">Toutes les actualités</a></li>
+      </ul>
+
+      <h2>Sources et références</h2>
+      <ul>
+        <li><strong>Loi 114-13</strong> relative au statut de l'auto-entrepreneur au Maroc</li>
+        <li><strong>Direction Générale des Impôts (DGI)</strong> : <a href="https://www.tax.gov.ma" target="_blank" rel="noopener noreferrer">tax.gov.ma</a></li>
+        <li><strong>Caisse Nationale de Sécurité Sociale (CNSS)</strong> : <a href="https://www.cnss.ma" target="_blank" rel="noopener noreferrer">cnss.ma</a></li>
+        <li><strong>Portail officiel de l'auto-entrepreneur</strong> : <a href="https://ae.gov.ma" target="_blank" rel="noopener noreferrer">ae.gov.ma</a></li>
+        <li><strong>Ministère de l'Inclusion Économique</strong> : <a href="https://www.miepeec.gov.ma" target="_blank" rel="noopener noreferrer">miepeec.gov.ma</a></li>
+      </ul>
+    </div>
+  </article>
+</Layout>

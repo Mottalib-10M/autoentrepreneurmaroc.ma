@@ -1,5 +1,6 @@
 ---
 import Layout from '../components/layout/Layout.astro';
+import RelatedCalculators from '../components/ui/RelatedCalculators.astro';
 import { siteConfig } from '../config';
 import { getBreadcrumbSchema, getSoftwareAppSchema } from '../lib/seo';
 
@@ -73,5 +74,8 @@ const schema = {
 
     <!-- Content -->
     <slot />
+
+    <!-- Related tools -->
+    <RelatedCalculators />
   </div>
 </Layout>

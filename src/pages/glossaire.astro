@@ -1,0 +1,268 @@
+---
+import Layout from '../components/layout/Layout.astro';
+import { siteConfig } from '../config';
+import { getBreadcrumbSchema } from '../lib/seo';
+
+const title = 'Glossaire Auto-Entrepreneur Maroc : Termes Clés AE';
+const description = "Glossaire auto-entrepreneur au Maroc : définitions des termes fiscaux, administratifs et comptables du statut AE. Tous les termes expliqués simplement en 2025.";
+
+const breadcrumbs = [
+  { name: 'Accueil', url: siteConfig.url + '/' },
+  { name: 'Glossaire', url: siteConfig.url + '/glossaire/' },
+];
+
+const definedTermSetSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'DefinedTermSet',
+  name: 'Glossaire Auto-Entrepreneur Maroc',
+  description: "Termes et définitions relatifs au statut d'auto-entrepreneur au Maroc.",
+  inLanguage: 'fr',
+  url: siteConfig.url + '/glossaire/',
+};
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    getBreadcrumbSchema(breadcrumbs),
+    definedTermSetSchema,
+  ],
+};
+
+const letters = ['A', 'B', 'C', 'D', 'F', 'I', 'P', 'R', 'S', 'T'];
+---
+
+<Layout title={title} description={description} schema={schema}>
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <!-- Breadcrumbs -->
+    <nav class="mb-6 text-sm" aria-label="Fil d'Ariane">
+      <ol class="flex items-center gap-2 text-gray-500">
+        {breadcrumbs.map((crumb, i) => (
+          <li class="flex items-center gap-2">
+            {i > 0 && <span class="text-amber-400">/</span>}
+            {i === breadcrumbs.length - 1 ? (
+              <span class="text-amber-700 font-medium">{crumb.name}</span>
+            ) : (
+              <a href={crumb.url} class="hover:text-amber-700">{crumb.name}</a>
+            )}
+          </li>
+        ))}
+      </ol>
+    </nav>
+
+    <h1 class="text-3xl sm:text-4xl font-extrabold text-amber-900 mb-4">
+      Glossaire Auto-Entrepreneur Maroc
+    </h1>
+    <p class="text-lg text-gray-600 mb-8 max-w-3xl">
+      Retrouvez les définitions de tous les termes liés au <strong>statut d'auto-entrepreneur</strong> au Maroc : fiscalité, obligations, déclarations et démarches administratives.
+    </p>
+
+    <!-- Author Byline -->
+    <p class="text-sm text-gray-500 mb-8">
+      Par <a href="/a-propos/" class="text-amber-700 font-medium">{siteConfig.author.name}</a> ({siteConfig.author.credentials})
+      &middot; Mis à jour en 2025
+    </p>
+
+    <!-- Navigation A-Z -->
+    <nav aria-label="Navigation alphabétique" class="mb-10 flex flex-wrap gap-2">
+      {letters.map((letter) => (
+        <a href={`#${letter}`} class="w-9 h-9 flex items-center justify-center rounded-lg bg-amber-50 text-sm font-semibold text-amber-800 hover:bg-amber-600 hover:text-white transition-colors">
+          {letter}
+        </a>
+      ))}
+    </nav>
+
+    <!-- Glossaire -->
+    <div class="space-y-10">
+
+      <!-- A -->
+      <section id="A">
+        <h2 class="text-2xl font-bold text-amber-800 mb-4 border-b border-amber-200 pb-2">A</h2>
+        <dl class="space-y-4">
+          <div>
+            <dt class="font-semibold text-gray-900">Activité artisanale</dt>
+            <dd class="text-gray-600 mt-1">Catégorie d'activité auto-entrepreneur regroupant les métiers manuels et artisanaux (couture, menuiserie, poterie, etc.). Les plafonds de chiffre d'affaires et taux d'imposition sont spécifiques à cette catégorie.</dd>
+          </div>
+          <div>
+            <dt class="font-semibold text-gray-900">Activité commerciale</dt>
+            <dd class="text-gray-600 mt-1">Catégorie d'activité auto-entrepreneur regroupant l'achat-revente de marchandises et la vente de produits. Le plafond de chiffre d'affaires annuel est de 500 000 DH pour cette catégorie.</dd>
+          </div>
+          <div>
+            <dt class="font-semibold text-gray-900">Auto-entrepreneur</dt>
+            <dd class="text-gray-600 mt-1">Statut juridique simplifié créé par la Loi 114-13 permettant à toute personne physique d'exercer une activité à titre individuel avec des obligations comptables et fiscales allégées. Consultez notre <a href="/guides/inscription-auto-entrepreneur/" class="text-amber-700 hover:underline">guide d'inscription</a> pour démarrer.</dd>
+          </div>
+        </dl>
+      </section>
+
+      <!-- B -->
+      <section id="B">
+        <h2 class="text-2xl font-bold text-amber-800 mb-4 border-b border-amber-200 pb-2">B</h2>
+        <dl class="space-y-4">
+          <div>
+            <dt class="font-semibold text-gray-900">Barid Bank</dt>
+            <dd class="text-gray-600 mt-1">Banque postale marocaine partenaire du programme auto-entrepreneur. Barid Bank propose l'ouverture de comptes dédiés aux auto-entrepreneurs et facilite le paiement des cotisations.</dd>
+          </div>
+        </dl>
+      </section>
+
+      <!-- C -->
+      <section id="C">
+        <h2 class="text-2xl font-bold text-amber-800 mb-4 border-b border-amber-200 pb-2">C</h2>
+        <dl class="space-y-4">
+          <div>
+            <dt class="font-semibold text-gray-900">Carte auto-entrepreneur</dt>
+            <dd class="text-gray-600 mt-1">Document officiel délivré lors de l'inscription au Registre national de l'auto-entrepreneur. Cette carte atteste du statut et contient le numéro d'identification unique de l'auto-entrepreneur.</dd>
+          </div>
+          <div>
+            <dt class="font-semibold text-gray-900">Changement d'activité</dt>
+            <dd class="text-gray-600 mt-1">Procédure permettant à un auto-entrepreneur de modifier la nature de son activité déclarée. Le changement doit être signalé au Registre national dans les délais prévus par la loi.</dd>
+          </div>
+          <div>
+            <dt class="font-semibold text-gray-900">Chiffre d'affaires (CA)</dt>
+            <dd class="text-gray-600 mt-1">Total des recettes encaissées par l'auto-entrepreneur sur une période donnée. Le CA sert de base au calcul de l'impôt et des cotisations. Suivez votre CA avec notre <a href="/suivi-chiffre-affaires/" class="text-amber-700 hover:underline">outil de suivi du chiffre d'affaires</a>.</dd>
+          </div>
+          <div>
+            <dt class="font-semibold text-gray-900">CNSS auto-entrepreneur</dt>
+            <dd class="text-gray-600 mt-1">Régime de protection sociale spécifique aux auto-entrepreneurs, géré par la CNSS. Il offre une couverture AMO et, depuis 2021, des droits aux allocations familiales et à la retraite. Voir notre <a href="/guides/cnss-auto-entrepreneur/" class="text-amber-700 hover:underline">guide CNSS auto-entrepreneur</a>.</dd>
+          </div>
+          <div>
+            <dt class="font-semibold text-gray-900">Contribution Professionnelle Unifiée (CPU)</dt>
+            <dd class="text-gray-600 mt-1">Taxe unique regroupant l'impôt sur le revenu, la taxe professionnelle et la cotisation CNSS pour les auto-entrepreneurs. La CPU simplifie les obligations fiscales en un seul paiement. Simulez votre CPU avec notre <a href="/calculateur-charges-ae/" class="text-amber-700 hover:underline">calculateur de charges AE</a>.</dd>
+          </div>
+          <div>
+            <dt class="font-semibold text-gray-900">CRI (Centre Régional d'Investissement)</dt>
+            <dd class="text-gray-600 mt-1">Organisme public régional facilitant la création d'entreprises au Maroc. Le CRI peut orienter les porteurs de projets vers le statut d'auto-entrepreneur ou d'autres formes juridiques.</dd>
+          </div>
+        </dl>
+      </section>
+
+      <!-- D -->
+      <section id="D">
+        <h2 class="text-2xl font-bold text-amber-800 mb-4 border-b border-amber-200 pb-2">D</h2>
+        <dl class="space-y-4">
+          <div>
+            <dt class="font-semibold text-gray-900">Déclaration trimestrielle</dt>
+            <dd class="text-gray-600 mt-1">Obligation pour l'auto-entrepreneur de déclarer son chiffre d'affaires chaque trimestre, même si celui-ci est nul. La déclaration sert de base au calcul de la CPU et des cotisations sociales.</dd>
+          </div>
+        </dl>
+      </section>
+
+      <!-- F -->
+      <section id="F">
+        <h2 class="text-2xl font-bold text-amber-800 mb-4 border-b border-amber-200 pb-2">F</h2>
+        <dl class="space-y-4">
+          <div>
+            <dt class="font-semibold text-gray-900">Facturation</dt>
+            <dd class="text-gray-600 mt-1">Obligation pour l'auto-entrepreneur d'émettre une facture pour chaque prestation ou vente. La facture doit comporter certaines mentions obligatoires (ICE, nom, adresse, etc.). Utilisez notre <a href="/generateur-facture/" class="text-amber-700 hover:underline">générateur de factures</a> gratuit.</dd>
+          </div>
+        </dl>
+      </section>
+
+      <!-- I -->
+      <section id="I">
+        <h2 class="text-2xl font-bold text-amber-800 mb-4 border-b border-amber-200 pb-2">I</h2>
+        <dl class="space-y-4">
+          <div>
+            <dt class="font-semibold text-gray-900">ICE (Identifiant Commun de l'Entreprise)</dt>
+            <dd class="text-gray-600 mt-1">Numéro unique à 15 chiffres attribué à chaque entreprise au Maroc, y compris les auto-entrepreneurs. L'ICE doit figurer sur toutes les factures, bons de commande et correspondances commerciales.</dd>
+          </div>
+          <div>
+            <dt class="font-semibold text-gray-900">Identifiant fiscal (IF)</dt>
+            <dd class="text-gray-600 mt-1">Numéro attribué par la Direction Générale des Impôts (DGI) à chaque contribuable. L'identifiant fiscal est nécessaire pour les déclarations fiscales et les relations avec l'administration.</dd>
+          </div>
+          <div>
+            <dt class="font-semibold text-gray-900">Impôt sur le revenu (IR)</dt>
+            <dd class="text-gray-600 mt-1">Pour les auto-entrepreneurs, l'IR est calculé sur le chiffre d'affaires à un taux forfaitaire réduit selon le type d'activité (0,5% pour le commerce, 1% pour les services). Consultez notre <a href="/guides/fiscalite-auto-entrepreneur/" class="text-amber-700 hover:underline">guide de la fiscalité AE</a>.</dd>
+          </div>
+        </dl>
+      </section>
+
+      <!-- P -->
+      <section id="P">
+        <h2 class="text-2xl font-bold text-amber-800 mb-4 border-b border-amber-200 pb-2">P</h2>
+        <dl class="space-y-4">
+          <div>
+            <dt class="font-semibold text-gray-900">Patente (Taxe professionnelle)</dt>
+            <dd class="text-gray-600 mt-1">Taxe locale due par les professionnels au Maroc. Les auto-entrepreneurs bénéficient d'une exonération de la taxe professionnelle pendant les 5 premières années d'activité.</dd>
+          </div>
+          <div>
+            <dt class="font-semibold text-gray-900">Plafond CA</dt>
+            <dd class="text-gray-600 mt-1">Montant maximum du chiffre d'affaires annuel autorisé sous le statut auto-entrepreneur : 500 000 DH pour les activités commerciales et 200 000 DH pour les services et l'artisanat. Au-delà, un changement de statut est requis.</dd>
+          </div>
+          <div>
+            <dt class="font-semibold text-gray-900">Prestation de services</dt>
+            <dd class="text-gray-600 mt-1">Catégorie d'activité auto-entrepreneur regroupant les services intellectuels et de conseil. Le plafond de CA annuel est de 200 000 DH avec un taux d'IR de 1%.</dd>
+          </div>
+        </dl>
+      </section>
+
+      <!-- R -->
+      <section id="R">
+        <h2 class="text-2xl font-bold text-amber-800 mb-4 border-b border-amber-200 pb-2">R</h2>
+        <dl class="space-y-4">
+          <div>
+            <dt class="font-semibold text-gray-900">Radiation</dt>
+            <dd class="text-gray-600 mt-1">Suppression de l'inscription d'un auto-entrepreneur du Registre national. La radiation peut être volontaire ou prononcée en cas de non-respect des obligations déclaratives pendant deux années consécutives.</dd>
+          </div>
+          <div>
+            <dt class="font-semibold text-gray-900">Registre du commerce</dt>
+            <dd class="text-gray-600 mt-1">Registre public tenu par les tribunaux de commerce. Les auto-entrepreneurs ne sont pas tenus de s'inscrire au registre du commerce, contrairement aux sociétés commerciales.</dd>
+          </div>
+          <div>
+            <dt class="font-semibold text-gray-900">Registre national de l'auto-entrepreneur</dt>
+            <dd class="text-gray-600 mt-1">Registre tenu par l'OMPIC (Office Marocain de la Propriété Industrielle et Commerciale) centralisant les inscriptions de tous les auto-entrepreneurs au Maroc.</dd>
+          </div>
+          <div>
+            <dt class="font-semibold text-gray-900">Régime fiscal</dt>
+            <dd class="text-gray-600 mt-1">Ensemble des règles fiscales applicables à l'auto-entrepreneur. Le régime AE est caractérisé par un impôt forfaitaire sur le CA, sans obligation de comptabilité complexe. Comparez avec d'autres statuts via notre <a href="/comparateur-statuts/" class="text-amber-700 hover:underline">comparateur de statuts</a>.</dd>
+          </div>
+        </dl>
+      </section>
+
+      <!-- S -->
+      <section id="S">
+        <h2 class="text-2xl font-bold text-amber-800 mb-4 border-b border-amber-200 pb-2">S</h2>
+        <dl class="space-y-4">
+          <div>
+            <dt class="font-semibold text-gray-900">Seuil d'assujettissement TVA</dt>
+            <dd class="text-gray-600 mt-1">Montant de chiffre d'affaires au-delà duquel l'auto-entrepreneur serait assujetti à la TVA. Actuellement, les auto-entrepreneurs bénéficient d'une exonération de TVA tant qu'ils respectent les plafonds de CA.</dd>
+          </div>
+        </dl>
+      </section>
+
+      <!-- T -->
+      <section id="T">
+        <h2 class="text-2xl font-bold text-amber-800 mb-4 border-b border-amber-200 pb-2">T</h2>
+        <dl class="space-y-4">
+          <div>
+            <dt class="font-semibold text-gray-900">Taxe professionnelle</dt>
+            <dd class="text-gray-600 mt-1">Impôt local dû par les personnes exerçant une activité professionnelle au Maroc. Les auto-entrepreneurs en sont exonérés pendant les 5 premières années suivant le début de leur activité.</dd>
+          </div>
+          <div>
+            <dt class="font-semibold text-gray-900">TVA (Taxe sur la Valeur Ajoutée)</dt>
+            <dd class="text-gray-600 mt-1">Impôt indirect sur la consommation. Les auto-entrepreneurs ne facturent pas la TVA et ne la récupèrent pas sur leurs achats, ce qui simplifie la gestion mais peut représenter un surcoût sur les achats professionnels.</dd>
+          </div>
+        </dl>
+      </section>
+
+    </div>
+
+    <!-- Liens utiles -->
+    <section class="mt-12 pt-8 border-t border-amber-200">
+      <h2 class="text-xl font-bold text-amber-900 mb-4">Outils et ressources pour l'auto-entrepreneur</h2>
+      <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        <a href="/calculateur-charges-ae/" class="group rounded-lg border border-gray-200 p-4 hover:border-amber-600 hover:shadow-sm transition-all">
+          <h3 class="font-semibold text-gray-900 group-hover:text-amber-700 text-sm">Calculateur de charges AE</h3>
+          <p class="text-xs text-gray-500 mt-1">Estimez votre IR, AMO et revenu net</p>
+        </a>
+        <a href="/comparateur-statuts/" class="group rounded-lg border border-gray-200 p-4 hover:border-amber-600 hover:shadow-sm transition-all">
+          <h3 class="font-semibold text-gray-900 group-hover:text-amber-700 text-sm">Comparateur de statuts</h3>
+          <p class="text-xs text-gray-500 mt-1">AE vs SARL vs SAS</p>
+        </a>
+        <a href="/generateur-facture/" class="group rounded-lg border border-gray-200 p-4 hover:border-amber-600 hover:shadow-sm transition-all">
+          <h3 class="font-semibold text-gray-900 group-hover:text-amber-700 text-sm">Générateur de factures</h3>
+          <p class="text-xs text-gray-500 mt-1">Créez des factures conformes</p>
+        </a>
+      </div>
+    </section>
+  </div>
+</Layout>

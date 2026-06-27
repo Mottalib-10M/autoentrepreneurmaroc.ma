@@ -1,0 +1,47 @@
+---
+const tools = [
+  { title: 'Simulateur de charges', description: 'Calculez vos cotisations CNSS, impot et net apres charges en tant qu\'auto-entrepreneur.', href: '/' },
+  { title: 'Calculateur de charges AE', description: 'Estimez vos charges sociales et fiscales selon votre activite et chiffre d\'affaires.', href: '/calculateur-charges-ae/' },
+  { title: 'Suivi du chiffre d\'affaires', description: 'Suivez votre CA mensuel et verifiez le respect des plafonds auto-entrepreneur.', href: '/suivi-chiffre-affaires/' },
+  { title: 'Generateur de facture', description: 'Creez des factures conformes a la reglementation marocaine en quelques clics.', href: '/generateur-facture/' },
+  { title: 'Comparateur de statuts', description: 'Comparez auto-entrepreneur, SARL, SAS et portage salarial pour choisir le meilleur statut.', href: '/comparateur-statuts/' },
+  { title: 'Plafond CA 2026', description: 'Consultez les plafonds de chiffre d\'affaires en vigueur pour les auto-entrepreneurs.', href: '/plafond/chiffre-affaires-2026/' },
+  { title: 'Charges sociales 2026', description: 'Decouvrez les taux de cotisations sociales applicables aux auto-entrepreneurs en 2026.', href: '/plafond/charges-sociales-2026/' },
+  { title: 'TVA auto-entrepreneur', description: 'Tout savoir sur l\'exoneration et les seuils de TVA pour les auto-entrepreneurs au Maroc.', href: '/plafond/tva-auto-entrepreneur/' },
+  { title: 'Guide d\'inscription', description: 'Les etapes pour s\'inscrire comme auto-entrepreneur au Maroc.', href: '/guides/inscription-auto-entrepreneur/' },
+  { title: 'Fiscalite AE', description: 'Comprendre le regime fiscal de l\'auto-entrepreneur au Maroc.', href: '/guides/fiscalite-auto-entrepreneur/' },
+  { title: 'CNSS auto-entrepreneur', description: 'Tout savoir sur les cotisations CNSS et la couverture sociale.', href: '/guides/cnss-auto-entrepreneur/' },
+  { title: 'Obligations de facturation', description: 'Les regles de facturation obligatoires pour les auto-entrepreneurs.', href: '/guides/obligations-facturation/' },
+  { title: 'Passer de AE a SARL', description: 'Guide pratique pour migrer du statut auto-entrepreneur vers la SARL.', href: '/guides/passer-ae-sarl/' },
+];
+
+const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
+
+const related = tools
+  .filter((t) => {
+    const normHref = t.href.replace(/\/$/, '') || '/';
+    return normHref !== currentPath;
+  })
+  .slice(0, 4);
+---
+
+{related.length > 0 && (
+  <section class="mt-12" aria-labelledby="related-heading">
+    <h2 id="related-heading" class="text-xl font-bold text-amber-900 mb-4">
+      Outils connexes
+    </h2>
+    <div class="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+      {related.map((tool) => (
+        <a
+          href={tool.href}
+          class="group rounded-xl border border-gray-200 bg-white p-4 hover:border-amber-400 hover:shadow-md transition-all"
+        >
+          <h3 class="font-semibold text-amber-900 group-hover:text-amber-700 transition-colors">
+            {tool.title}
+          </h3>
+          <p class="mt-1 text-sm text-gray-500">{tool.description}</p>
+        </a>
+      ))}
+    </div>
+  </section>
+)}

@@ -1,0 +1,137 @@
+---
+import Layout from '../../components/layout/Layout.astro';
+import { siteConfig } from '../../config';
+import { getBreadcrumbSchema, getArticleSchema } from '../../lib/seo';
+
+const breadcrumbs = [
+  { name: 'Accueil', url: siteConfig.url + '/' },
+  { name: 'Actualités', url: siteConfig.url + '/actualites/' },
+];
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    getBreadcrumbSchema(breadcrumbs),
+    {
+      '@context': 'https://schema.org',
+      '@type': 'CollectionPage',
+      name: 'Actualités Auto-Entrepreneur Maroc',
+      description: 'Les dernières actualités et réformes du statut auto-entrepreneur au Maroc. Nouveaux plafonds, cotisations CNSS, fiscalité et réglementations.',
+      url: siteConfig.url + '/actualites/',
+      publisher: {
+        '@type': 'Organization',
+        name: siteConfig.name,
+        url: siteConfig.url,
+      },
+    },
+  ],
+};
+
+const articles = [
+  {
+    title: 'Réforme du Statut Auto-Entrepreneur 2025 : Nouveaux Plafonds, CNSS et Fiscalité',
+    description: 'Tour d\'horizon complet des réformes 2025 du statut auto-entrepreneur au Maroc : relèvement des plafonds de CA, nouvelles cotisations CNSS, évolutions fiscales et impact sur les auto-entrepreneurs.',
+    href: '/actualites/reforme-statut-auto-entrepreneur-2025/',
+    date: '2025-06-20',
+    readingTime: '9 min',
+  },
+];
+
+function formatDate(dateStr: string): string {
+  return new Date(dateStr).toLocaleDateString('fr-FR', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+}
+---
+
+<Layout
+  title="Actualités Auto-Entrepreneur Maroc : Réformes et Nouveautés 2025"
+  description="Les dernières actualités et réformes du statut auto-entrepreneur au Maroc. Nouveaux plafonds, cotisations CNSS, fiscalité et réglementations."
+  type="article"
+  schema={schema}
+>
+  <section class="bg-gradient-to-br from-amber-600 via-amber-700 to-amber-800 text-white py-12 sm:py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- Breadcrumbs -->
+      <nav class="mb-6 text-sm" aria-label="Fil d'Ariane">
+        <ol class="flex items-center gap-2 text-amber-200">
+          {breadcrumbs.map((crumb, i) => (
+            <li class="flex items-center gap-2">
+              {i > 0 && <span class="text-amber-400">/</span>}
+              {i === breadcrumbs.length - 1 ? (
+                <span class="text-white font-medium">{crumb.name}</span>
+              ) : (
+                <a href={crumb.url} class="hover:text-white">{crumb.name}</a>
+              )}
+            </li>
+          ))}
+        </ol>
+      </nav>
+      <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white mb-4">
+        Actualités Auto-Entrepreneur au Maroc
+      </h1>
+      <p class="text-xl text-amber-100 max-w-3xl leading-relaxed">
+        Suivez les dernières évolutions du statut auto-entrepreneur au Maroc :
+        réformes législatives, nouveaux plafonds de chiffre d'affaires, changements
+        de cotisations CNSS, fiscalité et réglementation. Nos analyses vous aident
+        à rester informé et à adapter votre activité.
+      </p>
+      <p class="text-amber-200 text-sm mt-4">
+        Par {siteConfig.author.name} ({siteConfig.author.credentials}) &middot; {articles.length} article{articles.length > 1 ? 's' : ''} publié{articles.length > 1 ? 's' : ''}
+      </p>
+    </div>
+  </section>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <section>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {articles.map((article) => (
+          <a href={article.href} class="card group hover:no-underline">
+            <div class="flex items-center gap-3 text-xs text-gray-500 mb-3">
+              <time datetime={article.date}>{formatDate(article.date)}</time>
+              <span aria-hidden="true">&middot;</span>
+              <span>{article.readingTime} de lecture</span>
+            </div>
+            <h2 class="text-lg font-bold text-amber-900 mb-2 group-hover:text-amber-700">
+              {article.title}
+            </h2>
+            <p class="text-gray-600 text-sm leading-relaxed">
+              {article.description}
+            </p>
+            <span class="inline-flex items-center gap-1 mt-4 text-sm font-semibold text-amber-700">
+              Lire l'article
+              <svg class="w-4 h-4 group-hover:translate-x-0.5 transition-transform" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="9 18 15 12 9 6" />
+              </svg>
+            </span>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <!-- Outils -->
+    <section class="mt-16 bg-amber-50 border border-amber-200 rounded-xl p-8">
+      <h2 class="text-2xl font-extrabold text-amber-900 mb-6">Outils Utiles</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <a href="/calculateur-charges-ae/" class="bg-white p-4 rounded-lg border border-amber-100 hover:border-amber-300 transition-colors hover:no-underline">
+          <p class="font-bold text-amber-900">Calculateur de Charges</p>
+          <p class="text-sm text-gray-600">Simulez IR, AMO et revenu net</p>
+        </a>
+        <a href="/suivi-chiffre-affaires/" class="bg-white p-4 rounded-lg border border-amber-100 hover:border-amber-300 transition-colors hover:no-underline">
+          <p class="font-bold text-amber-900">Suivi du CA</p>
+          <p class="text-sm text-gray-600">Suivez votre progression</p>
+        </a>
+        <a href="/plafond/chiffre-affaires-2026/" class="bg-white p-4 rounded-lg border border-amber-100 hover:border-amber-300 transition-colors hover:no-underline">
+          <p class="font-bold text-amber-900">Plafonds de CA</p>
+          <p class="text-sm text-gray-600">Seuils annuels en vigueur</p>
+        </a>
+        <a href="/guides/cnss-auto-entrepreneur/" class="bg-white p-4 rounded-lg border border-amber-100 hover:border-amber-300 transition-colors hover:no-underline">
+          <p class="font-bold text-amber-900">Guide CNSS</p>
+          <p class="text-sm text-gray-600">Cotisations et couverture</p>
+        </a>
+      </div>
+    </section>
+  </div>
+</Layout>

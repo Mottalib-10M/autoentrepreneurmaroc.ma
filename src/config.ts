@@ -32,4 +32,5 @@ export const navLinks = [
   { label: 'Comparateur Statuts', href: '/comparateur-statuts/' },
   { label: 'Factures', href: '/generateur-facture/' },
   { label: 'Guides', href: '/guides/' },
+  { label: 'Actualités', href: '/actualites/' },
 ] as const;

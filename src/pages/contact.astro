@@ -1,0 +1,86 @@
+---
+import Layout from '../components/layout/Layout.astro';
+import { siteConfig } from '../config';
+import { getBreadcrumbSchema } from '../lib/seo';
+
+const breadcrumbs = [
+  { name: 'Accueil', url: siteConfig.url + '/' },
+  { name: 'Contact', url: siteConfig.url + '/contact/' },
+];
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    getBreadcrumbSchema(breadcrumbs),
+  ],
+};
+---
+
+<Layout
+  title="Contactez-nous - Auto-Entrepreneur Maroc | Assistance"
+  description="Contactez l'équipe Auto-Entrepreneur Maroc pour vos questions sur le statut AE, la fiscalité et nos outils. Réponse sous 48h à contact@autoentrepreneurmaroc.ma."
+  schema={schema}
+>
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <!-- Breadcrumbs -->
+    <nav class="mb-6 text-sm" aria-label="Fil d'Ariane">
+      <ol class="flex items-center gap-2 text-gray-500">
+        {breadcrumbs.map((crumb, i) => (
+          <li class="flex items-center gap-2">
+            {i > 0 && <span class="text-amber-400">/</span>}
+            {i === breadcrumbs.length - 1 ? (
+              <span class="text-amber-700 font-medium">{crumb.name}</span>
+            ) : (
+              <a href={crumb.url} class="hover:text-amber-700">{crumb.name}</a>
+            )}
+          </li>
+        ))}
+      </ol>
+    </nav>
+
+    <h1 class="text-3xl sm:text-4xl font-extrabold text-amber-900 mb-8">
+      Contactez-nous
+    </h1>
+
+    <div class="prose max-w-none">
+      <p>Vous avez une question sur le statut d'auto-entrepreneur au Maroc, nos calculateurs ou nos guides ? L'équipe d'<strong>Auto-Entrepreneur Maroc</strong> est à votre disposition pour vous aider. Nous nous engageons à fournir des informations fiables et à jour sur le régime de l'auto-entrepreneur.</p>
+
+      <h2>Nous écrire par email</h2>
+
+      <p>Le meilleur moyen de nous joindre est par email :</p>
+
+      <p class="text-lg"><strong><a href={`mailto:${siteConfig.contact.email}`}>{siteConfig.contact.email}</a></strong></p>
+
+      <p>Nous répondons à tous les messages dans un délai de <strong>48 heures ouvrables</strong>. Les demandes reçues le week-end ou les jours fériés seront traitées dès le jour ouvrable suivant.</p>
+
+      <h2>Quand nous contacter ?</h2>
+
+      <ul>
+        <li><strong>Signalement d'erreur :</strong> si vous constatez une erreur dans un calcul de charges, un taux d'imposition ou une information sur le statut AE, merci de nous le signaler avec la page concernée et la source officielle de référence.</li>
+        <li><strong>Suggestion d'amélioration :</strong> si vous souhaitez voir un nouvel outil, un guide sur un sujet particulier ou une fonctionnalité supplémentaire sur le générateur de factures.</li>
+        <li><strong>Question sur la fiscalité AE :</strong> si vous ne comprenez pas un résultat de notre calculateur de charges ou si vous avez besoin de clarification sur l'IR forfaitaire ou l'AMO.</li>
+        <li><strong>Information obsolète :</strong> si un changement législatif concernant le statut d'auto-entrepreneur n'est pas encore reflété sur notre site.</li>
+      </ul>
+
+      <h2>Questions fréquentes</h2>
+
+      <h3>Votre site est-il un site officiel du gouvernement ?</h3>
+      <p>Non. Auto-Entrepreneur Maroc est un site indépendant et informatif. Nous ne sommes pas affiliés à la DGI, à la CNSS ou à ae.gov.ma. Nos informations sont basées sur la législation en vigueur (Loi 114-13 et ses modifications) mais ne se substituent pas aux sources officielles. Pour les démarches administratives officielles, rendez-vous sur <a href="https://ae.gov.ma" target="_blank" rel="noopener">ae.gov.ma</a>.</p>
+
+      <h3>Mes données sont-elles collectées ?</h3>
+      <p>Non. Tous nos calculateurs et le générateur de factures fonctionnent entièrement dans votre navigateur. Aucune donnée n'est envoyée à un serveur. Consultez notre <a href="/confidentialite/">politique de confidentialité</a> pour en savoir plus.</p>
+
+      <h3>Pouvez-vous m'aider à créer mon auto-entreprise ?</h3>
+      <p>Nous fournissons des guides détaillés sur le processus d'inscription, mais nous ne proposons pas de service d'accompagnement personnalisé. Pour l'inscription, rendez-vous sur le <a href="https://ae.gov.ma" target="_blank" rel="noopener">portail officiel ae.gov.ma</a>. Pour un accompagnement individuel, nous recommandons de consulter un expert-comptable.</p>
+
+      <h2>Avertissement</h2>
+
+      <p>Auto-Entrepreneur Maroc ne fournit pas de conseils juridiques, fiscaux ou comptables personnalisés. Les informations publiées sur le site sont à caractère général et informatif. Pour des questions spécifiques à votre situation individuelle, nous vous recommandons de consulter un expert-comptable ou un conseiller fiscal agréé.</p>
+    </div>
+
+    <div class="mt-10 p-6 rounded-xl bg-amber-50 border border-amber-200">
+      <p class="text-sm text-amber-900"><strong>Responsable éditorial :</strong> {siteConfig.author.name}, {siteConfig.author.credentials}</p>
+      <p class="text-sm text-amber-900 mt-1"><strong>Email :</strong> <a href={`mailto:${siteConfig.contact.email}`} class="text-amber-700 hover:underline">{siteConfig.contact.email}</a></p>
+    </div>
+  </div>
+</Layout>

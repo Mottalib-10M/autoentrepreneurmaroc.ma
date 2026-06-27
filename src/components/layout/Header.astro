@@ -1,7 +1,9 @@
 ---
-import { siteConfig, navLinks } from '../../config';
+import { siteConfig } from '../../config';
+import { headerLinks } from '../../data/nav';
 
 const currentPath = Astro.url.pathname;
+const navLinks = headerLinks;
 ---
 
 <header class="bg-white border-b-2 border-amber-200 sticky top-0 z-50 no-print">

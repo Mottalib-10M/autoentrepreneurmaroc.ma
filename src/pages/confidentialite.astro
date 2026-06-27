@@ -1,0 +1,98 @@
+---
+import Layout from '../components/layout/Layout.astro';
+import { siteConfig } from '../config';
+import { getBreadcrumbSchema } from '../lib/seo';
+
+const breadcrumbs = [
+  { name: 'Accueil', url: siteConfig.url + '/' },
+  { name: 'Confidentialité', url: siteConfig.url + '/confidentialite/' },
+];
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    getBreadcrumbSchema(breadcrumbs),
+  ],
+};
+---
+
+<Layout
+  title="Politique de Confidentialité - Auto-Entrepreneur Maroc"
+  description="Politique de confidentialité d'autoentrepreneurmaroc.ma : aucune collecte de données personnelles, calculs côté client, zéro cookie de pistage ou tracking."
+  noindex={true}
+  schema={schema}
+>
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <!-- Breadcrumbs -->
+    <nav class="mb-6 text-sm" aria-label="Fil d'Ariane">
+      <ol class="flex items-center gap-2 text-gray-500">
+        {breadcrumbs.map((crumb, i) => (
+          <li class="flex items-center gap-2">
+            {i > 0 && <span class="text-amber-400">/</span>}
+            {i === breadcrumbs.length - 1 ? (
+              <span class="text-amber-700 font-medium">{crumb.name}</span>
+            ) : (
+              <a href={crumb.url} class="hover:text-amber-700">{crumb.name}</a>
+            )}
+          </li>
+        ))}
+      </ol>
+    </nav>
+
+    <h1 class="text-3xl sm:text-4xl font-extrabold text-amber-900 mb-8">
+      Politique de confidentialité
+    </h1>
+
+    <div class="prose max-w-none">
+      <p>Chez <strong>Auto-Entrepreneur Maroc</strong> ({siteConfig.domain}), la protection de votre vie privée est une priorité. Cette page explique en détail comment nous traitons vos données lorsque vous utilisez notre site, nos calculateurs et notre générateur de factures.</p>
+
+      <h2>Principe fondamental : aucune collecte de données personnelles</h2>
+
+      <p>Auto-Entrepreneur Maroc ne collecte, ne stocke et ne transmet aucune donnée personnelle à des serveurs distants. Ce principe s'applique à l'ensemble de nos services :</p>
+
+      <ul>
+        <li><strong>Calculateur de charges AE :</strong> les données saisies (chiffre d'affaires, activité, etc.) sont traitées exclusivement dans votre navigateur. Aucune information n'est envoyée à nos serveurs.</li>
+        <li><strong>Générateur de factures :</strong> les informations de facturation (nom, ICE, adresse, montants) sont stockées localement dans le localStorage de votre navigateur. Ces données restent sur votre appareil et ne sont jamais transmises à nos serveurs.</li>
+        <li><strong>Comparateur de statuts :</strong> les simulations sont effectuées côté client sans aucun transfert de données.</li>
+        <li><strong>Suivi du chiffre d'affaires :</strong> vos données de CA sont stockées dans le localStorage de votre navigateur uniquement.</li>
+      </ul>
+
+      <h2>Stockage local (localStorage)</h2>
+
+      <p>Certains de nos outils (générateur de factures, suivi du CA) utilisent le localStorage de votre navigateur pour sauvegarder vos données entre les sessions. Il est important de comprendre que :</p>
+
+      <ul>
+        <li>Ces données sont stockées uniquement sur votre appareil.</li>
+        <li>Elles ne sont jamais envoyées à nos serveurs ni à des tiers.</li>
+        <li>Vous pouvez les supprimer à tout moment en vidant les données de site de votre navigateur.</li>
+        <li>Le changement de navigateur ou d'appareil ne transfère pas ces données.</li>
+      </ul>
+
+      <h2>Cookies</h2>
+
+      <p>Auto-Entrepreneur Maroc n'utilise aucun cookie de suivi publicitaire ou de pistage commercial. Le site peut utiliser des cookies techniques strictement nécessaires au bon fonctionnement du site. Ces cookies ne contiennent aucune information personnelle identifiable.</p>
+
+      <h2>Outils d'analyse</h2>
+
+      <p>Le site peut utiliser des outils d'analyse d'audience anonymes pour comprendre l'utilisation du site et améliorer l'expérience utilisateur. Ces outils collectent des données agrégées et anonymisées (pages visitées, durée de visite, type d'appareil) sans permettre l'identification d'un utilisateur individuel.</p>
+
+      <h2>Liens externes</h2>
+
+      <p>Notre site contient des liens vers des sites tiers (ae.gov.ma, tax.gov.ma, cnss.ma, etc.). Nous n'avons aucun contrôle sur les politiques de confidentialité de ces sites externes et vous encourageons à les consulter directement.</p>
+
+      <h2>Droits des utilisateurs</h2>
+
+      <p>Puisque nous ne collectons aucune donnée personnelle sur nos serveurs, il n'y a aucune donnée à consulter, modifier ou supprimer de notre côté. Pour les données stockées localement dans votre navigateur (localStorage), vous pouvez les supprimer à tout moment via les paramètres de votre navigateur.</p>
+
+      <h2>Modifications de cette politique</h2>
+
+      <p>Nous nous réservons le droit de mettre à jour cette politique de confidentialité. Toute modification sera publiée sur cette page avec la date de mise à jour.</p>
+
+      <h2>Contact</h2>
+
+      <p>Pour toute question relative à cette politique de confidentialité, vous pouvez nous écrire à : <a href={`mailto:${siteConfig.contact.email}`}>{siteConfig.contact.email}</a>.</p>
+
+      <p class="text-sm text-gray-500 mt-8">Dernière mise à jour : juin 2026</p>
+    </div>
+  </div>
+</Layout>
