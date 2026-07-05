@@ -42,7 +42,17 @@ const year = new Date().getFullYear();
     </div>
     </nav>
 
-    <div class="border-t border-amber-800 mt-8 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4">
+    <div class="border-t border-amber-800 mt-8 pt-6">
+      <h3 class="text-lg font-bold text-white mb-3">Sites utiles</h3>
+      <ul class="flex flex-wrap gap-x-6 gap-y-2 text-sm">
+        <li><a href="https://salairemaroc.ma" target="_blank" rel="noopener" class="text-amber-200 hover:text-white">Calculateur Salaire Net Maroc</a></li>
+        <li><a href="https://cnssmaroc.ma" target="_blank" rel="noopener" class="text-amber-200 hover:text-white">Simulateur CNSS Maroc</a></li>
+        <li><a href="https://banquesmaroc.ma" target="_blank" rel="noopener" class="text-amber-200 hover:text-white">Comparateur Banques Maroc</a></li>
+        <li><a href="https://emploipublic.ma" target="_blank" rel="noopener" class="text-amber-200 hover:text-white">Concours Fonction Publique Maroc</a></li>
+      </ul>
+    </div>
+
+    <div class="border-t border-amber-800 mt-6 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4">
       <p class="text-amber-300 text-sm">
         &copy; {year} {siteConfig.name}. Tous droits réservés.
       </p>

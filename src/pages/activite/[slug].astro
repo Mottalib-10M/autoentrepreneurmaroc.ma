@@ -4,6 +4,26 @@ import { siteConfig } from '../../config';
 import { getBreadcrumbSchema, getFAQSchema, getArticleSchema } from '../../lib/seo';
 import { activites } from '../../data/activites';
 import type { Activite } from '../../data/activites';
+import { AE_CONFIG } from '../../data/ae-config';
+import { simulerRevenuAnnuel } from '../../lib/ae-engine';
+import {
+  computeActivityCalc,
+  getActivityContext,
+  buildEnrichedFaqs,
+  buildSimulatorSteps,
+  getRelatedActivities,
+  getBudgetLines,
+  getGrowthContent,
+} from '../../lib/activity-content';
+import {
+  generateUniqueFAQs,
+  generateUniqueTaxTips,
+  generateUniqueBudgetBreakdown,
+  generateUniqueComparisons,
+  generateUniqueEconomicContext,
+  generateUniqueProjection,
+  generateUniqueDidYouKnow,
+} from '../../lib/unique-content-generator';
 
 export function getStaticPaths() {
   return activites.map((activite) => ({
@@ -17,9 +37,32 @@ interface Props {
 }
 
 const { activite } = Astro.props;
+const calc = computeActivityCalc(activite);
+const ctx = getActivityContext(activite, calc);
+const faqs = buildEnrichedFaqs(activite, calc);
+const simSteps = buildSimulatorSteps(activite);
+const related = getRelatedActivities(activite.slug, activites);
+const budgetLines = getBudgetLines(activite.slug);
+const growthContent = getGrowthContent(activite.slug, activite);
+const budgetTotalMin = budgetLines.reduce((s, l) => s + l.min, 0);
+const budgetTotalMax = budgetLines.reduce((s, l) => s + l.max, 0);
+const netReelMin = Math.round(calc.netMensuelMin - budgetTotalMax);
+const netReelMax = Math.round(calc.netMensuelMax - budgetTotalMin);
 
-const pageTitle = `${activite.nom} Auto-Entrepreneur au Maroc : guide charges`;
-const pageDescription = `Guide pour devenir ${activite.nom.toLowerCase()} auto-entrepreneur au Maroc en 2026 : taux IR forfaitaire, cotisation AMO, revenus moyens, tarifs, formalites d inscription.`;
+// Contenu unique g\u00e9n\u00e9r\u00e9 par montant
+const uniqueFaqs = generateUniqueFAQs(activite, calc);
+const uniqueTaxTips = generateUniqueTaxTips(activite, calc);
+const uniqueBudgetBreakdown = generateUniqueBudgetBreakdown(activite, calc);
+const uniqueComparisons = generateUniqueComparisons(activite, calc);
+const uniqueEconomicCtx = generateUniqueEconomicContext(activite, calc);
+const uniqueProjection = generateUniqueProjection(activite, calc);
+const uniqueDidYouKnow = generateUniqueDidYouKnow(activite, calc);
+
+const fmt = (n: number): string =>
+  new Intl.NumberFormat('fr-FR', { maximumFractionDigits: 0 }).format(n);
+
+const pageTitle = `${activite.nom} Auto-Entrepreneur au Maroc : charges, IR et revenus 2026`;
+const pageDescription = `Guide complet ${activite.nom.toLowerCase()} auto-entrepreneur au Maroc 2026 : simulez vos charges (IR ${activite.tauxIR * 100}%, AMO), revenus nets de ${fmt(calc.netMensuelMin)} à ${fmt(calc.netMensuelMax)} DH/mois, tarifs et formalités.`;
 
 const breadcrumbs = [
   { name: 'Accueil', url: siteConfig.url + '/' },
@@ -27,11 +70,12 @@ const breadcrumbs = [
   { name: activite.nom, url: siteConfig.url + '/activite/' + activite.slug + '/' },
 ];
 
+const allFaqsForSchema = [...faqs, ...uniqueFaqs];
 const schema = {
   '@context': 'https://schema.org',
   '@graph': [
     getBreadcrumbSchema(breadcrumbs),
-    getFAQSchema(activite.faqs),
+    getFAQSchema(allFaqsForSchema),
     getArticleSchema({
       title: pageTitle,
       description: pageDescription,
@@ -39,12 +83,6 @@ const schema = {
     }),
   ],
 };
-
-const irAnnuel = activite.revenuMoyen.min * 12 * activite.tauxIR;
-const amoAnnuel = 1_200;
-const chargesAnnuelles = irAnnuel + amoAnnuel;
-const revenuNetMensuel = activite.revenuMoyen.min - (chargesAnnuelles / 12);
-const tauxEffectif = ((chargesAnnuelles / (activite.revenuMoyen.min * 12)) * 100).toFixed(1);
 ---
 
 <Layout
@@ -76,21 +114,57 @@ const tauxEffectif = ((chargesAnnuelles / (activite.revenuMoyen.min * 12)) * 100
 
     <p class="text-sm text-gray-500 mb-8">
       Par <a href="/a-propos/" class="text-amber-700 font-medium">{siteConfig.author.name}</a> ({siteConfig.author.credentials})
-      &middot; Mis à jour en 2026
+      &middot; Mis &agrave; jour en 2026
     </p>
 
     <div class="prose max-w-none">
+      <!-- Introduction experte avec E-E-A-T -->
       <p class="text-lg text-gray-700 leading-relaxed">
-        {activite.description} Découvrez les charges, les revenus attendus, les tarifs du marché et toutes les démarches
+        {activite.description} D&eacute;couvrez les charges, les revenus attendus, les tarifs du march&eacute; et toutes les d&eacute;marches
         pour exercer comme {activite.nom.toLowerCase()} avec le statut auto-entrepreneur au Maroc en 2026.
       </p>
 
+      <p class="text-gray-700 leading-relaxed">
+        {ctx.introExpert}
+      </p>
+
+      <!-- Mini-simulateur : stat cards -->
+      <div class="not-prose my-8">
+        <h2 class="text-xl font-bold text-amber-900 mb-4">&#9998; Simulateur rapide : {activite.nom} AE</h2>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-4">
+          <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 text-center">
+            <p class="text-sm text-gray-500">IR annuel</p>
+            <p class="text-xl font-bold text-amber-800">{fmt(calc.irAnnuelMin)} DH</p>
+            <p class="text-xs text-gray-400">pour {fmt(calc.caMensuelMin)} DH/mois</p>
+          </div>
+          <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 text-center">
+            <p class="text-sm text-gray-500">AMO / CNSS</p>
+            <p class="text-xl font-bold text-amber-800">{fmt(calc.amoAnnuel)} DH/an</p>
+            <p class="text-xs text-gray-400">{fmt(calc.amoTrimestriel)} DH/trimestre</p>
+          </div>
+          <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 text-center">
+            <p class="text-sm text-gray-500">Total charges</p>
+            <p class="text-xl font-bold text-amber-800">{fmt(calc.totalChargesAnnuelMin)} DH/an</p>
+            <p class="text-xs text-gray-400">taux effectif {calc.tauxEffectifMin}%</p>
+          </div>
+          <div class="bg-green-50 border border-green-200 rounded-xl p-4 text-center">
+            <p class="text-sm text-gray-500">Revenu net</p>
+            <p class="text-xl font-bold text-green-700">{fmt(calc.netMensuelMin)} DH/mois</p>
+            <p class="text-xs text-gray-400">apr&egrave;s IR + AMO</p>
+          </div>
+        </div>
+        <p class="text-sm text-gray-500 text-center">
+          * Calcul bas&eacute; sur un CA mensuel de {fmt(calc.caMensuelMin)} DH.
+          <a href="/calculateur-charges-ae/" class="text-amber-700 underline">Simulez avec votre CA r&eacute;el &rarr;</a>
+        </p>
+      </div>
+
       <!-- Tableau récapitulatif -->
       <div class="not-prose my-8 bg-amber-50 border border-amber-200 rounded-xl p-6">
-        <h2 class="text-xl font-bold text-amber-900 mb-4">Fiche récapitulative : {activite.nom} AE</h2>
+        <h2 class="text-xl font-bold text-amber-900 mb-4">Fiche r&eacute;capitulative : {activite.nom} AE</h2>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div class="bg-white rounded-lg p-4 border border-amber-100">
-            <p class="text-sm text-gray-500">Type d'activité</p>
+            <p class="text-sm text-gray-500">Type d&rsquo;activit&eacute;</p>
             <p class="text-lg font-bold text-amber-800">
               {activite.type === 'services' ? 'Prestation de services' : 'Commerciale / Artisanale'}
             </p>
@@ -101,87 +175,162 @@ const tauxEffectif = ((chargesAnnuelles / (activite.revenuMoyen.min * 12)) * 100
           </div>
           <div class="bg-white rounded-lg p-4 border border-amber-100">
             <p class="text-sm text-gray-500">Plafond CA annuel</p>
-            <p class="text-lg font-bold text-amber-800">{activite.plafondCA.toLocaleString('fr-FR')} DH</p>
+            <p class="text-lg font-bold text-amber-800">{fmt(activite.plafondCA)} DH</p>
           </div>
           <div class="bg-white rounded-lg p-4 border border-amber-100">
             <p class="text-sm text-gray-500">Revenu mensuel moyen</p>
-            <p class="text-lg font-bold text-amber-800">{activite.revenuMoyen.min.toLocaleString('fr-FR')} - {activite.revenuMoyen.max.toLocaleString('fr-FR')} DH</p>
+            <p class="text-lg font-bold text-amber-800">{fmt(activite.revenuMoyen.min)} - {fmt(activite.revenuMoyen.max)} DH</p>
           </div>
           <div class="bg-white rounded-lg p-4 border border-amber-100">
-            <p class="text-sm text-gray-500">Tarifs du marché</p>
+            <p class="text-sm text-gray-500">Tarifs du march&eacute;</p>
             <p class="text-lg font-bold text-amber-800">{activite.tarifMoyen}</p>
           </div>
           <div class="bg-white rounded-lg p-4 border border-amber-100">
             <p class="text-sm text-gray-500">Taux effectif de charges</p>
-            <p class="text-lg font-bold text-amber-800">{tauxEffectif}% du CA</p>
+            <p class="text-lg font-bold text-amber-800">{calc.tauxEffectifMin}% - {calc.tauxEffectifMax}% du CA</p>
+          </div>
+          <div class="bg-white rounded-lg p-4 border border-amber-100">
+            <p class="text-sm text-gray-500">Revenu net mensuel</p>
+            <p class="text-lg font-bold text-green-700">{fmt(calc.netMensuelMin)} - {fmt(calc.netMensuelMax)} DH</p>
+          </div>
+          <div class="bg-white rounded-lg p-4 border border-amber-100">
+            <p class="text-sm text-gray-500">Utilisation du plafond</p>
+            <p class="text-lg font-bold text-amber-800">{calc.pourcentagePlafondMin}% - {calc.pourcentagePlafondMax}%</p>
           </div>
         </div>
       </div>
 
-      <!-- Calcul des charges -->
-      <h2>Charges détaillées : {activite.nom} auto-entrepreneur</h2>
+      <!-- Fiscalité détaillée avec valeurs calculées -->
+      <h2>Fiscalit&eacute; d&eacute;taill&eacute;e : {activite.nom} auto-entrepreneur 2026</h2>
 
       <p>
-        En tant que {activite.nom.toLowerCase()} auto-entrepreneur au Maroc, vos charges se composent de deux éléments
-        principaux : l'impôt sur le revenu (IR) forfaitaire et la cotisation AMO.
+        En tant que {activite.nom.toLowerCase()} auto-entrepreneur au Maroc, vos charges obligatoires se composent de deux &eacute;l&eacute;ments
+        principaux : l&rsquo;imp&ocirc;t sur le revenu (IR) forfaitaire &agrave; {activite.tauxIR * 100}% du chiffre d&rsquo;affaires et la cotisation
+        AMO (Assurance Maladie Obligatoire) de {fmt(calc.amoAnnuel)} DH par an. Le r&eacute;gime forfaitaire de l&rsquo;auto-entrepreneur
+        (loi 114-13) est con&ccedil;u pour simplifier la vie des ind&eacute;pendants marocains en rempla&ccedil;ant l&rsquo;ensemble des
+        imp&ocirc;ts et taxes par un pr&eacute;l&egrave;vement unique et proportionnel au chiffre d&rsquo;affaires r&eacute;alis&eacute;.
       </p>
 
+      <p>{ctx.fiscaliteDetail}</p>
+
+      <!-- Tableau des charges détaillé -->
       <div class="not-prose my-6">
         <table class="w-full border-collapse">
           <thead>
             <tr class="bg-amber-100">
               <th class="border border-amber-200 px-4 py-2 text-left text-amber-900">Charge</th>
-              <th class="border border-amber-200 px-4 py-2 text-right text-amber-900">Montant</th>
-              <th class="border border-amber-200 px-4 py-2 text-left text-amber-900">Fréquence</th>
+              <th class="border border-amber-200 px-4 py-2 text-right text-amber-900">Montant annuel</th>
+              <th class="border border-amber-200 px-4 py-2 text-right text-amber-900">Montant trimestriel</th>
+              <th class="border border-amber-200 px-4 py-2 text-left text-amber-900">Fr&eacute;quence</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td class="border border-amber-200 px-4 py-2">IR forfaitaire ({activite.tauxIR * 100}% du CA)</td>
-              <td class="border border-amber-200 px-4 py-2 text-right">{Math.round(irAnnuel).toLocaleString('fr-FR')} DH/an</td>
+              <td class="border border-amber-200 px-4 py-2 text-right">{fmt(calc.irAnnuelMin)} DH</td>
+              <td class="border border-amber-200 px-4 py-2 text-right">{fmt(calc.irTrimestrielMin)} DH</td>
               <td class="border border-amber-200 px-4 py-2">Trimestrielle</td>
             </tr>
             <tr class="bg-amber-50">
               <td class="border border-amber-200 px-4 py-2">Cotisation AMO (CNSS)</td>
-              <td class="border border-amber-200 px-4 py-2 text-right">1 200 DH/an</td>
-              <td class="border border-amber-200 px-4 py-2">Trimestrielle (300 DH)</td>
+              <td class="border border-amber-200 px-4 py-2 text-right">{fmt(calc.amoAnnuel)} DH</td>
+              <td class="border border-amber-200 px-4 py-2 text-right">{fmt(calc.amoTrimestriel)} DH</td>
+              <td class="border border-amber-200 px-4 py-2">Trimestrielle</td>
             </tr>
-            <tr class="font-bold">
-              <td class="border border-amber-200 px-4 py-2">Total charges annuelles</td>
-              <td class="border border-amber-200 px-4 py-2 text-right">{Math.round(chargesAnnuelles).toLocaleString('fr-FR')} DH/an</td>
+            <tr class="font-bold bg-amber-100">
+              <td class="border border-amber-200 px-4 py-2">Total charges obligatoires</td>
+              <td class="border border-amber-200 px-4 py-2 text-right">{fmt(calc.totalChargesAnnuelMin)} DH</td>
+              <td class="border border-amber-200 px-4 py-2 text-right">{fmt(calc.irTrimestrielMin + calc.amoTrimestriel)} DH</td>
+              <td class="border border-amber-200 px-4 py-2">-</td>
+            </tr>
+            <tr class="font-bold text-green-700">
+              <td class="border border-amber-200 px-4 py-2">Revenu net annuel</td>
+              <td class="border border-amber-200 px-4 py-2 text-right">{fmt(calc.netAnnuelMin)} DH</td>
+              <td class="border border-amber-200 px-4 py-2 text-right">{fmt(Math.round(calc.netAnnuelMin / 4))} DH</td>
               <td class="border border-amber-200 px-4 py-2">-</td>
             </tr>
           </tbody>
         </table>
         <p class="text-sm text-gray-500 mt-2">
-          * Calcul basé sur un CA mensuel de {activite.revenuMoyen.min.toLocaleString('fr-FR')} DH (fourchette basse)
+          * Calcul bas&eacute; sur un CA mensuel de {fmt(calc.caMensuelMin)} DH (fourchette basse du march&eacute;)
         </p>
       </div>
 
       <p>
-        Avec un CA mensuel de {activite.revenuMoyen.min.toLocaleString('fr-FR')} DH, votre revenu net mensuel (après IR et AMO)
-        est d'environ <strong>{Math.round(revenuNetMensuel).toLocaleString('fr-FR')} DH</strong>, soit un taux effectif de
-        charges de seulement <strong>{tauxEffectif}%</strong>. Utilisez notre
-        <a href="/calculateur-charges-ae/">calculateur de charges</a> pour simuler avec votre CA réel.
+        Avec un CA mensuel de {fmt(calc.caMensuelMin)} DH, votre revenu net mensuel (apr&egrave;s IR et AMO)
+        est d&rsquo;environ <strong>{fmt(calc.netMensuelMin)} DH</strong>, soit un taux effectif de
+        charges de seulement <strong>{calc.tauxEffectifMin}%</strong>. Pour un CA mensuel de {fmt(calc.caMensuelMax)} DH
+        (fourchette haute), votre revenu net atteint <strong>{fmt(calc.netMensuelMax)} DH par mois</strong> apr&egrave;s
+        des charges totales de {fmt(calc.totalChargesAnnuelMax)} DH/an (taux effectif de {calc.tauxEffectifMax}%).
+        Utilisez notre <a href="/calculateur-charges-ae/">calculateur de charges</a> pour simuler avec votre CA r&eacute;el.
       </p>
 
-      <!-- Revenus et tarifs -->
-      <h2>Revenus et tarifs du marché</h2>
+      <!-- Tableau comparatif par palier de CA -->
+      <h2>Tableau comparatif des charges par palier de CA mensuel</h2>
 
       <p>
-        Le chiffre d'affaires d'un {activite.nom.toLowerCase()} auto-entrepreneur au Maroc varie entre
-        <strong>{activite.revenuMoyen.min.toLocaleString('fr-FR')} DH</strong> et
-        <strong>{activite.revenuMoyen.max.toLocaleString('fr-FR')} DH par mois</strong>.
-        Les tarifs du marché se situent autour de <strong>{activite.tarifMoyen}</strong>.
-        Ces chiffres dépendent de votre expérience, de votre spécialisation et de votre localisation géographique.
+        Le tableau ci-dessous pr&eacute;sente les charges mensuelles et le revenu net d&rsquo;un {activite.nom.toLowerCase()} auto-entrepreneur
+        pour diff&eacute;rents niveaux de chiffre d&rsquo;affaires. Ces chiffres vous permettent d&rsquo;estimer rapidement votre situation
+        financi&egrave;re selon votre volume d&rsquo;activit&eacute; pr&eacute;visionnel.
+      </p>
+
+      <div class="not-prose my-6">
+        <table class="w-full border-collapse text-sm">
+          <thead>
+            <tr class="bg-amber-100">
+              <th class="border border-amber-200 px-3 py-2 text-right text-amber-900">CA mensuel</th>
+              <th class="border border-amber-200 px-3 py-2 text-right text-amber-900">IR/mois</th>
+              <th class="border border-amber-200 px-3 py-2 text-right text-amber-900">AMO/mois</th>
+              <th class="border border-amber-200 px-3 py-2 text-right text-amber-900">Total charges</th>
+              <th class="border border-amber-200 px-3 py-2 text-right text-amber-900">Net mensuel</th>
+              <th class="border border-amber-200 px-3 py-2 text-right text-amber-900">Taux effectif</th>
+            </tr>
+          </thead>
+          <tbody>
+            {simSteps.map((step, i) => (
+              <tr class={i % 2 === 0 ? '' : 'bg-amber-50'}>
+                <td class="border border-amber-200 px-3 py-2 text-right font-medium">{fmt(step.ca)} DH</td>
+                <td class="border border-amber-200 px-3 py-2 text-right">{fmt(step.ir)} DH</td>
+                <td class="border border-amber-200 px-3 py-2 text-right">{fmt(step.amo)} DH</td>
+                <td class="border border-amber-200 px-3 py-2 text-right">{fmt(step.total)} DH</td>
+                <td class="border border-amber-200 px-3 py-2 text-right font-bold text-green-700">{fmt(step.net)} DH</td>
+                <td class="border border-amber-200 px-3 py-2 text-right">{step.tauxEffectif}%</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <p class="text-sm text-gray-500 mt-2">
+          * IR &agrave; {activite.tauxIR * 100}% (activit&eacute; {activite.type === 'services' ? 'de services' : 'commerciale'}) + AMO {fmt(calc.amoAnnuel)} DH/an. Plafond CA annuel : {fmt(calc.plafondCA)} DH.
+        </p>
+      </div>
+
+      <!-- Revenus et tarifs du marché -->
+      <h2>Revenus et tarifs du march&eacute; : {activite.nom.toLowerCase()} au Maroc</h2>
+
+      <p>
+        Le chiffre d&rsquo;affaires d&rsquo;un {activite.nom.toLowerCase()} auto-entrepreneur au Maroc varie entre
+        <strong>{fmt(activite.revenuMoyen.min)} DH</strong> et
+        <strong>{fmt(activite.revenuMoyen.max)} DH par mois</strong>, soit un CA annuel de
+        <strong>{fmt(calc.caAnnuelMin)} DH</strong> &agrave; <strong>{fmt(calc.caAnnuelMax)} DH</strong>.
+        Les tarifs du march&eacute; se situent autour de <strong>{activite.tarifMoyen}</strong>.
+        Ces chiffres d&eacute;pendent de votre exp&eacute;rience, de votre sp&eacute;cialisation et de votre localisation g&eacute;ographique
+        (Casablanca, Rabat, Marrakech et Tanger offrent g&eacute;n&eacute;ralement les tarifs les plus &eacute;lev&eacute;s).
+      </p>
+
+      <p>
+        En termes de revenus nets, un {activite.nom.toLowerCase()} AE conserve entre <strong>{fmt(calc.netMensuelMin)} DH</strong>
+        et <strong>{fmt(calc.netMensuelMax)} DH par mois</strong> apr&egrave;s d&eacute;duction de l&rsquo;IR forfaitaire et de l&rsquo;AMO.
+        Ce taux de r&eacute;tention de {(100 - parseFloat(calc.tauxEffectifMin)).toFixed(1)}% &agrave; {(100 - parseFloat(calc.tauxEffectifMax)).toFixed(1)}% est
+        nettement sup&eacute;rieur &agrave; celui d&rsquo;un salari&eacute; au r&eacute;gime r&eacute;el, o&ugrave; les pr&eacute;l&egrave;vements
+        peuvent atteindre 30 &agrave; 45% du revenu brut.
       </p>
 
       {activite.autorisations.length > 0 && (
         <>
-          <h2>Autorisations et formalités spécifiques</h2>
+          <h2>Autorisations et formalit&eacute;s sp&eacute;cifiques</h2>
           <p>
-            L'exercice de l'activité de {activite.nom.toLowerCase()} en auto-entrepreneur au Maroc peut nécessiter
-            certaines autorisations ou formalités spécifiques :
+            L&rsquo;exercice de l&rsquo;activit&eacute; de {activite.nom.toLowerCase()} en auto-entrepreneur au Maroc peut n&eacute;cessiter
+            certaines autorisations ou formalit&eacute;s sp&eacute;cifiques :
           </p>
           <ul>
             {activite.autorisations.map((auth) => (
@@ -189,18 +338,340 @@ const tauxEffectif = ((chargesAnnuelles / (activite.revenuMoyen.min * 12)) * 100
             ))}
           </ul>
           <p>
-            Renseignez-vous auprès de votre commune et des organismes compétents pour connaître les exigences
-            exactes dans votre ville et pour votre spécialité.
+            Renseignez-vous aupr&egrave;s de votre commune et des organismes comp&eacute;tents pour conna&icirc;tre les exigences
+            exactes dans votre ville et pour votre sp&eacute;cialit&eacute;. Le d&eacute;faut d&rsquo;autorisation peut entra&icirc;ner
+            des sanctions administratives et financi&egrave;res.
           </p>
         </>
       )}
 
-      <!-- Contenu éditorial -->
-      <h2>Devenir {activite.nom.toLowerCase()} auto-entrepreneur au Maroc</h2>
+      <!-- Contenu éditorial original -->
+      <h2>Devenir {activite.nom.toLowerCase()} auto-entrepreneur au Maroc en 2026</h2>
 
       {activite.editorial.split('\n\n').map((paragraph) => (
         <p>{paragraph}</p>
       ))}
+
+      <!-- Obligations légales -->
+      <h2>Obligations l&eacute;gales et r&eacute;glementaires</h2>
+
+      <p>{ctx.obligationsLegales}</p>
+
+      <p>
+        Tout auto-entrepreneur au Maroc doit respecter les obligations suivantes, quel que soit son domaine d&rsquo;activit&eacute; :
+        d&eacute;claration trimestrielle du chiffre d&rsquo;affaires sur la plateforme ae.gov.ma (m&ecirc;me en cas de CA nul),
+        paiement de l&rsquo;IR forfaitaire et de l&rsquo;AMO dans les d&eacute;lais impartis, tenue d&rsquo;un registre chronologique
+        des recettes, et &eacute;mission de factures conformes comportant toutes les mentions l&eacute;gales obligatoires
+        (ICE, mention d&rsquo;exon&eacute;ration TVA, coordonn&eacute;es compl&egrave;tes). Le non-respect de la d&eacute;claration
+        trimestrielle entra&icirc;ne une p&eacute;nalit&eacute; de 15% du montant d&ucirc;, major&eacute;e de 0,5% par mois de retard.
+      </p>
+
+      <!-- Conseils pratiques -->
+      <h2>Conseils pratiques pour r&eacute;ussir comme {activite.nom.toLowerCase()} AE</h2>
+
+      <p>{ctx.conseilsPratiques}</p>
+
+      <p>
+        La gestion financi&egrave;re est cl&eacute; pour tout auto-entrepreneur. Avec des charges obligatoires de seulement
+        {fmt(calc.totalChargesMensuelMin)} DH par mois (pour un CA de {fmt(calc.caMensuelMin)} DH), l&rsquo;essentiel de votre
+        gestion portera sur vos charges d&rsquo;exploitation, votre prospection commerciale et la fid&eacute;lisation de votre client&egrave;le.
+        Ouvrez un compte bancaire d&eacute;di&eacute; &agrave; votre activit&eacute; pour s&eacute;parer vos finances personnelles et professionnelles,
+        m&ecirc;me si ce n&rsquo;est pas l&eacute;galement obligatoire pour les auto-entrepreneurs.
+      </p>
+
+      <!-- Comparaison AE vs SARL vs SAS -->
+      <h2>Comparaison des statuts : AE vs SARL pour un {activite.nom.toLowerCase()}</h2>
+
+      <p>{ctx.comparaisonStatuts}</p>
+
+      <div class="not-prose my-6">
+        <table class="w-full border-collapse text-sm">
+          <thead>
+            <tr class="bg-amber-100">
+              <th class="border border-amber-200 px-4 py-2 text-left text-amber-900">Crit&egrave;re</th>
+              <th class="border border-amber-200 px-4 py-2 text-center text-amber-900">Auto-Entrepreneur</th>
+              <th class="border border-amber-200 px-4 py-2 text-center text-amber-900">SARL</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="border border-amber-200 px-4 py-2 font-medium">Imp&ocirc;t</td>
+              <td class="border border-amber-200 px-4 py-2 text-center">IR {activite.tauxIR * 100}% du CA<br/>({fmt(calc.irAnnuelMin)} DH/an)</td>
+              <td class="border border-amber-200 px-4 py-2 text-center">IS 10-31% du b&eacute;n&eacute;fice</td>
+            </tr>
+            <tr class="bg-amber-50">
+              <td class="border border-amber-200 px-4 py-2 font-medium">Charges sociales</td>
+              <td class="border border-amber-200 px-4 py-2 text-center">AMO : {fmt(calc.amoAnnuel)} DH/an</td>
+              <td class="border border-amber-200 px-4 py-2 text-center">CNSS : ~33% du salaire g&eacute;rant</td>
+            </tr>
+            <tr>
+              <td class="border border-amber-200 px-4 py-2 font-medium">Plafond CA</td>
+              <td class="border border-amber-200 px-4 py-2 text-center">{fmt(calc.plafondCA)} DH/an</td>
+              <td class="border border-amber-200 px-4 py-2 text-center">Illimit&eacute;</td>
+            </tr>
+            <tr class="bg-amber-50">
+              <td class="border border-amber-200 px-4 py-2 font-medium">TVA</td>
+              <td class="border border-amber-200 px-4 py-2 text-center">Exon&eacute;r&eacute;</td>
+              <td class="border border-amber-200 px-4 py-2 text-center">20% (r&eacute;cup&eacute;rable)</td>
+            </tr>
+            <tr>
+              <td class="border border-amber-200 px-4 py-2 font-medium">D&eacute;duction charges</td>
+              <td class="border border-amber-200 px-4 py-2 text-center">Non</td>
+              <td class="border border-amber-200 px-4 py-2 text-center">Oui</td>
+            </tr>
+            <tr class="bg-amber-50">
+              <td class="border border-amber-200 px-4 py-2 font-medium">Comptabilit&eacute;</td>
+              <td class="border border-amber-200 px-4 py-2 text-center">Registre recettes</td>
+              <td class="border border-amber-200 px-4 py-2 text-center">Comptabilit&eacute; compl&egrave;te</td>
+            </tr>
+            <tr>
+              <td class="border border-amber-200 px-4 py-2 font-medium">Net annuel estim&eacute;</td>
+              <td class="border border-amber-200 px-4 py-2 text-center font-bold text-green-700">{fmt(calc.netAnnuelMin)} DH</td>
+              <td class="border border-amber-200 px-4 py-2 text-center">Variable (apr&egrave;s IS + CNSS)</td>
+            </tr>
+          </tbody>
+        </table>
+        <p class="text-sm text-gray-500 mt-2">
+          * Comparaison pour un CA annuel de {fmt(calc.caAnnuelMin)} DH. <a href="/comparateur-statuts/" class="text-amber-700 underline">Comparez en d&eacute;tail &rarr;</a>
+        </p>
+      </div>
+
+      <!-- Perspectives du marché -->
+      <h2>Perspectives du march&eacute; pour les {activite.nom.toLowerCase()}s au Maroc</h2>
+
+      <p>{ctx.perspectivesMarche}</p>
+
+      <p>
+        Le statut auto-entrepreneur, cr&eacute;&eacute; par la loi 114-13, a permis la formalisation de centaines de milliers
+        d&rsquo;ind&eacute;pendants au Maroc. Pour les {activite.nom.toLowerCase()}s, ce cadre offre une porte d&rsquo;entr&eacute;e
+        accessible dans l&rsquo;&eacute;conomie formelle avec un minimum de contraintes administratives et fiscales. La d&eacute;claration
+        en ligne sur ae.gov.ma, l&rsquo;obtention rapide de l&rsquo;ICE et la simplicit&eacute; de la facturation facilitent le
+        d&eacute;marrage de l&rsquo;activit&eacute;. N&eacute;anmoins, surveillez votre chiffre d&rsquo;affaires par rapport au
+        plafond de {fmt(calc.plafondCA)} DH/an et pr&eacute;parez votre transition vers un autre statut juridique si
+        votre activit&eacute; cro&icirc;t au-del&agrave; de ce seuil.
+      </p>
+
+      <!-- Marché et acquisition clients -->
+      <h2>March&eacute; et acquisition de clients pour un {activite.nom.toLowerCase()} AE</h2>
+
+      <p>{ctx.marcheEtAcquisition}</p>
+
+      <!-- Comparaison inter-activités -->
+      <h2>Sp&eacute;cificit&eacute;s du m&eacute;tier de {activite.nom.toLowerCase()} par rapport aux autres activit&eacute;s AE</h2>
+
+      <p>{ctx.interActivityComparison}</p>
+
+      <!-- Comment fonctionne la fiscalité AE au Maroc -->
+      <h2>Comment fonctionne la fiscalit&eacute; auto-entrepreneur au Maroc pour un {activite.nom.toLowerCase()}</h2>
+
+      <p>
+        Le r&eacute;gime fiscal de l&rsquo;auto-entrepreneur marocain (loi 114-13) repose sur trois piliers simples
+        qui s&rsquo;appliquent &agrave; l&rsquo;activit&eacute; de {activite.nom.toLowerCase()} :
+      </p>
+
+      <p>
+        <strong>1. L&rsquo;IR forfaitaire ({activite.tauxIR * 100}% du CA)</strong> &ndash; Contrairement au r&eacute;gime r&eacute;el
+        o&ugrave; l&rsquo;imp&ocirc;t est calcul&eacute; sur le b&eacute;n&eacute;fice net selon un bar&egrave;me progressif (0 &agrave; 38%),
+        l&rsquo;auto-entrepreneur paie un pourcentage fixe de son chiffre d&rsquo;affaires brut. Pour un {activite.nom.toLowerCase()}
+        (activit&eacute; {activite.type === 'services' ? 'de services' : 'commerciale/artisanale'}), ce taux est de {activite.tauxIR * 100}%.
+        Aucune charge professionnelle n&rsquo;est d&eacute;ductible, mais le taux tr&egrave;s bas compense largement cette absence de d&eacute;duction.
+        Pour un CA trimestriel de {fmt(calc.caMensuelMin * 3)} DH, l&rsquo;IR est de seulement {fmt(calc.irTrimestrielMin)} DH.
+      </p>
+
+      <p>
+        <strong>2. La cotisation AMO (CNSS)</strong> &ndash; L&rsquo;Assurance Maladie Obligatoire co&ucirc;te {fmt(calc.amoTrimestriel)} DH par
+        trimestre, soit {fmt(calc.amoAnnuel)} DH par an, quel que soit votre CA. Cette cotisation vous donne acc&egrave;s &agrave; la couverture
+        m&eacute;dicale de base de la CNSS. La cotisation est due m&ecirc;me si votre CA est nul pour le trimestre.
+        C&rsquo;est la seule charge sociale obligatoire du r&eacute;gime AE &ndash; il n&rsquo;y a pas de cotisation retraite
+        ni de cotisation compl&eacute;mentaire obligatoire, ce qui explique le taux effectif tr&egrave;s bas de {calc.tauxEffectifMin}%.
+      </p>
+
+      <p>
+        <strong>3. L&rsquo;exon&eacute;ration de TVA</strong> &ndash; L&rsquo;auto-entrepreneur est exon&eacute;r&eacute; de TVA tant que son
+        CA annuel reste sous le seuil de {fmt(calc.plafondCA)} DH. Vous ne collectez pas de TVA aupr&egrave;s de vos clients et
+        ne pouvez pas r&eacute;cup&eacute;rer la TVA sur vos achats. Cette exon&eacute;ration simplifie la facturation et rend
+        vos tarifs de {activite.nom.toLowerCase()} plus comp&eacute;titifs pour les clients particuliers et les petites entreprises
+        non assujetties &agrave; la TVA.
+      </p>
+
+      <!-- Budget mensuel d'exploitation -->
+      <h2>Budget mensuel d&rsquo;exploitation : {activite.nom.toLowerCase()} auto-entrepreneur</h2>
+
+      <p>
+        Au-del&agrave; des charges fiscales obligatoires ({fmt(calc.totalChargesMensuelMin)} DH/mois), un {activite.nom.toLowerCase()}
+        auto-entrepreneur au Maroc doit pr&eacute;voir des charges d&rsquo;exploitation non d&eacute;ductibles. Voici une estimation
+        r&eacute;aliste du budget mensuel pour cette activit&eacute; :
+      </p>
+
+      <div class="not-prose my-6">
+        <table class="w-full border-collapse text-sm">
+          <thead>
+            <tr class="bg-amber-100">
+              <th class="border border-amber-200 px-4 py-2 text-left text-amber-900">Poste de d&eacute;pense</th>
+              <th class="border border-amber-200 px-4 py-2 text-right text-amber-900">Min (DH/mois)</th>
+              <th class="border border-amber-200 px-4 py-2 text-right text-amber-900">Max (DH/mois)</th>
+            </tr>
+          </thead>
+          <tbody>
+            {budgetLines.map((line, i) => (
+              <tr class={i % 2 === 0 ? '' : 'bg-amber-50'}>
+                <td class="border border-amber-200 px-4 py-2">{line.poste}</td>
+                <td class="border border-amber-200 px-4 py-2 text-right">{fmt(line.min)} DH</td>
+                <td class="border border-amber-200 px-4 py-2 text-right">{fmt(line.max)} DH</td>
+              </tr>
+            ))}
+            <tr class="bg-amber-50 font-medium">
+              <td class="border border-amber-200 px-4 py-2">Charges fiscales (IR + AMO)</td>
+              <td class="border border-amber-200 px-4 py-2 text-right">{fmt(calc.totalChargesMensuelMin)} DH</td>
+              <td class="border border-amber-200 px-4 py-2 text-right">{fmt(calc.totalChargesMensuelMax)} DH</td>
+            </tr>
+            <tr class="font-bold bg-amber-100">
+              <td class="border border-amber-200 px-4 py-2">Total d&eacute;penses mensuelles</td>
+              <td class="border border-amber-200 px-4 py-2 text-right">{fmt(budgetTotalMin + calc.totalChargesMensuelMin)} DH</td>
+              <td class="border border-amber-200 px-4 py-2 text-right">{fmt(budgetTotalMax + calc.totalChargesMensuelMax)} DH</td>
+            </tr>
+            <tr class="font-bold text-green-700">
+              <td class="border border-amber-200 px-4 py-2">Revenu r&eacute;el estim&eacute;</td>
+              <td class="border border-amber-200 px-4 py-2 text-right">{fmt(Math.max(0, netReelMin))} DH/mois</td>
+              <td class="border border-amber-200 px-4 py-2 text-right">{fmt(Math.max(0, netReelMax))} DH/mois</td>
+            </tr>
+          </tbody>
+        </table>
+        <p class="text-sm text-gray-500 mt-2">
+          * Estimations indicatives. Les charges d&rsquo;exploitation ne sont pas d&eacute;ductibles en r&eacute;gime AE.
+        </p>
+      </div>
+
+      <p>
+        Il est important de distinguer le revenu net fiscal ({fmt(calc.netMensuelMin)} &agrave; {fmt(calc.netMensuelMax)} DH/mois)
+        du revenu r&eacute;el apr&egrave;s toutes les d&eacute;penses d&rsquo;exploitation. Un {activite.nom.toLowerCase()} AE doit
+        pr&eacute;voir un budget d&rsquo;exploitation de {fmt(budgetTotalMin)} &agrave; {fmt(budgetTotalMax)} DH/mois en moyenne.
+        Ouvrez un compte bancaire d&eacute;di&eacute; pour bien s&eacute;parer vos flux personnels et professionnels, et constituez
+        une r&eacute;serve de tr&eacute;sorerie d&rsquo;au moins 3 mois de charges pour absorber les p&eacute;riodes creuses.
+      </p>
+
+      <!-- Croissance et scaling -->
+      <h2>Croissance et d&eacute;veloppement de votre activit&eacute; de {activite.nom.toLowerCase()}</h2>
+
+      <p>{growthContent}</p>
+
+      <p>
+        Surveillez r&eacute;guli&egrave;rement votre chiffre d&rsquo;affaires cumul&eacute; par rapport au plafond annuel
+        de {fmt(calc.plafondCA)} DH. Avec un CA moyen de {fmt(calc.caMensuelMin)} DH/mois, vous utilisez {calc.pourcentagePlafondMin}%
+        du plafond, ce qui vous laisse une marge de {fmt(calc.margeRestanteMin)} DH. Utilisez notre
+        <a href="/suivi-chiffre-affaires/">outil de suivi du CA</a> pour monitorer votre progression et anticiper le passage
+        en soci&eacute;t&eacute; si n&eacute;cessaire. Le passage vers la SARL doit &ecirc;tre pr&eacute;par&eacute; en amont :
+        choisissez votre expert-comptable, pr&eacute;parez vos statuts et identifiez vos charges d&eacute;ductibles futures
+        avant de franchir le cap.
+      </p>
+
+      <!-- Analyse économique unique (contenu généré par montant) -->
+      <h2>Analyse \u00e9conomique d\u00e9taill\u00e9e : {activite.nom.toLowerCase()} \u00e0 {fmt(calc.caMensuelMin)} DH/mois</h2>
+
+      <p>{uniqueEconomicCtx}</p>
+
+      <!-- Conseils fiscaux uniques -->
+      <h2>Optimisation fiscale pour un {activite.nom.toLowerCase()} AE \u00e0 {fmt(calc.caMensuelMin)} DH/mois</h2>
+
+      {uniqueTaxTips.map((tip) => (
+        <div class="my-4">
+          <h3 class="text-lg font-semibold text-amber-800">{tip.title}</h3>
+          <p>{tip.content}</p>
+        </div>
+      ))}
+
+      <!-- Comparaison AE vs SARL détaillée et unique -->
+      <h2>Analyse comparative d\u00e9taill\u00e9e AE vs SARL pour un {activite.nom.toLowerCase()} \u00e0 {fmt(calc.caAnnuelMin)} DH/an</h2>
+
+      <div class="not-prose my-6">
+        <table class="w-full border-collapse text-sm">
+          <thead>
+            <tr class="bg-amber-100">
+              <th class="border border-amber-200 px-4 py-2 text-left text-amber-900">Indicateur</th>
+              <th class="border border-amber-200 px-4 py-2 text-center text-amber-900">Auto-Entrepreneur</th>
+              <th class="border border-amber-200 px-4 py-2 text-center text-amber-900">SARL</th>
+              <th class="border border-amber-200 px-4 py-2 text-left text-amber-900">Verdict</th>
+            </tr>
+          </thead>
+          <tbody>
+            {uniqueComparisons.map((comp, i) => (
+              <tr class={i % 2 === 0 ? '' : 'bg-amber-50'}>
+                <td class="border border-amber-200 px-4 py-2 font-medium">{comp.metric}</td>
+                <td class="border border-amber-200 px-4 py-2 text-center">{comp.aeValue}</td>
+                <td class="border border-amber-200 px-4 py-2 text-center">{comp.sarlValue}</td>
+                <td class="border border-amber-200 px-4 py-2 text-sm text-gray-600">{comp.verdict}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <p class="text-sm text-gray-500 mt-2">
+          * Analyse bas&eacute;e sur un CA annuel de {fmt(calc.caAnnuelMin)} DH pour un {activite.nom.toLowerCase()} AE au Maroc.
+        </p>
+      </div>
+
+      <!-- Ventilation financière unique -->
+      <h2>Ventilation financi&egrave;re mensuelle : {activite.nom.toLowerCase()} AE ({fmt(calc.caMensuelMin)} DH/mois)</h2>
+
+      <div class="not-prose my-6">
+        <table class="w-full border-collapse text-sm">
+          <thead>
+            <tr class="bg-amber-100">
+              <th class="border border-amber-200 px-4 py-2 text-left text-amber-900">Poste</th>
+              <th class="border border-amber-200 px-4 py-2 text-right text-amber-900">Montant (DH)</th>
+              <th class="border border-amber-200 px-4 py-2 text-right text-amber-900">% du CA</th>
+            </tr>
+          </thead>
+          <tbody>
+            {uniqueBudgetBreakdown.map((item, i) => (
+              <tr class={i % 2 === 0 ? '' : 'bg-amber-50'}>
+                <td class="border border-amber-200 px-4 py-2">{item.label}</td>
+                <td class="border border-amber-200 px-4 py-2 text-right font-medium">{fmt(item.montant)} DH</td>
+                <td class="border border-amber-200 px-4 py-2 text-right">{item.pourcentage}%</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Projection financière unique -->
+      <h2>Projection financi&egrave;re et trajectoire de croissance</h2>
+
+      <p>{uniqueProjection}</p>
+
+      <!-- Le saviez-vous (facts uniques par montant) -->
+      <div class="not-prose my-8 bg-amber-50 border border-amber-200 rounded-xl p-6">
+        <h2 class="text-xl font-bold text-amber-900 mb-4">Le saviez-vous ? Chiffres cl&eacute;s du {activite.nom.toLowerCase()} AE</h2>
+        <ul class="space-y-3">
+          {uniqueDidYouKnow.map((fact) => (
+            <li class="flex items-start gap-3">
+              <span class="text-amber-500 font-bold text-lg flex-shrink-0">&bull;</span>
+              <span class="text-gray-700">{fact}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Comment s'inscrire -->
+      <h2>Comment s&rsquo;inscrire comme {activite.nom.toLowerCase()} auto-entrepreneur</h2>
+
+      <p>
+        L&rsquo;inscription comme {activite.nom.toLowerCase()} auto-entrepreneur au Maroc se fait enti&egrave;rement en ligne sur la
+        plateforme <strong>ae.gov.ma</strong> en moins de 48 heures. Voici les documents n&eacute;cessaires :
+      </p>
+
+      <ul>
+        <li>Copie de la Carte d&rsquo;Identit&eacute; Nationale (CIN) en cours de validit&eacute;</li>
+        <li>Certificat de r&eacute;sidence de moins de 3 mois</li>
+        <li>Photo d&rsquo;identit&eacute; r&eacute;cente</li>
+      </ul>
+
+      <p>
+        Apr&egrave;s validation, vous recevez votre num&eacute;ro ICE (Identifiant Commun de l&rsquo;Entreprise) qui devra figurer
+        sur toutes vos factures. Vous pourrez alors commencer &agrave; exercer votre activit&eacute; de {activite.nom.toLowerCase()}
+        et &agrave; &eacute;mettre des factures conformes aux exigences l&eacute;gales. La premi&egrave;re d&eacute;claration
+        trimestrielle se fera &agrave; la fin du trimestre en cours, accompagn&eacute;e du paiement de l&rsquo;IR forfaitaire
+        ({activite.tauxIR * 100}% du CA) et de l&rsquo;AMO ({fmt(calc.amoTrimestriel)} DH).
+      </p>
 
       <!-- Liens utiles -->
       <div class="not-prose my-8 bg-white border border-amber-200 rounded-xl p-6">
@@ -216,8 +687,8 @@ const tauxEffectif = ((chargesAnnuelles / (activite.revenuMoyen.min * 12)) * 100
           <a href="/generateur-facture/" class="flex items-center gap-3 p-3 rounded-lg bg-amber-50 hover:bg-amber-100 transition-colors hover:no-underline">
             <span class="text-xl">&#9993;</span>
             <div>
-              <p class="font-bold text-amber-900">Générateur de factures</p>
-              <p class="text-sm text-gray-600">Créez des factures conformes</p>
+              <p class="font-bold text-amber-900">G&eacute;n&eacute;rateur de factures</p>
+              <p class="text-sm text-gray-600">Cr&eacute;ez des factures conformes</p>
             </div>
           </a>
           <a href="/suivi-chiffre-affaires/" class="flex items-center gap-3 p-3 rounded-lg bg-amber-50 hover:bg-amber-100 transition-colors hover:no-underline">
@@ -237,26 +708,65 @@ const tauxEffectif = ((chargesAnnuelles / (activite.revenuMoyen.min * 12)) * 100
         </div>
       </div>
 
+      <!-- Activités similaires -->
+      {related.length > 0 && (
+        <div class="not-prose my-8 bg-gray-50 border border-gray-200 rounded-xl p-6">
+          <h2 class="text-xl font-bold text-amber-900 mb-4">Activit&eacute;s similaires en auto-entrepreneur</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {related.map((rel) => {
+              const relCalc = computeActivityCalc(rel);
+              return (
+                <a href={`/activite/${rel.slug}/`} class="flex items-center justify-between p-3 rounded-lg bg-white border border-gray-100 hover:border-amber-300 transition-colors hover:no-underline">
+                  <div>
+                    <p class="font-bold text-amber-900">{rel.nom}</p>
+                    <p class="text-sm text-gray-600">IR {rel.tauxIR * 100}% &middot; Net {fmt(relCalc.netMensuelMin)}-{fmt(relCalc.netMensuelMax)} DH/mois</p>
+                  </div>
+                  <span class="text-amber-500">&rarr;</span>
+                </a>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
       <!-- Articles liés -->
-      <h2>Articles liés</h2>
+      <h2>Guides et ressources pour auto-entrepreneurs</h2>
       <ul>
-        <li><a href="/guides/inscription-auto-entrepreneur/">Comment s'inscrire comme auto-entrepreneur au Maroc</a></li>
-        <li><a href="/guides/fiscalite-auto-entrepreneur/">Fiscalité de l'auto-entrepreneur au Maroc</a></li>
-        <li><a href="/guides/obligations-facturation/">Obligations de facturation de l'AE</a></li>
-        <li><a href="/guides/cnss-auto-entrepreneur/">CNSS et protection sociale de l'AE</a></li>
-        <li><a href="/comparaison/auto-entrepreneur-vs-sarl/">Auto-entrepreneur vs SARL : comparaison détaillée</a></li>
-        <li><a href="/plafond/chiffre-affaires-2026/">Plafonds de chiffre d'affaires 2026</a></li>
+        <li><a href="/guides/inscription-auto-entrepreneur/">Comment s&rsquo;inscrire comme auto-entrepreneur au Maroc</a></li>
+        <li><a href="/guides/fiscalite-auto-entrepreneur/">Fiscalit&eacute; de l&rsquo;auto-entrepreneur au Maroc</a></li>
+        <li><a href="/guides/obligations-facturation/">Obligations de facturation de l&rsquo;AE</a></li>
+        <li><a href="/guides/cnss-auto-entrepreneur/">CNSS et protection sociale de l&rsquo;AE</a></li>
+        <li><a href="/comparaison/auto-entrepreneur-vs-sarl/">Auto-entrepreneur vs SARL : comparaison d&eacute;taill&eacute;e</a></li>
+        <li><a href="/plafond/chiffre-affaires-2026/">Plafonds de chiffre d&rsquo;affaires 2026</a></li>
         <li><a href="/guides/">Tous nos guides pour auto-entrepreneurs</a></li>
+      </ul>
+
+      <!-- Sources et références officielles -->
+      <h2>Sources et r&eacute;f&eacute;rences officielles</h2>
+
+      <p>
+        Les informations pr&eacute;sent&eacute;es dans ce guide s&rsquo;appuient sur les donn&eacute;es officielles
+        des autorit&eacute;s marocaines comp&eacute;tentes. Nous vous recommandons de consulter
+        directement ces sources pour toute d&eacute;marche administrative ou v&eacute;rification :
+      </p>
+
+      <ul>
+        <li><strong>Direction G&eacute;n&eacute;rale des Imp&ocirc;ts (DGI)</strong> &ndash; Autorit&eacute; fiscale marocaine, bar&egrave;mes IR et r&eacute;glementation fiscale de l&rsquo;auto-entrepreneur : <a href="https://www.tax.gov.ma" target="_blank" rel="noopener noreferrer">tax.gov.ma</a></li>
+        <li><strong>Caisse Nationale de S&eacute;curit&eacute; Sociale (CNSS)</strong> &ndash; Cotisations AMO, protection sociale et affiliation des auto-entrepreneurs : <a href="https://www.cnss.ma" target="_blank" rel="noopener noreferrer">cnss.ma</a></li>
+        <li><strong>Haut-Commissariat au Plan (HCP)</strong> &ndash; Statistiques &eacute;conomiques, donn&eacute;es sectorielles et indicateurs du march&eacute; de l&rsquo;emploi au Maroc : <a href="https://www.hcp.ma" target="_blank" rel="noopener noreferrer">hcp.ma</a></li>
+        <li><strong>Centre R&eacute;gional d&rsquo;Investissement (CRI)</strong> &ndash; Accompagnement &agrave; la cr&eacute;ation d&rsquo;entreprise et formalit&eacute;s r&eacute;gionales : <a href="https://www.cri.ma" target="_blank" rel="noopener noreferrer">cri.ma</a></li>
+        <li><strong>Portail officiel de l&rsquo;auto-entrepreneur</strong> &ndash; Inscription, d&eacute;clarations trimestrielles et gestion du statut AE : <a href="https://ae.gov.ma" target="_blank" rel="noopener noreferrer">ae.gov.ma</a></li>
+        <li><strong>Loi 114-13</strong> relative au statut de l&rsquo;auto-entrepreneur au Maroc et ses d&eacute;crets d&rsquo;application</li>
       </ul>
     </div>
 
-    <!-- FAQ Section -->
+    <!-- FAQ Section with 6 Q&A -->
     <div class="mt-12">
       <h2 class="text-2xl font-extrabold text-amber-900 mb-6">
-        Questions fréquentes : {activite.nom} auto-entrepreneur
+        Questions fr&eacute;quentes : {activite.nom} auto-entrepreneur au Maroc
       </h2>
       <div class="space-y-4">
-        {activite.faqs.map((faq, i) => (
+        {faqs.map((faq, i) => (
           <details class="bg-white border border-amber-200 rounded-lg p-4 group" id={`faq-${i}`}>
             <summary class="cursor-pointer list-none flex items-center justify-between">
               <h3 class="text-lg font-bold text-amber-900 pr-4">{faq.question}</h3>
@@ -265,6 +775,45 @@ const tauxEffectif = ((chargesAnnuelles / (activite.revenuMoyen.min * 12)) * 100
             <p class="text-gray-700 mt-4 leading-relaxed">{faq.answer}</p>
           </details>
         ))}
+      </div>
+    </div>
+
+    <!-- FAQ supplémentaires uniques (générées par montant) -->
+    <div class="mt-8">
+      <h2 class="text-2xl font-extrabold text-amber-900 mb-6">
+        Chiffres et calculs : {activite.nom} AE &agrave; {fmt(calc.caMensuelMin)} DH/mois
+      </h2>
+      <div class="space-y-4">
+        {uniqueFaqs.map((faq, i) => (
+          <details class="bg-white border border-amber-200 rounded-lg p-4 group" id={`faq-unique-${i}`}>
+            <summary class="cursor-pointer list-none flex items-center justify-between">
+              <h3 class="text-lg font-bold text-amber-900 pr-4">{faq.question}</h3>
+              <span class="text-amber-500 transform group-open:rotate-45 transition-transform text-xl flex-shrink-0">+</span>
+            </summary>
+            <p class="text-gray-700 mt-4 leading-relaxed">{faq.answer}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+
+    <!-- Author E-E-A-T box -->
+    <div class="mt-12 bg-gray-50 border border-gray-200 rounded-xl p-6">
+      <div class="flex items-start gap-4">
+        <div class="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center flex-shrink-0">
+          <span class="text-amber-700 font-bold text-lg">MR</span>
+        </div>
+        <div>
+          <p class="font-bold text-gray-900">{siteConfig.author.name}</p>
+          <p class="text-sm text-gray-500">{siteConfig.author.credentials}</p>
+          <p class="text-sm text-gray-600 mt-2">
+            Sp&eacute;cialiste en finance d&rsquo;entreprise et entrepreneuriat au Maroc. Auteur de guides pratiques
+            pour les auto-entrepreneurs marocains, avec une expertise particuli&egrave;re en fiscalit&eacute; forfaitaire,
+            optimisation des charges et choix de statut juridique. Les analyses pr&eacute;sent&eacute;es sur ce site
+            s&rsquo;appuient sur la l&eacute;gislation marocaine en vigueur (loi 114-13, Code G&eacute;n&eacute;ral des Imp&ocirc;ts)
+            et sont mises &agrave; jour r&eacute;guli&egrave;rement.
+          </p>
+          <a href="/a-propos/" class="text-sm text-amber-700 hover:underline mt-1 inline-block">En savoir plus &rarr;</a>
+        </div>
       </div>
     </div>
   </article>
