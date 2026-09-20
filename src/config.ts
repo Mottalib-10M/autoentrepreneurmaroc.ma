@@ -5,8 +5,8 @@ export const siteConfig = {
   tagline: 'Le guide complet de l\'auto-entrepreneur au Maroc',
   description: 'Guide complet, calculateurs et outils gratuits pour les auto-entrepreneurs au Maroc. Simulez vos charges, comparez les statuts et générez vos factures.',
   author: {
-    name: 'Mottalib Radif',
-    credentials: 'MBA INSEAD',
+    name: 'Radif Partners',
+    credentials: 'Éditeur de calculateurs et de guides pratiques',
     url: 'https://autoentrepreneurmaroc.ma/a-propos/',
   },
   contact: {

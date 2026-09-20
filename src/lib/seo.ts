@@ -39,7 +39,7 @@ export function getWebsiteSchema() {
       'query-input': 'required name=search_term_string',
     },
     author: {
-      '@type': 'Person',
+      '@type': 'Organization',
       name: siteConfig.author.name,
       url: siteConfig.author.url,
     },
@@ -52,7 +52,7 @@ export function getWebsiteSchema() {
 export function buildPersonSchema() {
   return {
     '@context': 'https://schema.org',
-    '@type': 'Person',
+    '@type': 'Organization',
     name: siteConfig.author.name,
     url: siteConfig.author.url,
     jobTitle: 'Fondateur',
@@ -62,7 +62,6 @@ export function buildPersonSchema() {
       url: siteConfig.url,
     },
     sameAs: [
-      'https://www.linkedin.com/in/mottalib/',
     ],
   };
 }
@@ -83,7 +82,7 @@ export function getOrganizationSchema() {
       height: 630,
     },
     founder: {
-      '@type': 'Person',
+      '@type': 'Organization',
       name: siteConfig.author.name,
       jobTitle: 'Fondateur',
     },
@@ -117,7 +116,7 @@ export function getArticleSchema(props: {
     inLanguage: 'fr-MA',
     image: siteConfig.url + '/og-default.png',
     author: {
-      '@type': 'Person',
+      '@type': 'Organization',
       name: siteConfig.author.name,
       url: siteConfig.author.url,
     },
@@ -153,7 +152,7 @@ export function getSoftwareAppSchema(props: {
       priceCurrency: 'MAD',
     },
     author: {
-      '@type': 'Person',
+      '@type': 'Organization',
       name: siteConfig.author.name,
     },
   };
