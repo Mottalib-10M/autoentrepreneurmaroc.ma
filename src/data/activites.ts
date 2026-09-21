@@ -204,7 +204,7 @@ Pour vous démarquer, proposez des services à valeur ajoutée : stratégie de c
       { question: 'Quels réseaux sociaux maîtriser en priorité au Maroc ?', answer: 'Facebook (dominant), Instagram (forte croissance), TikTok (jeunes), WhatsApp Business et LinkedIn (B2B).' },
       { question: 'Un CM AE peut-il gérer des campagnes publicitaires ?', answer: 'Oui, les dépenses pub sont facturées au client et votre prestation de gestion est facturée séparément.' },
       { question: 'Faut-il des certifications ?', answer: 'Pas obligatoire, mais Meta Blueprint, Google Digital Garage ou HubSpot renforcent votre crédibilité.' },
-      { question: 'Comment fixer ses tarifs de community management ?', answer: 'Un package basique (8 publications/mois) : 2 000-3 000 DH/mois. Un package premium (20+ publications, Reels, publicité) : 5 000-8 000 DH/mois.' },
+      { question: 'Comment fixer ses tarifs de community management ?', answer: 'Un package basique (8 publications/mois) : 2 000-3 000 DH/mois. Un package premium (20+ publications, Réels, publicité) : 5 000-8 000 DH/mois.' },
     ],
   },
   {
